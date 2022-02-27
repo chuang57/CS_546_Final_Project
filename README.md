@@ -1,5 +1,5 @@
 # CS_546_Final_Project
-Proposal
+# Proposal
 
 Stevens CarPool application: The idea here is to provide a facility for Stevens faculty and students to share the ride between them. 
 Two entities will be involved here.
