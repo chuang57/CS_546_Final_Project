@@ -1,2 +1,2 @@
-# CS_546_Fnal_Project
+# CS_546_Final_Project
 
