@@ -1,0 +1,17 @@
+  <div> {{{data.appartmentName}}}</div>
+  <div>{{{data.state}}}</div>
+  <div>{{{data.city}}}</div>
+  <div>{{{data.address}}}</div>
+  {{#each data.photos}}
+  <img src="{{{ this }}}"></img>
+   {{/each}}
+  <div>{{{data.zipcode}}}</div>
+  <div>{{{data.rentprice}}}</div>
+  <div>{{{data.price}}}</div>
+  <div>{{{data.size}}}</div>
+  <div>{{{data.occupantCapacity}}}</div>
+  {{#each data.reviews}}
+  <div>{{{ this.name }}}</div>
+  <div>{{{ this.rating }}}</div>
+  <div>{{{ this.desc }}}</div>
+  {{/each}}
