@@ -1,0 +1,54 @@
+h1{
+    color:rgb(26, 49, 118);
+}
+/* h2{
+    color:rgb(26, 49, 118);
+}
+
+form {
+    border-radius: 4px;
+    align-items: center;
+}
+
+label {
+    color: magenta;
+    font-size: 20px;
+}
+
+input {
+    width: 200px;
+    height: 20px;
+    font-style: initial;
+    
+}
+
+button{
+   padding: 10px 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: white;
+    background-color: navy;
+    border: 1px solid red;
+    border-radius: 10px;
+}
+
+ */
+a{
+    font-size: inherit;
+    color: blue;
+}
+
+/* p{
+    font-size: 20px;
+    color: red;
+} */
+
+/* img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+  }
+ */
