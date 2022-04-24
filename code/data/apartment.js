@@ -5,8 +5,8 @@ const {ObjectId} = require('mongodb');
 module.exports = {
 
 async create(state, city, photos, address, zipcode, rent, size, occupantCapacity){    
-  let bandMembersInvalidFlag = false;
-
+  let photosInvalidFlag = false;
+  
   console.log(arguments.length);
 if(arguments.length!==8) throw 'Incorrect numbers of passed arguments, it should be 6'; 
 /* if (!name) throw 'You must provide a name to search for';
@@ -26,6 +26,19 @@ if (typeof city !== 'string') throw 'city must be a string';
 if (city.trim().length === 0)
 throw 'city cannot be an empty string or just spaces';
 city = city.trim();
+
+if (!photos) throw 'You must provide photos of apartment';
+if (!photos ||  !Array.isArray(photos)) throw 'You must provide an array of photos';
+if (photos.length === 0) throw 'You must supply at least one photos';
+for (i in photos) {
+  if (typeof photos[i] !== 'string' || photos[i].trim().length === 0) {
+    photosInvalidFlag = true;
+    break;
+  }
+  photos[i] = photos[i].trim();
+}
+if (photosInvalidFlag)
+      throw 'One or more photos is an empty';
 
 
 if (!address) throw 'You must provide address of the apartment';
@@ -101,7 +114,7 @@ occupantCapacity = occupantCapacity.trim();
     // return bandsList;
 }, */
 
-async getAllApartment(zipcode){
+async getAllApartmentSelectedZipCode(zipcode){
   if (!zipcode) throw 'You must provide an id to search for';
     //if (typeof zipcode !== 'string') throw 'Id must be a string';
     if (zipcode.trim().length === 0)
@@ -124,6 +137,38 @@ async getAllApartment(zipcode){
     if (apartmentData === null) throw 'No apartment available for this zip code';
     //banggo._id = banggo._id.toString();  
     return apartmentData;
+
+},
+
+
+async getAllApartment(){
+  
+    const apartmentCollection = await apartment();
+    const apartmentData = await apartmentCollection.find({ }).toArray();
+
+    for(let i in apartmentData){
+      apartmentData[i]._id =apartmentData[i]._id.toString();
+
+    }
+    if (apartmentData === null) throw 'No apartment available';
+    //banggo._id = banggo._id.toString();  
+    return apartmentData;
+
+},
+
+
+async sortAllApartmentByPrice(){
+  
+  const apartmentCollection = await apartment();
+  const apartmentData = await apartmentCollection.find({},{_id:0}).sort({"rent":1}).toArray();
+
+  for(let i in apartmentData){
+    apartmentData[i]._id =apartmentData[i]._id.toString();
+
+  }
+  if (apartmentData === null) throw 'No apartment available';
+  //banggo._id = banggo._id.toString();  
+  return apartmentData;
 
 },
 

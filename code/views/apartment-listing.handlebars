@@ -1,120 +1,49 @@
 
- <div class="container">
-  <div class = "row gx-2">  
+<div class="container">
+<div class="row row-cols-4"> 
 
-    {{#each apartmentListing}}
-  {{!--   <div class="container">
-      <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-        <div class="col">
+   
+    {{!-- <div class="container">
+      <div class="row row-cols-4"> --}}
+  {{!--      <div class="col">
           <div class="p-3 border bg-light"> --}}
             {{!-- Row column --}}
-           
+             {{#each apartmentListing}}
              <div class = "col">
-              <div class = "p-3 border" >
-             <div class="card" style="width: 20rem;">
-              <img class="card-img-top" src="public/apartment.jpg" alt="Card image cap">
+              <div class = "p-3 border bg-light" >
+              
+             <div class="card" >
+              {{!--  {{#each photos}}    --}}
+           {{!--      {{@index}} 
+               {{#if @first}} --}}
+
+               {{#with this.photos}}
+              <img class="card-img-top" src={{this.[0]}} alt="Card image cap">
+               {{/with}}
+         {{!--      {{/if}}   --}}
+            {{!--  {{/each}}   --}}
               <div class="card-body">
                 <p class="card-text">{{this.address}}</p>
+                <p class="card-text">{{this.rent}} monthly</p>
                 <a href="/apartment/{{this._id}}" class="click">For more details click here</a>
               </div>
              </div> 
+              
             </div>
             </div>
             
             {{!-- // --}}
-        {{!--   </div>
-        </div>
-      </div>
-    </div> --}}
-  {{/each}}
+      {{!--    </div>
+        </div> --}}
+      
+    {{!--   </div>
+    </div>  --}}
+ {{/each}}
   </div>
+ 
   </div> 
 
-   {{!--  <div class="row no-gutters">
-      <div class="card col-sm-6 col-lg-3">
-        <div class="card-img-top"><img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMjNfODYg%2FMDAxNjQyOTM4NzIwOTc3.sQMhSBWe-RPq-YVjUFGTU1PoKg7f8y1z5ZwazDjDhnAg.nTappjPa5nNbZ_0g53EMNltkgAWb6tYrb-gvMr6hkhUg.JPEG.sdh622%2F28337d111925579aada11bc691645cd3.jpg&type=a340" />
-        </div>
-        <div class="card-body">
-          <p class="card-text">my text
-        </div>
-        <div class="card-footer">my footer</div>
-      </div>
-      <div class="card col-sm-6 col-lg-3">
-        <div class="card-img-top"><img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMjNfODYg%2FMDAxNjQyOTM4NzIwOTc3.sQMhSBWe-RPq-YVjUFGTU1PoKg7f8y1z5ZwazDjDhnAg.nTappjPa5nNbZ_0g53EMNltkgAWb6tYrb-gvMr6hkhUg.JPEG.sdh622%2F28337d111925579aada11bc691645cd3.jpg&type=a340" />
-        </div>
-        <div class="card-body">
-          <p class="card-text">my text
-        </div>
-        <div class="card-footer">my footer</div>
-      </div>
-      <div class="card col-sm-6 col-lg-3">
-        <div class="card-img-top"><img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMjNfODYg%2FMDAxNjQyOTM4NzIwOTc3.sQMhSBWe-RPq-YVjUFGTU1PoKg7f8y1z5ZwazDjDhnAg.nTappjPa5nNbZ_0g53EMNltkgAWb6tYrb-gvMr6hkhUg.JPEG.sdh622%2F28337d111925579aada11bc691645cd3.jpg&type=a340" />
-        </div>
-        <div class="card-body">
-          <p class="card-text">my text
-        </div>
-        <div class="card-footer">my footer</div>
-      </div>
-      <div class="card col-sm-6 col-lg-3">
-        <div class="card-img-top"><img
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMjNfODYg%2FMDAxNjQyOTM4NzIwOTc3.sQMhSBWe-RPq-YVjUFGTU1PoKg7f8y1z5ZwazDjDhnAg.nTappjPa5nNbZ_0g53EMNltkgAWb6tYrb-gvMr6hkhUg.JPEG.sdh622%2F28337d111925579aada11bc691645cd3.jpg&type=a340" />
-        </div>
-        <div class="card-body">
-          <p class="card-text">my text
-        </div>
-        <div class="card-footer">my footer</div>
-      </div>
-    </div>
 
-    <div class="container">
-      <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-      </div>
-    </div>
- --}}
-    {{!-- <span class="border border-primary"></span>
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top"
-        src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMjNfODYg%2FMDAxNjQyOTM4NzIwOTc3.sQMhSBWe-RPq-YVjUFGTU1PoKg7f8y1z5ZwazDjDhnAg.nTappjPa5nNbZ_0g53EMNltkgAWb6tYrb-gvMr6hkhUg.JPEG.sdh622%2F28337d111925579aada11bc691645cd3.jpg&type=a340"
-        alt="Card image cap">
-      <div class="card-body">
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-          content.</p>
-      </div>
-    </div>
-    </span> --}}
     {{!-- <div> {{{this.appartmentName}}}</div>
     <div>{{{this.state}}}</div>
     <div>{{{this.city}}}</div>

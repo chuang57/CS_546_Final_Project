@@ -83,22 +83,26 @@
            
              <div class = "col">
               <div class = "p-3 border" >
-              <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+
+
+ {{#each photos}}               
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src={{this.photos}} class="d-block w-100" alt="...">
+      <img src={{this}} class="d-block w-100" alt="...">
     </div>
-    <div class="carousel-item">
-      <img src={{this.photos}} class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src={{this.photos}} class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src={{this.photos}} class="d-block w-100" alt="...">
+   <div class="carousel-item">
+      <img src={{this}} class="d-block w-80" alt="...">
     </div>
    
   </div>
+   
+    <div class="carousel-item">
+      <img src={{this}} class="d-block w-80" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src={{this}} class="d-block w-80" alt="...">
+    </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
@@ -108,6 +112,9 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
+
+
+{{/each}}  
 </div>
 </div>
              <div class = "col">
