@@ -6,7 +6,14 @@ const { ObjectId } = require("mongodb");
 
 const isAlpha = (str) => /^[a-zA-Z]*$/.test(str);
 
-const createUser = async (username, password) => {
+const createUser = async (
+  username,
+  password,
+  email,
+  phonenumber,
+  city,
+  gender
+) => {
   const lowerUsername = username.toLowerCase();
   if (!lowerUsername || !password) {
     throw new Error("Username or password is empty");
@@ -20,7 +27,7 @@ const createUser = async (username, password) => {
   const userCollections = await users();
   if (
     await userCollections.findOne({
-      username: lowerUsername,
+      email: email,
     })
   ) {
     throw new Error("There is already a user with that username");
@@ -37,18 +44,21 @@ const createUser = async (username, password) => {
   await userCollections.insertOne({
     username: lowerUsername,
     password: await bcrypt.hash(password, salt),
+    email,
+    phonenumber,
+    city,
+    gender,
   });
   return { userInserted: true };
 };
 
-const checkUser = async (username, password) => {
-  const lowerUsername = username.toLowerCase();
-  if (!lowerUsername || !password) {
-    throw new Error("Username or password is empty");
+const checkUser = async (email, password) => {
+  if (!email || !password) {
+    throw new Error("email or password is empty");
   }
-  if (typeof lowerUsername !== "string" || lowerUsername.length < 4) {
+  if (typeof email !== "string" || email.length < 4) {
     throw new Error(
-      "user name should be a valid string and should be at least 4 characters long."
+      "email should be a valid string and should be at least 4 characters long."
     );
   }
 
@@ -60,14 +70,14 @@ const checkUser = async (username, password) => {
     );
   }
 
-  const findUserName = await userCollections.findOne({
-    username: lowerUsername,
+  const findemail = await userCollections.findOne({
+    email,
   });
-  if (!findUserName) {
-    throw new Error("Either the username or password is invalid");
+  if (!findemail) {
+    throw new Error("Either the email or password is invalid");
   }
-  if (!(await bcrypt.compare(password, findUserName.password))) {
-    throw new Error("Either the username or password is invalid");
+  if (!(await bcrypt.compare(password, findemail.password))) {
+    throw new Error("Either the email or password is invalid");
   }
   return { authenticated: true };
 };
