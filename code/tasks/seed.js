@@ -13,7 +13,7 @@ const main = async () => {
   //state, city, photos, address, zipcode, rent, size, occupantCapacity
   //"NJ","Piscataway"," ","1100 Meadows Dr","08854","$2,475","1,064 sq ft","2"
     try {
-     apart = await apartment.create( "NJ","somerville","https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjAxMjNfODYg%2FMDAxNjQyOTM4NzIwOTc3.sQMhSBWe-RPq-YVjUFGTU1PoKg7f8y1z5ZwazDjDhnAg.nTappjPa5nNbZ_0g53EMNltkgAWb6tYrb-gvMr6hkhUg.JPEG.sdh622%2F28337d111925579aada11bc691645cd3.jpg&type=a340","22 Somerville st","08854","$1400","2000 sq ft","2");
+     apart = await apartment.create( "NJ","Jersey city",["https://image.shutterstock.com/image-photo/modern-architecture-urban-residential-apartment-260nw-1865190721.jpg"],"Jersey","08854","$1400","1700 sq ft","2");
     console.log(`apartment has been created successfully!`);
     console.log(apart);
     } catch (e) {

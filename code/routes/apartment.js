@@ -206,6 +206,53 @@ if (genreInvalidFlag){
 });
 
 
+router
+.route('/apartment')
+.get( async (req, res) => {
+
+try{
+  let allAvailableApartmentList = await apartmentData.getAllApartment();
+ 
+  res.status(200).render("all-apartment-listing", 
+  { allApartmentListing: allAvailableApartmentList}
+ ////   city: allAvailableApartmentList[i].city,
+   // address:allAvailableApartmentList[i].address,
+   // rent:allAvailableApartmentList[i].rent,
+    //size:allAvailableApartmentList[i].size,
+    //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
+  
+  );
+ // } 
+} catch (e) {
+  res.status(404).json({ error:e});
+}
+
+});
+
+
+router
+.route('/apartment/sortbyrent')
+.get( async (req, res) => {
+
+try{
+  let sortAllApartmentByPrice = await apartmentData.sortAllApartmentByPrice();
+  console.log("sorted",sortAllApartmentByPrice);
+  res.status(200).render("all-apartment-listing", 
+  { allApartmentListing: sortAllApartmentByPrice}
+ ////   city: allAvailableApartmentList[i].city,
+   // address:allAvailableApartmentList[i].address,
+   // rent:allAvailableApartmentList[i].rent,
+    //size:allAvailableApartmentList[i].size,
+    //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
+  
+  );
+ // } 
+} catch (e) {
+  res.status(404).json({ error:e});
+}
+
+});
+
 
 router
 .route('/apartment')
@@ -218,12 +265,12 @@ if (!apartmentZipcode) {
 }
 
 try{
-  let allAvailableApartmentList = await apartmentData.getAllApartment(apartmentZipcode);
+  let allAvailableApartmentList = await apartmentData.getAllApartmentSelectedZipCode(apartmentZipcode);
   //res.status(200).json(allAvailableApartmentList);
   //console.log("allAvailableApartmentList......",allAvailableApartmentList);
 
   //for(let i in allAvailableApartmentList){
-  console.log("check.........");
+  //console.log("check.........",allAvailableApartmentList[0].photos[0].length());
   res.status(200).render("apartment-listing", 
   { apartmentListing: allAvailableApartmentList}
  ////   city: allAvailableApartmentList[i].city,
