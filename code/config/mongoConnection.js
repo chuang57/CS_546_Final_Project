@@ -1,9 +1,12 @@
 const MongoClient = require('mongodb').MongoClient;
 
 const settings = {
-  mongoConfig: {
-    serverUrl: 'mongodb://localhost:27017/',
-    database: 'Apartment-Finder'
+  mongoConfig: {      
+    "serverUrl": "mongodb+srv://tony0824:Wlsdn1995@cluster0.7c0da.mongodb.net/test",
+    "database": 'Apartment-Finder'
+
+    // serverUrl: 'mongodb://localhost:27017/',
+    // database: 'Apartment-Finder'
   }
 };
 const mongoConfig = settings.mongoConfig;
