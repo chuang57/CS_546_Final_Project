@@ -1,8 +1,9 @@
 const bcrypt = require("bcrypt");
 
-const mongoCollections = require("./config/mongoCollections");
+const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 const { ObjectId } = require("mongodb");
+
 
 const isAlpha = (str) => /^[a-zA-Z]*$/.test(str);
 

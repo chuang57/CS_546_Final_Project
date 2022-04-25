@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createUser, checkUser } = require("../users");
+const { createUser, checkUser } = require("../data/users");
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 
