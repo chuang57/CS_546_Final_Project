@@ -41,19 +41,20 @@ router.post("/newApartment", async (req, res) => {
 });
 
 router.post("/newApartmentInfo", async (req, res) => {
+  let photos = [];
   let state = req.body.state;
   let city = req.body.city;
-  let photos = req.body.photos;
+  photos = req.body.photos;
   let address = req.body.address;
   let zipcode = req.body.zipcode;
   let rent = req.body.rent;
   let size = req.body.size;
   let occupantCapacity = req.body.occupantCapacity;
   try {
-    var obj = {
+    /* var obj = {
         data: req.body.photos
-    };
-    let x = await apartmentData.create(state,city,obj,address,zipcode,rent,size,occupantCapacity);
+    }; */
+    let x = await apartmentData.create(state,city,photos,address,zipcode,rent,size,occupantCapacity);
   } catch (e) {
     res.status(500).json({ error: e });
   }
