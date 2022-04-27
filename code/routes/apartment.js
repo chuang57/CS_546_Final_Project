@@ -1,19 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const data = require('../data');
+const data = require("../data");
 const apartmentData = data.apartment;
-const {ObjectId} = require('mongodb');
+const { ObjectId } = require("mongodb");
 
-
-router.get('/', async (req, res) => {
-  let arr=[], obj = {};
+router.get("/", async (req, res) => {
+  let arr = [],
+    obj = {};
   console.log("in get routes of apartment");
-  res.render('city-choosing', {
-    title: "Apartment Finder"
-});
-return;
+  res.render("city-choosing", {
+    title: "Apartment Finder",
+    username: req.session.user?.username,
+  });
+  return;
   //res.status(200).json("hello apartment finder");
- /*  try {
+  /*  try {
     const getAllBands = await bandsData.getAll(req.params.id);
    for(let i = 0;i<getAllBands.length;i++){
     obj =  {"_id": getAllBands[i]._id,"name": getAllBands[i].name};
@@ -30,28 +31,12 @@ return;
 //404 db errors
 //500 error in my code
 
-
-router.get("/login", async (req, res) => {
-  
-      //console.log(req.session.user);
-      res.render('login', {
-          title: "User Login"
-      });
-      return;
- 
-});
-
-
-
-
-router
-.route('/')
-.post( async (req, res) => {
+router.route("/").post(async (req, res) => {
   const apartmentInfo = req.body.zipcode;
   let bandMembersInvalidFlag = false;
-  let genreInvalidFlag = false;  
-console.log("apartmentInfo",apartmentInfo);
- /*  if(Object.keys(bandsInfo).length!==6){
+  let genreInvalidFlag = false;
+  console.log("apartmentInfo", apartmentInfo);
+  /*  if(Object.keys(bandsInfo).length!==6){
     res.status(400).json({ error: 'You must provide the correct data to create the band'});
     return;
   }
@@ -194,108 +179,109 @@ if (genreInvalidFlag){
     return;
   }
  */
- // state, city, photos, address, zipcode, rent, size, occupantCapacity
+  // state, city, photos, address, zipcode, rent, size, occupantCapacity
   try {
-    const newApartment = await apartmentData.create(apartmentInfo.state,apartmentInfo.city,apartmentInfo.photos,apartmentInfo.address,apartmentInfo.zipcode,apartmentInfo.rent,apartmentInfo.size,apartmentInfo.occupantCapacity);
-     //console.log("new band",newBand);
-      res.status(200).json(newApartment);
-    } catch (e) {
-      res.status(400).json({ error: e });
-      return;
-    }
+    const newApartment = await apartmentData.create(
+      apartmentInfo.state,
+      apartmentInfo.city,
+      apartmentInfo.photos,
+      apartmentInfo.address,
+      apartmentInfo.zipcode,
+      apartmentInfo.rent,
+      apartmentInfo.size,
+      apartmentInfo.occupantCapacity
+    );
+    //console.log("new band",newBand);
+    res.status(200).json(newApartment);
+  } catch (e) {
+    res.status(400).json({ error: e });
+    return;
+  }
 });
 
+router.route("/apartment").get(async (req, res) => {
+  try {
+    let allAvailableApartmentList = await apartmentData.getAllApartment();
 
-router
-.route('/apartment')
-.get( async (req, res) => {
-
-try{
-  let allAvailableApartmentList = await apartmentData.getAllApartment();
- 
-  res.status(200).render("all-apartment-listing", 
-  { allApartmentListing: allAvailableApartmentList}
- ////   city: allAvailableApartmentList[i].city,
-   // address:allAvailableApartmentList[i].address,
-   // rent:allAvailableApartmentList[i].rent,
-    //size:allAvailableApartmentList[i].size,
-    //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
-  
-  );
- // } 
-} catch (e) {
-  res.status(404).json({ error:e});
-}
-
+    res.status(200).render(
+      "all-apartment-listing",
+      {
+        allApartmentListing: allAvailableApartmentList,
+        username: req.session.user?.username,
+      }
+      ////   city: allAvailableApartmentList[i].city,
+      // address:allAvailableApartmentList[i].address,
+      // rent:allAvailableApartmentList[i].rent,
+      //size:allAvailableApartmentList[i].size,
+      //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
+    );
+    // }
+  } catch (e) {
+    res.status(404).json({ error: e });
+  }
 });
 
-
-router
-.route('/apartment/sortbyrent')
-.get( async (req, res) => {
-
-try{
-  let sortAllApartmentByPrice = await apartmentData.sortAllApartmentByPrice();
-  console.log("sorted",sortAllApartmentByPrice);
-  res.status(200).render("all-apartment-listing", 
-  { allApartmentListing: sortAllApartmentByPrice}
- ////   city: allAvailableApartmentList[i].city,
-   // address:allAvailableApartmentList[i].address,
-   // rent:allAvailableApartmentList[i].rent,
-    //size:allAvailableApartmentList[i].size,
-    //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
-  
-  );
- // } 
-} catch (e) {
-  res.status(404).json({ error:e});
-}
-
+router.route("/apartment/sortbyrent").get(async (req, res) => {
+  try {
+    let sortAllApartmentByPrice = await apartmentData.sortAllApartmentByPrice();
+    console.log("sorted", sortAllApartmentByPrice);
+    res.status(200).render(
+      "all-apartment-listing",
+      { allApartmentListing: sortAllApartmentByPrice }
+      ////   city: allAvailableApartmentList[i].city,
+      // address:allAvailableApartmentList[i].address,
+      // rent:allAvailableApartmentList[i].rent,
+      //size:allAvailableApartmentList[i].size,
+      //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
+    );
+    // }
+  } catch (e) {
+    res.status(404).json({ error: e });
+  }
 });
 
+router.route("/apartment").post(async (req, res) => {
+  const apartmentZipcode = req.body.zipcode;
+  console.log("apartmentZipcode", apartmentZipcode);
+  if (!apartmentZipcode) {
+    res.status(400).render("error", {
+      error: "Please provide zipcode to search the apartment",
+    });
+    return;
+  }
 
-router
-.route('/apartment')
-.post( async (req, res) => {
-  const apartmentZipcode = req.body.zipcode; 
-console.log("apartmentZipcode",apartmentZipcode);
-if (!apartmentZipcode) {
-  res.status(400).render("error", { error: "Please provide zipcode to search the apartment" });
-  return;
-}
+  try {
+    let allAvailableApartmentList =
+      await apartmentData.getAllApartmentSelectedZipCode(apartmentZipcode);
+    //res.status(200).json(allAvailableApartmentList);
+    //console.log("allAvailableApartmentList......",allAvailableApartmentList);
 
-try{
-  let allAvailableApartmentList = await apartmentData.getAllApartmentSelectedZipCode(apartmentZipcode);
-  //res.status(200).json(allAvailableApartmentList);
-  //console.log("allAvailableApartmentList......",allAvailableApartmentList);
-
-  //for(let i in allAvailableApartmentList){
-  //console.log("check.........",allAvailableApartmentList[0].photos[0].length());
-  res.status(200).render("apartment-listing", 
-  { apartmentListing: allAvailableApartmentList}
- ////   city: allAvailableApartmentList[i].city,
-   // address:allAvailableApartmentList[i].address,
-   // rent:allAvailableApartmentList[i].rent,
-    //size:allAvailableApartmentList[i].size,
-    //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
-  
-  );
- // } 
-} catch (e) {
-  res.status(404).json({ error:e});
-}
-
+    //for(let i in allAvailableApartmentList){
+    //console.log("check.........",allAvailableApartmentList[0].photos[0].length());
+    res.status(200).render(
+      "apartment-listing",
+      { apartmentListing: allAvailableApartmentList }
+      ////   city: allAvailableApartmentList[i].city,
+      // address:allAvailableApartmentList[i].address,
+      // rent:allAvailableApartmentList[i].rent,
+      //size:allAvailableApartmentList[i].size,
+      //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
+    );
+    // }
+  } catch (e) {
+    res.status(404).json({ error: e });
+  }
 });
 
 router.get("/apartment/:id", async (req, res) => {
   let apartmentId = req.params.id;
   apartmentId = apartmentId.trim();
-  console.log("inside apartment id routes",apartmentId);
- 
-/*     if (typeof req.params.id !== 'string') {
+  console.log("inside apartment id routes", apartmentId);
+
+  /*     if (typeof req.params.id !== 'string') {
       res.status(400).json({ error: 'Id must be a string.' });
       return;} */
-/*   console.log(typeof showId,isNaN(showId));
+  /*   console.log(typeof showId,isNaN(showId));
 
    if (isNaN(showId)) {
       res.status(400).render('singleShow', { error_message: "Request failed with status code 400", title: "Error", showId: showId});
@@ -303,41 +289,52 @@ router.get("/apartment/:id", async (req, res) => {
   } 
 */
 
-   //console.log("showId",showId);
+  //console.log("showId",showId);
   try {
-   let apartment = await apartmentData.getApartmentById(apartmentId)
-     // console.log(show);
-      if(apartment){
-     // res.status(200).render('each-apartment-listing', { singalShow: show, title: show.name, summary: show.summary, image: images, rating: show.rating.average, network:network,language:show.language, genres:show.genres});
-    // res.status(200).json(apartment);
-   
-    console.log("-------------",apartment.photos,apartment[0].photos);
-     res.status(200).render("each-apartment-listing", 
-     { eachApartmentListing: apartment}
-    ////   city: allAvailableApartmentList[i].city,
-      // address:allAvailableApartmentList[i].address,
-      // rent:allAvailableApartmentList[i].rent,
-       //size:allAvailableApartmentList[i].size,
-       //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
-     
-     );
-    }
-   else{
+    let apartment = await apartmentData.getApartmentById(apartmentId);
+    // console.log(show);
+    if (apartment) {
+      // res.status(200).render('each-apartment-listing', { singalShow: show, title: show.name, summary: show.summary, image: images, rating: show.rating.average, network:network,language:show.language, genres:show.genres});
+      // res.status(200).json(apartment);
+
+      console.log("-------------", apartment.photos, apartment[0].photos);
+      res.status(200).render(
+        "each-apartment-listing",
+        {
+          eachApartmentListing: apartment,
+          username: req.session.user?.username,
+        }
+
+        ////   city: allAvailableApartmentList[i].city,
+        // address:allAvailableApartmentList[i].address,
+        // rent:allAvailableApartmentList[i].rent,
+        //size:allAvailableApartmentList[i].size,
+        //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
+      );
+    } else {
       // console.log("1");
       //console.log(e);
       //res.status(404).render('singleShow', { error_message: `There is no show found for the given ID: ${showId}`, title: "Error", showId: showId});
-      res.status(404).render('each-apartment-listing', { error_message: "Request failed with status code 404", title: "Error", apartmentId: apartmentId});
-      return; 
-  } 
-}  
-  catch (e) {
-    // console.log("2");
-      //res.status(500).json({ error: e });   
-      //res.status(404).render('singleShow', { error_message: `There is no show found for the given ID: ${showId}`, title: "Error", showId: showId});
-      res.status(404).render('each-apartment-listing', { error_message: "Request failed with status code 404", title: "Error", apartmentId: apartmentId});
+      res.status(404).render("each-apartment-listing", {
+        error_message: "Request failed with status code 404",
+        title: "Error",
+        apartmentId: apartmentId,
+        username: req.session.user?.username,
+      });
       return;
+    }
+  } catch (e) {
+    // console.log("2");
+    //res.status(500).json({ error: e });
+    //res.status(404).render('singleShow', { error_message: `There is no show found for the given ID: ${showId}`, title: "Error", showId: showId});
+    res.status(404).render("each-apartment-listing", {
+      error_message: "Request failed with status code 404",
+      title: "Error",
+      apartmentId: apartmentId,
+      username: req.session.user?.username,
+    });
+    return;
   }
-
 });
 
 /* router
@@ -574,7 +571,4 @@ if (req.params.id.trim().length === 0) {
   }
 }); */
 
-
 module.exports = router;
-
-

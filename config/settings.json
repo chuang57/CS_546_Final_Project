@@ -1,6 +1,0 @@
-{
-  "mongoConfig": {
-    "serverUrl": "mongodb+srv://tony0824:Wlsdn1995@cluster0.7c0da.mongodb.net/test",
-    "database": "users"
-  }
-}
