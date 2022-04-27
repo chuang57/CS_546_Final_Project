@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 
 const settings = {
   mongoConfig: {      
-    "serverUrl": "mongodb+srv://tony0824:Wlsdn1995@cluster0.7c0da.mongodb.net/test",
+    "serverUrl": "mongodb+srv://chuang:546stevens19@apartment-finder.7mnia.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     //"serverUrl": 'mongodb://localhost:27017/',
     "database": 'Apartment-Finder'
 

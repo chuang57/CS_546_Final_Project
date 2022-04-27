@@ -27,18 +27,18 @@ if (city.trim().length === 0)
 throw 'city cannot be an empty string or just spaces';
 city = city.trim();
 
-if (!photos) throw 'You must provide photos of apartment';
-if (!photos ||  !Array.isArray(photos)) throw 'You must provide an array of photos';
-if (photos.length === 0) throw 'You must supply at least one photos';
-for (i in photos) {
-  if (typeof photos[i] !== 'string' || photos[i].trim().length === 0) {
-    photosInvalidFlag = true;
-    break;
-  }
-  photos[i] = photos[i].trim();
-}
-if (photosInvalidFlag)
-      throw 'One or more photos is an empty';
+// if (!photos) throw 'You must provide photos of apartment';
+// if (!photos ||  !Array.isArray(photos)) throw 'You must provide an array of photos';
+// if (photos.length === 0) throw 'You must supply at least one photos';
+// for (i in photos) {
+//   if (typeof photos[i] !== 'string' || photos[i].trim().length === 0) {
+//     photosInvalidFlag = true;
+//     break;
+//   }
+//   photos[i] = photos[i].trim();
+// }
+// if (photosInvalidFlag)
+//       throw 'One or more photos is an empty';
 
 
 if (!address) throw 'You must provide address of the apartment';

@@ -5,7 +5,18 @@ const configRoutes = require("./routes");
 const exphbs = require("express-handlebars");
 const static = express.static(__dirname + "/public");
 const session = require("express-session");
-
+var multer = require('multer');
+  
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+  
+var upload = multer({ storage: storage });
 app.use("/public", static);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
