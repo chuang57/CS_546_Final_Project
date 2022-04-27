@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require("../data");
 const apartmentData = data.apartment;
 const { ObjectId } = require("mongodb");
+const mongoconnection = require("../config/mongoConnection");
 
 router.get("/", async (req, res) => {
   let arr = [],
@@ -31,6 +32,33 @@ router.get("/", async (req, res) => {
 //404 db errors
 //500 error in my code
 
+router.post("/newApartment", async (req, res) => {
+  try {
+    res.render("new-apartment");
+  } catch (e) {
+    res.status(500).json({ error: e });
+  }
+});
+
+router.post("/newApartmentInfo", async (req, res) => {
+  let state = req.body.state;
+  let city = req.body.city;
+  let photos = req.body.photos;
+  let address = req.body.address;
+  let zipcode = req.body.zipcode;
+  let rent = req.body.rent;
+  let size = req.body.size;
+  let occupantCapacity = req.body.occupantCapacity;
+  try {
+    var obj = {
+        data: req.body.photos
+    };
+    let x = await apartmentData.create(state,city,obj,address,zipcode,rent,size,occupantCapacity);
+  } catch (e) {
+    res.status(500).json({ error: e });
+  }
+});
+// ["https://image.shutterstock.com/image-photo/modern-architecture-urban-residential-apartment-260nw-1865190721.jpg"]
 router.route("/").post(async (req, res) => {
   const apartmentInfo = req.body.zipcode;
   let bandMembersInvalidFlag = false;
