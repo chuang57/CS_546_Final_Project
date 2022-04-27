@@ -5,6 +5,8 @@ const apartmentData = data.apartment;
 const { ObjectId } = require("mongodb");
 const mongoconnection = require("../config/mongoConnection");
 
+
+
 router.get("/", async (req, res) => {
   let arr = [],
     obj = {};
@@ -41,10 +43,15 @@ router.post("/newApartment", async (req, res) => {
 });
 
 router.post("/newApartmentInfo", async (req, res) => {
-  let photos = [];
+  let photosArr = [];
   let state = req.body.state;
   let city = req.body.city;
-  photos = req.body.photos;
+
+ // console.log("req.body.photos",req.body.photos);
+ // console.log("req.body.photos length",req.body.photos);
+  photosArr = req.body.photos;
+ // console.log("photosArr[0]", photosArr[0]);
+ // console.log("photosArr", photosArr);
   let address = req.body.address;
   let zipcode = req.body.zipcode;
   let rent = req.body.rent;
@@ -54,7 +61,7 @@ router.post("/newApartmentInfo", async (req, res) => {
     /* var obj = {
         data: req.body.photos
     }; */
-    let x = await apartmentData.create(state,city,photos,address,zipcode,rent,size,occupantCapacity);
+    let x = await apartmentData.create(state,city,photosArr,address,zipcode,rent,size,occupantCapacity);
   } catch (e) {
     res.status(500).json({ error: e });
   }
@@ -286,7 +293,9 @@ router.route("/apartment").post(async (req, res) => {
     //console.log("allAvailableApartmentList......",allAvailableApartmentList);
 
     //for(let i in allAvailableApartmentList){
-    //console.log("check.........",allAvailableApartmentList[0].photos[0].length());
+    console.log("check.........",allAvailableApartmentList[0].photos[0]);
+
+    
     res.status(200).render(
       "apartment-listing",
       { apartmentListing: allAvailableApartmentList,

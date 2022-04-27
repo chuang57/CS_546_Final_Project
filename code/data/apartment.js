@@ -4,7 +4,7 @@ const {ObjectId} = require('mongodb');
 
 module.exports = {
 
-async create(state, city, photos, address, zipcode, rent, size, occupantCapacity){    
+async create(state, city, photosArr, address, zipcode, rent, size, occupantCapacity){    
   let photosInvalidFlag = false;
   
   console.log(arguments.length);
@@ -76,7 +76,7 @@ occupantCapacity = occupantCapacity.trim();
     _id: ObjectId(), 
     state: state,
     city: city,
-    photos:  photos,
+    photos: photosArr,
     address: address,
     zipcode: zipcode,
     rent: rent,
