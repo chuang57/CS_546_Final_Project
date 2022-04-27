@@ -66,10 +66,9 @@
           <a class="nav-item nav-link active" href="/login">Login
             <span class="sr-only">(current)</span></a>
           <a class="nav-item nav-link active" href="/signup">Sign Up</a>
-
+           
           {{#if allApartmentListing}}
-            <a class="nav-item nav-link" href="/apartment/sortbyrent">Sort by
-              rent</a>
+            <a class="nav-item nav-link" href="/apartment/sortbyrent">Sort by rent</a>
             {{!  <a class="nav-item nav-link disabled" href="#">Disabled</a> }}
             <form class="d-flex">
               <button
@@ -78,6 +77,7 @@
               >Sort by price</button>
             </form>
 
+         
             {{!  <ul class="nav navbar-nav navbar-right">
                 <li><a href="/login" class="">login</a>
                 </li>
@@ -93,9 +93,15 @@
           {{/if}}
         </div>
       </div>
-      {{{username}}}
+  {{!--     {{{username}}} --}}
     </nav>
-
+       {{#if username}}
+       <div class="row-mid">
+        <div class="col-sm-6">
+          welcome {{username}}
+        </div>
+      </div>
+      {{/if}}
     <main class="container">
       <h1>Discover Your New Home. Helping renters find their perfect fit</h1>
       <div class="row">

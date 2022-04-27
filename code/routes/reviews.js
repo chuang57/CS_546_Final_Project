@@ -1,42 +1,47 @@
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
-const albumsData = data.albums;
+const reviewsData = data.reviews;
 const {ObjectId} = require('mongodb');
 
-router
-.route('/:id')    //GET /albums/{bandId}
-.get(async (req, res) => {
-    req.params.id = req.params.id.trim();
-    /* if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ error: 'Provided band id is not a valid object ID.' });
-    return;}
-    if (typeof req.params.id !== 'string') {
-    res.status(400).json({ error: 'Id must be a string.' });
-    return;}
-    if (req.params.id.trim().length === 0) {
-    res.status(400).json({ error: 'Id cannot be an empty string or just spaces.' });
-    return;
-    }
-    try{
-    let albumsList = await albumsData.getAll(req.params.id);
-   // console.log(albumsList);
-    if(albumsList.length === 0){
-        res.status(404).json({ error: 'No album for the given band id' });
-        return; 
-    }
-    res.status(200).json(albumsList);
-    } catch (e) {
-    res.status(404).json({ error:e});
-    } */
+
+/* const express = require("express");
+const router = express.Router();
+const data = require("../data");
+const reviewsData = data.reviews;
+//const { ObjectId } = require("mongodb");
+const mongoCollections = require("../config/mongoCollections");
+const reviews = mongoCollections.reviews; */
+
+/* const express = require("express");
+const router = express.Router();
+const { createUser, checkUser } = require("../data/users");
+const mongoCollections = require("../config/mongoCollections");
+const users = mongoCollections.users; */
+
+
+router.get("/reviews/:id", async (req, res) => {
+  console.log("in get routes of reviews", req.params.id);
+  res.render("reviews", {
+    apartmentId: req.params.id,
+    username: req.session.user?.username,
+    
+  });
+  return;
+
 });
 
 
-/* router.post('/:id', async (req, res) => {
-    const albumInfo = req.body;
+
+
+router.post('/reviews/:id', async (req, res) => {
+  console.log("in post routes of reviews",req.params.id);
+  console.log("req.body",req.body);
+    const reviewsInfo = req.body;
     let tracksInvalidFlag = false; 
-    req.params.id = req.params.id.trim();
-    if (!req.params.id) {
+     req.params.id = req.params.id.trim();
+     let sessionUser = req.session.user.username;
+   /*  if (!req.params.id) {
         res.status(400).json({ error: 'You must Supply a band ID to create album' });
         return;
       }
@@ -108,28 +113,28 @@ router
     if (typeof albumInfo.rating !== 'number') {
         res.status(400).json({ error: 'Provided rating value is in incorrect format.'});
         return;
-    } 
-    if (albumInfo.rating> 5 || albumInfo.rating<1) {
+    }  */
+  /*   if (reviewsInfo.rating> 5 || reviewsInfo.rating<1) {
         res.status(400).json({ error: 'Given rating value should be a range from 1 to 5.'});
         return;
     } 
-    if (isValidRating(albumInfo.rating)=== false) {
+    if (isValidRating(reviewsInfo.rating) === false) {
         res.status(400).json({ error: 'Only one decimal place value in rating is accepted.'});
         return;
-    }  
+    }   */
    // console.log(albumInfo,req.params.id);
     //If the JSON is valid and the album can be created successful, you will return all the 
     //band data showing the albums  (as shown below) with a 200 status code.
    //while create() func in data/albums.js returing newly created album only. 
     try {
-        const newAlbum = await albumsData.create(req.params.id, albumInfo.title,albumInfo.releaseDate,albumInfo.tracks,albumInfo.rating);
+        const newAlbum = await reviewsData.create(req.params.id, sessionUser, reviewsInfo.rating,reviewsInfo.description);
         res.status(200).json(newAlbum);
      } catch (e) {
         res.status(400).json({ error: e });
         
       }
   });
-   */
+  
 
 /* router
 .route('/album/:id')

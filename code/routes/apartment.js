@@ -260,7 +260,9 @@ router.route("/apartment").post(async (req, res) => {
     //console.log("check.........",allAvailableApartmentList[0].photos[0].length());
     res.status(200).render(
       "apartment-listing",
-      { apartmentListing: allAvailableApartmentList }
+      { apartmentListing: allAvailableApartmentList,
+        username: req.session.user?.username,
+       }
       ////   city: allAvailableApartmentList[i].city,
       // address:allAvailableApartmentList[i].address,
       // rent:allAvailableApartmentList[i].rent,

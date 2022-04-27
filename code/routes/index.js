@@ -4,7 +4,7 @@ const userRoutes = require("./user");
 
 const constructorMethod = (app) => {
   app.use("/", apartmentRoutes);
-  // app.use('/reviews', reviewsRoutes);
+  app.use("/", reviewsRoutes);
   app.use("/", userRoutes);
   app.use("*", (req, res) => {
     res.status(404).json({ error: "Not found" });

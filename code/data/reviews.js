@@ -5,8 +5,8 @@ const {ObjectId} = require('mongodb');
 
 module.exports = {
 
-async create(bandId, title, releaseDate, tracks, rating){  
-let tracksInvalidFlag = false;  
+async create(apartmentId, sessionUser, rating, description){  
+/* let tracksInvalidFlag = false;  
 if(arguments.length !== 5 ) throw "Number of arguments should be 5"; 
 if (!bandId) throw 'You must provide a band ID to search for';
 if (!title) throw 'You must provide a title to search for';
@@ -37,31 +37,43 @@ if (tracksInvalidFlag)
  if(!isValidDateString(releaseDate)) throw "Invalid date string";   
  if(typeof rating !== 'number') throw 'Incorrect rating';
  if(rating> 5 || rating<1) throw 'rating should be a range from 1 to 5'; 
- if(isValidRating(rating) === false) throw 'Only one decimal place value in rating is accepted';
+ if(isValidRating(rating) === false) throw 'Only one decimal place value in rating is accepted'; */
 
 //const myId = new ObjectId(); // No argument
-   let newAlbum = {
+console.log("inside reviews.js data folder");
+   let review = {
     _id: ObjectId(), 
-    title: title,
-    releaseDate:  releaseDate,
-    tracks: tracks,
+    name: sessionUser,
+    apartmentid: apartmentId,
     rating: rating,
+    description: description
     
   };
-  
-  let singleBand = await bandsData.get(bandId);
-  singleBand.albums.push(newAlbum);
+  console.log("inside reviews.js data folder12345");
+  let singleApartment = await apartmentData.getApartmentById(apartmentId);
+
+console.log("singleApartment",singleApartment);
+console.log("singleApartment reviews",singleApartment.reviews, "singleApartment type", typeof singleApartment);
+
+singleApartment[0].reviews.push(review);
+  console.log("inside reviews data folder single review", singleApartment);
   //console.log(singleBand);
-  const bandsCollection = await bands();
-  const updatedInfo = await bandsCollection.updateOne({_id: ObjectId(bandId)}, { $addToSet: {albums: newAlbum} }); 
+  const apartmentCollection = await apartment();
+  const updatedInfo = await apartmentCollection.updateOne({_id: ObjectId(apartmentId)}, { $addToSet: {reviews: review} }); 
 
   //const updatedInfo = await bandsCollection.replaceOne({
   //_id: ObjectId(bandId)}, {"albums":newAlbum, "overallRating":singleBand.overallRating}); 
   // const updatedInfo = await bandsCollection.replaceOne({
   //  _id: ObjectId(bandId)}, {"_id": singleBand}); 
-
+console.log(updatedInfo);
    if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount)
    throw 'could not update band successfully';
+
+   if(updatedInfo.modifiedCount === 1){
+     console.log("inside modified count 1 block");
+   const updatedInfo2 = await apartmentCollection.updateOne({_id: ObjectId(req.session.user._id.toString())}, { $addToSet: {reviewsWritten: _id} }); 
+
+   }
 
    if(updatedInfo.modifiedCount === 1) {
    const updatedInfo2 = await bandsCollection.updateOne({

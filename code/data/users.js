@@ -14,9 +14,11 @@ const createUser = async (
   phonenumber,
   city,
   gender,
-  age
+  age,
+  usertype
 ) => {
-  console.log(email);
+  console.log("email",email);
+  console.log("usertype..", usertype);
   const lowerUsername = username.toLowerCase();
   if (!lowerUsername || !password) {
     throw new Error("Username or password is empty");
@@ -52,6 +54,10 @@ const createUser = async (
     city,
     gender,
     age,
+    usertype,
+    reviewsWritten:[],
+    savedApartments:[]
+
   });
   return { userInserted: true };
 };

@@ -17,7 +17,16 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     await checkUser(email, password, req);
-    res.redirect("/");
+   // res.redirect("/");
+   console.log("user in post login route",req.session.user);
+   console.log("req.params.id", req.session.user._id);
+   console.log("req.params.username",req.session.user.username);
+    res.render("city-choosing", {
+      username: req.session.user?.username,
+    // username: req.session.user.username,
+     //userId: req.session.user._id.toString()
+    });
+
   } catch (e) {
     res.send(`"error", ${e.message}`);
     return;
@@ -54,14 +63,19 @@ router.get("/profile/:email", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const { email, password, username, phonenumber, city, gender, age } =
+  const { email, password, username, phonenumber, city, gender, age, usertype } =
     req.body;
+    
+
+    console.log(req.body);
   try {
-    await createUser(email, password, username, phonenumber, city, gender, age);
+    await createUser(email, password, username, phonenumber, city, gender, age, usertype);
   } catch (e) {
     console.log(e);
   }
-  res.redirect("/");
+  res.render("login",{success:"welcome! Please login now to proceed further"});
 });
 
 module.exports = router;
+
+

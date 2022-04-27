@@ -1,0 +1,90 @@
+{{!--  {{#if success}}
+<p>{{success}}</p>
+ {{/if}}
+
+<form method="POST" action="/login">
+  <div class="form-group">
+    <label for="InputRating">Rating</label>
+    <input
+      type="rating"
+      name="rating"
+      class="form-control"
+      id="InputRating"
+      aria-describedby="ratingHelp"
+      placeholder="Enter rating"
+    />
+    <small id="ratingHelp" class="form-text text-muted">We value your feedback</small>
+  </div>
+  <div class="form-group">
+    <label for="ReviewText">Write a Review</label>
+    <input
+      type="text"
+      name="text"
+      class="form-control"
+      id="ReviewText"
+      placeholder="Write a review"
+    />
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Confirm</button>
+</form> --}}
+
+
+<form method="POST" action="/reviews/{{apartmentId}}">
+<section class="vh-50">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-9">
+
+        <h4>Write a Review</h4>
+
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body">
+
+            <div class="row align-items-center pt-4 pb-3">
+              <div class="col-md-3 ps-5">
+                <h6 class="mb-0">Rating</h6>
+              </div>
+
+              <div class="col-md-9 pe-5">
+
+                <input type="text" name = "rating" class="form-control form-control-lg" placeholder="1 - 5"/>
+
+              </div>
+            </div>
+
+
+            <hr class="mx-n3">
+
+            <div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+
+                <h6 class="mb-0">Review Text</h6>
+
+              </div>
+              <div class="col-md-9 pe-5">
+
+                <textarea class="form-control" name = "description" rows="3" placeholder="We value your feedback"></textarea>
+               {{!--   <input type="textarea" name = "reviewtext" class="form-control form-control-lg" rows="3" placeholder="We value your feedback"/> --}}
+
+              </div>
+            </div>
+
+        
+
+       
+              
+            <hr class="mx-n3">
+
+            <div class="px-5 py-4">
+              <button type="submit" class="btn btn-primary btn-lg" >Confirm</button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+</form>
