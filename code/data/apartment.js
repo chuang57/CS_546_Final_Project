@@ -194,6 +194,8 @@ async getApartmentById(apartmentId){
     //console.log("inside data", apartmentData,"apartment id",apartmentData[0].state,apartmentData[0]._id.toString());
 
     console.log("asedf", apartmentIdData);
+   // apartmentIdData = apartmentIdData.toString();
+   // console.log("qwerty",apartmentIdData[0].reviews);
     if (apartmentIdData === null) throw 'No apartment available for this search';
     //banggo._id = banggo._id.toString();  
     return apartmentIdData;
