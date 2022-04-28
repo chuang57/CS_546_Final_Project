@@ -1,8 +1,71 @@
 <div>
-  <div>{{{username}}}</div>
-  <div>{{{email}}}</div>
-  <div>{{{phonenumber}}}</div>
-  <div>{{{city}}}</div>
-  <div>{{{gender}}}</div>
-  <div>{{{age}}}</div>
+  <div>
+    <div>User Name</div>
+    <div>{{{username}}}</div>
+  </div>
+
+  <div>
+    <div>Email</div>
+    <div>{{{email}}}</div>
+  </div>
+
+  <div>
+    <div>Phone Number</div>
+    <div>{{{phonenumber}}}</div>
+  </div>
+
+  <div>
+    <div>City</div>
+    <div>{{{city}}}</div>
+  </div>
+
+  <div>
+    <div>Gender</div>
+    <div>{{{gender}}}</div>
+  </div>
+
+  <div>
+    <div>Age</div>
+    <div>{{{age}}}</div>
+  </div>
+
+   {{#each allApartmentListing}}
+      <div class="col">
+        <div class="p-3 border bg-light">
+
+          <div class="card">
+            {{!-- {{#each photos}} --}}
+            {{!-- {{@index}}
+                                    {{#if @first}} --}}
+
+            {{#with this.photos}}
+              <img
+                class="card-img-top-down"
+                src="public/{{this.[0]}}"
+                alt="{{address}} image"
+              />
+            {{/with}}
+
+            {{!-- {{/if}} --}}
+            {{!-- {{/each}} --}}
+            <button onclick="postBookmark('{{this._id}}')">bookmark</button>
+            <div class="card-body">
+              <p class="card-text">{{this.address}}</p>
+              <p class="card-text">{{this.rent}} monthly</p>
+              <a href="/apartment/{{this._id}}" class="click">For more details
+                click here</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {{! // }}
+      {{!
+                    </div>
+                </div>
+            </div>
+        </div> }}
+    {{/each}}
+
 </div>

@@ -65,7 +65,7 @@ singleApartment[0].reviews.push(review);
   //_id: ObjectId(bandId)}, {"albums":newAlbum, "overallRating":singleBand.overallRating}); 
   // const updatedInfo = await bandsCollection.replaceOne({
   //  _id: ObjectId(bandId)}, {"_id": singleBand}); 
-console.log(updatedInfo);
+
    if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount)
    throw 'could not update band successfully';
 

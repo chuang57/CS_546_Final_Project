@@ -1,5 +1,5 @@
- <div class="container">
-{{!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="container">
+  {{!<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-md">
     <a class="navbar-brand" href="#">List of available apartments</a>
     <li class="nav-item dropdown">
@@ -15,46 +15,56 @@
     </li>
   </div>
 </nav>
- --}}
+ }}
 
-
-
-    <div class="row row-cols-4">
-        {{!-- <div class="container">
+  <div class="row row-cols-4">
+    {{! <div class="container">
             <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
                 <div class="col">
-                    <div class="p-3 border bg-light"> --}}
-                        {{!-- Row column --}}
-                        {{#each allApartmentListing}}
-                        <div class="col">
-                            <div class="p-3 border bg-light">
+                    <div class="p-3 border bg-light"> }}
+    {{! Row column }}
+    {{#each allApartmentListing}}
+      <div class="col">
+        <div class="p-3 border bg-light">
 
-                                <div class="card">
-                                    {{!-- {{#each photos}} --}}
-                                    {{!-- {{@index}}
+          <div class="card">
+            {{!-- {{#each photos}} --}}
+            {{!-- {{@index}}
                                     {{#if @first}} --}}
 
-                                    {{#with this.photos}}
-                                    <img class="card-img-top-down" src="public/{{this.[0]}}" alt="{{address}} image">
-                                    {{/with}}
-                                    {{!-- {{/if}} --}}
-                                    {{!-- {{/each}} --}}
-                                    <div class="card-body">
-                                        <p class="card-text">{{this.address}}</p>
-                                        <p class="card-text">{{this.rent}} monthly</p>
-                                        <a href="/apartment/{{this._id}}" class="click">For more details click here</a>
-                                    </div>
-                                </div>
+            {{#with this.photos}}
+              <img
+                class="card-img-top-down"
+                src="public/{{this.[0]}}"
+                alt="{{address}} image"
+              />
+            {{/with}}
 
-                            </div>
-                        </div>
+            {{!-- {{/if}} --}}
+            {{!-- {{/each}} --}}
+            <button onclick="postBookmark('{{this._id}}')">bookmark</button>
+            <div class="card-body">
+              <p class="card-text">{{this.address}}</p>
+              <p class="card-text">{{this.rent}} monthly</p>
+              <a href="/apartment/{{this._id}}" class="click">For more details
+                click here</a>
+            </div>
+          </div>
 
-                        {{!-- // --}}
-                        {{!--
+        </div>
+      </div>
+
+      {{! // }}
+      {{!
                     </div>
                 </div>
             </div>
-        </div> --}}
-        {{/each}}
-    </div>
+        </div> }}
+    {{/each}}
+  </div>
+  <script>
+    function postBookmark (id) { fetch('/user/bookmark', { method: 'POST',
+    headers: { "Content-Type": "application/json", }, body:JSON.stringify({
+    apartId: id }) } )}
+  </script>
 </div>
