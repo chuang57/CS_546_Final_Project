@@ -49,8 +49,12 @@ router.post("/newApartmentInfo", async (req, res) => {
 
  // console.log("req.body.photos",req.body.photos);
  // console.log("req.body.photos length",req.body.photos);
-  photosArr = req.body.photos;
- // console.log("photosArr[0]", photosArr[0]);
+if(!Array.isArray(req.body.photos))
+{
+  photosArr.push(req.body.photos);
+}
+else photosArr = req.body.photos;
+ console.log("photosArr", photosArr);
  // console.log("photosArr", photosArr);
   let address = req.body.address;
   let zipcode = req.body.zipcode;
