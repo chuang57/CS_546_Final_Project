@@ -36,6 +36,7 @@ router.post("/reviews/:id", isLogin, async (req, res) => {
   let tracksInvalidFlag = false;
   req.params.id = req.params.id.trim();
   let sessionUser = req.session.user.username;
+  let userSessionId = req.session.user._id;
   /*  if (!req.params.id) {
         res.status(400).json({ error: 'You must Supply a band ID to create album' });
         return;
@@ -122,13 +123,14 @@ router.post("/reviews/:id", isLogin, async (req, res) => {
   //band data showing the albums  (as shown below) with a 200 status code.
   //while create() func in data/albums.js returing newly created album only.
   try {
-    const newAlbum = await reviewsData.create(
+    const newReview = await reviewsData.create(
       req.params.id,
+      userSessionId,
       sessionUser,
       reviewsInfo.rating,
       reviewsInfo.description
     );
-    res.status(200).json(newAlbum);
+    res.status(200).json({newReview});
   } catch (e) {
     res.status(400).json({ error: e });
   }
