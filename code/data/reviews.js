@@ -84,7 +84,7 @@ singleApartment[0].reviews.push(review);
     // console.log(ObjectId(_id),_id.toString());
     // console.log(usersCollection);
      //console.log("req.session.user._id",req.session.user._id);
-    updatedInfo2 = await usersCollection.updateOne({_id: ObjectId(userSessionId)}, { $addToSet: {reviewsWritten: review._id} }); 
+    updatedInfo2 = await usersCollection.updateOne({_id: ObjectId(userSessionId)}, { $addToSet: {reviewsWritten: review._id.toString()} }); 
 
    }
 
