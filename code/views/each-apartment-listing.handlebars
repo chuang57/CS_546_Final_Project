@@ -148,6 +148,21 @@ Occupant capacity: --}}
               <div class = "p-3 border" >
 
             <h1>map of the apartment</h1>
+            <div id = "map" class="map"></div>
+            <script type="text/javascript">
+              var map = new ol.Map({
+                target: 'map',
+                layers: [
+                  new ol.layer.Tile({
+                    source: new ol.source.OSM()
+
+                  })
+                ],
+                view: new ol.view({
+                  center: ol.proj.fromLonLat([37.41, 8.82]),
+                  zoom: 4
+                })
+              });
             </div>
             </div>
 
