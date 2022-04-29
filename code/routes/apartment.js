@@ -325,7 +325,7 @@ router.post("/apartment", isLogin, async (req, res) => {
     );
     // }
   } catch (e) {
-    res.status(404).json({ error: e });
+    res.status(404).render("apartment-listing",{error: `There is no show found for the given Zip code: ${apartmentZipcode}`});
   }
 });
 
