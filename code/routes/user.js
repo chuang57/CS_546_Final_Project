@@ -39,11 +39,13 @@ router.post("/user/bookmark", isLogin, async (req, res) => {
     { _id: ObjectId(user._id) },
     { $addToSet: { savedApartments: apartmentId } }
   );
-  res.send("success");
+ // res.send("success");
+ console.log("/user/bookmark");
+  res.status(200).render("all-apartment-listing", {success: "Thank you for showing your interest."});
 });
 
 router.get("/logout", async (req, res) => {
-  req.session.user = undefined;
+  req.session.user = undefined; 
   res.render("logout");
 });
 
