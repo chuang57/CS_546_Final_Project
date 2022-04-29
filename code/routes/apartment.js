@@ -35,13 +35,21 @@ router.get("/", isLogin, async (req, res) => {
 //404 db errors
 //500 error in my code
 
-router.post("/newApartment", isLogin, async (req, res) => {
+router.get("/newApartment", isLogin, async (req, res) => {
   try {
-    res.render("new-apartment");
+    //res.render("new-apartment");
+    console.log("aditii.....");
+    res.status(200).render("new-apartment", {
+      //success: "Your property has been successfully added",
+      username: req.session.user?.username,
+      email: req.session.user?.email,
+      isNotLogin: !req.session.user,
+    });
   } catch (e) {
     res.status(500).json({ error: e });
   }
 });
+
 
 router.post("/newApartmentInfo", isLogin, async (req, res) => {
   let photosArr = [];
@@ -74,6 +82,14 @@ router.post("/newApartmentInfo", isLogin, async (req, res) => {
       size,
       occupantCapacity
     );
+    res.status(200).render("new-apartment", {
+      success: "Congratulations! Property has been added successfully.",
+      username: req.session.user?.username,
+      email: req.session.user?.email,
+      isNotLogin: !req.session.user,
+    });
+
+
   } catch (e) {
     res.status(500).json({ error: e });
   }
@@ -325,7 +341,7 @@ router.post("/apartment", isLogin, async (req, res) => {
     );
     // }
   } catch (e) {
-    res.status(404).render("apartment-listing",{error: `There is no show found for the given Zip code: ${apartmentZipcode}`});
+    res.status(404).render("apartment-listing",{error: `There is no apartment found for the given Zip code: ${apartmentZipcode}`});
   }
 });
 
@@ -348,7 +364,8 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
   //console.log("showId",showId);
   try {
     let apartment = await apartmentData.getApartmentById(apartmentId);
-    // console.log(show);
+    console.log("***********************************************",apartment);
+    console.log("**************aditi**********************",apartment[0].reviews);
     if (apartment) {
       // res.status(200).render('each-apartment-listing', { singalShow: show, title: show.name, summary: show.summary, image: images, rating: show.rating.average, network:network,language:show.language, genres:show.genres});
       // res.status(200).json(apartment);
@@ -358,6 +375,7 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
         "each-apartment-listing",
         {
           eachApartmentListing: apartment,
+          reviews:apartment[0].reviews,
           username: req.session.user?.username,
           email: req.session.user?.email,
           isNotLogin: !req.session.user,

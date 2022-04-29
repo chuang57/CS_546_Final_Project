@@ -96,7 +96,7 @@ singleApartment[0].reviews.push(review);
   //return singleBand.albums; if only the newly created band then do looping - need to ask TA
   //return singleBand;
   
-  return ;
+  return review;
  
 },
 

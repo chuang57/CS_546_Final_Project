@@ -50,11 +50,14 @@ router.get("/logout", async (req, res) => {
 });
 
 router.get("/signup", async (req, res) => {
-
-
+  try {
   res.render("signup", {
-    title: "User Signup",
+    signup: "User Signup",
   });
+}catch(e)
+{
+  res.send(e);
+}
   return;
 });
 

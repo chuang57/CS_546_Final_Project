@@ -1,6 +1,9 @@
- {{#if success}}
-<p>{{success}}</p>
- {{/if}}
+{{#if success}}
+
+<h4>{{success}}</h4>
+
+{{else}}
+
 
 <form method="POST" action="/login">
   <div class="form-group">
@@ -13,8 +16,7 @@
       aria-describedby="emailHelp"
       placeholder="Enter email"
     />
-    <small id="emailHelp" class="form-text text-muted">We'll never share your
-      email with anyone else.</small>
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
@@ -26,9 +28,16 @@
       placeholder="Password"
     />
   </div>
-  <div class="form-check">
+  {{!-- <div class="form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1" />
     <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
+  </div> --}}
+  <a href="/signup">Need to register? Click here to sign-up</a>
+
+  <br>  
+  <br>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+
+{{/if}}

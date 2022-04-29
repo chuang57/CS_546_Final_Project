@@ -130,7 +130,9 @@ router.post("/reviews/:id", isLogin, async (req, res) => {
       reviewsInfo.rating,
       reviewsInfo.description
     );
-    res.status(200).json({newReview});
+    console.log("newReview",newReview);
+    //eachApartmentListing
+    res.status(200).redirect("/apartment/"+newReview.apartmentid);
   } catch (e) {
     res.status(400).json({ error: e });
   }
