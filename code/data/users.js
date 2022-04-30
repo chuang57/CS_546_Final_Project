@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
+const apartment = mongoCollections.apartment;
 const { ObjectId } = require("mongodb");
 
 
@@ -94,4 +95,35 @@ const checkUser = async (email, password, req) => {
   return { authenticated: true };
 };
 
-module.exports = { createUser, checkUser };
+
+const getReviewfromId = async (reviewId) => {
+
+/* const userCollections = await users();
+  const userRecord = await userCollections.find({
+    _id: ObjectId(userid),
+  }).toArray();
+  console.log("userRecord",userRecord);
+
+  if (!userRecord) {
+    throw new Error("No user record found");
+  }
+  //req.session.user = findemail;
+  //return { authenticated: true };
+  return userRecord; */
+
+  if (!ObjectId.isValid(reviewId)) throw 'review id is not a valid object ID';
+  const apartmentCollection = await apartment();
+ // const band = await bandsCollection.find({ 'albums._id': ObjectId(albumId)}).toArray();
+        const aprtment = await apartmentCollection
+        .find({ 'reviews._id': ObjectId(reviewId) },
+           {   
+           projection: { _id:0, reviews: {$elemMatch: {_id: {$eq: ObjectId(reviewId)}}}} 
+         }).toArray();
+
+    if(aprtment.length === 0) throw 'no review exist for the given id: '+reviewId;
+    //console.log(JSON.stringify(band[0].albums[0],null,4));
+   return aprtment[0].reviews[0]; 
+
+};
+
+module.exports = { createUser, checkUser,getReviewfromId };

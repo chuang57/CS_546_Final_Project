@@ -61,6 +61,32 @@ router.get("/signup", async (req, res) => {
   return;
 });
 
+
+router.get("/checkAllReviews", async (req, res) => {
+  try {
+  res.render("checkAllReviews", {
+    signup: "User Signup",
+  });
+}catch(e)
+{
+  res.send(e);
+}
+  return;
+});
+
+
+router.get("/checkAllApartments", async (req, res) => {
+  try {
+  res.render("checkAllApartments", {
+    signup: "User Signup",
+  });
+}catch(e)
+{
+  res.send(e);
+}
+  return;
+});
+
 router.get("/profile/:email", async (req, res) => {
 
   const email = req.params.email;
@@ -77,9 +103,28 @@ router.get("/profile/:email", async (req, res) => {
     return findemail.savedApartments.includes(v._id.toString());
   });
 
+  console.log("findemail-----",findemail);
+  /* console.log("reviewsWritten-----",findemail.reviewsWritten);
+  console.log("reviewsWrittenLength",findemail.reviewsWritten.length);
+  console.log("findemail.gender",findemail.gender); */
+
+  let reviewLength = findemail.reviewsWritten.length;
+  let apartmentLength = findemail.savedApartments.length;
+  let genderCheck ; 
+  if(findemail.gender === 'female')
+  {
+    genderCheck = 'female'
+  }
+
+
+ // console.log("allRevieWritten",allReviewsWritten);
+  //console.log("allApartmentListing",allApartmentListing);
   res.render("profile", {
     ...findemail,
     allApartmentListing,
+    reviewLength,
+    apartmentLength,
+    genderCheck
   });
   return;
 });
