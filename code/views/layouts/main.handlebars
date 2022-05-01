@@ -76,10 +76,12 @@ body {
           <a class="nav-item nav-link active" href="/apartment">Apartments
             <span class="sr-only">(current)</span></a> --}}
 
+
           {{#if isNotLogin}}
             <a class="nav-item nav-link active" href="/login">Login
               <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link active" href="/signup">Sign Up</a>
+            <a class="nav-item nav-link hidden" href="/signup">Sign Up</a>
+              
 
           {{else}}
              {{#if signup}} 
@@ -95,6 +97,7 @@ body {
 
           {{/if}}
           {{/if}}
+
 
       
           {{#if allApartmentListing}}
@@ -129,6 +132,7 @@ body {
       {{/if}}
     </nav>
 
+
     <main class="container">
       <h1>Discover Your New Home. Helping renters find their perfect fit</h1>
       <div class="row">
@@ -137,6 +141,8 @@ body {
         </div>
       </div>
     </main>
+
+  
 
     <script
       src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -151,4 +157,17 @@ body {
     <script src="/public/js/form.js"></script>
   </body>
 
+
+<footer class="text-center text-black fixed-bottom" style="background-color: rgb(255, 255, 255);/">
+  <!-- Grid container -->
+  <div class="container p-4"></div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgb(255, 255, 255);">
+    ©CS546-C Group 41 Final Project:
+    <a class="text-black" href="https://mdbootstrap.com/">Aditi Gupta | Christian Huang | Hantao Guo | Jinwoo Jun</a>
+  </div>
+  <!-- Copyright -->
+</footer>
 </html> 
