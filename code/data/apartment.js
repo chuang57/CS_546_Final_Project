@@ -59,6 +59,8 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     //if (typeof zipcode !== 'number') throw 'zipcode must be in number';
     if (zipcode.trim().length === 0)
       throw "zipcode cannot be an empty string or just spaces";
+      if (zipcode.trim().length < 5)
+      throw "zipcode cannot be less than 5 digit";  
     zipcode = zipcode.trim();
 
     if (!rent) throw "You must provide rent of the apartment";

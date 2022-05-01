@@ -1,315 +1,313 @@
 h1{
-    color:rgb(26, 49, 118);
+  color:rgb(26, 49, 118);
 }
 h4{
-    color:rgb(189, 17, 60);
+  color:rgb(189, 17, 60);
 }
 /* h2{
-    color:rgb(26, 49, 118);
+  color:rgb(26, 49, 118);
 }
 
 form {
-    border-radius: 4px;
-    align-items: center;
+  border-radius: 4px;
+  align-items: center;
 }
 
 label {
-    color: magenta;
-    font-size: 20px;
+  color: magenta;
+  font-size: 20px;
 }
 
 input {
-    width: 200px;
-    height: 20px;
-    font-style: initial;
-    
+  width: 200px;
+  height: 20px;
+  font-style: initial;
+  
 }
 
 button{
-   padding: 10px 20px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color: white;
-    background-color: navy;
-    border: 1px solid red;
-    border-radius: 10px;
+ padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: white;
+  background-color: navy;
+  border: 1px solid red;
+  border-radius: 10px;
 }
 
- */
+*/
 a{
-    font-size: inherit;
-    color: blue;
+  font-size: inherit;
+  color: blue;
 }
 
 /* p{
-    font-size: 20px;
-    color: red;
+  font-size: 20px;
+  color: red;
 } */
 
 /* img {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 5px;
-    width: 150px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+}
+*/
+
+
+
+
+  body{
+      background: #edf1f5;
+      margin-top:20px;
   }
- */
+  .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #fff;
+      background-clip: border-box;
+      border: 0 solid transparent;
+      border-radius: 0;
+      margin-top:20px;
+  }
+  .text-muted {
+      color: #8898aa!important;
+  }
+  .card .card-subtitle {
+      font-weight: 300;
+      margin-bottom: 10px;
+      color: #8898aa;
+  }
+  ul.list-style-none li {
+      list-style: none;
+  }
+  .progress-bar {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      background-color: #707cd2;
+      transition: width .6s ease;
+  }
+  .progress {
+      -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+      -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+      -o-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+  }
+  
+  .progress {
+      display: flex;
+      height: 4px;
+      overflow: hidden;
+      font-size: .65625rem;
+      background-color: rgba(120,130,140,.13);
+      border-radius: 0;
+      box-shadow: inset 0 0.1rem 0.1rem rgba(0,0,0,.1);
+  }
+  .display-5 {
+      font-size: 50px !important;
+      font-weight: bold;
+      line-height: 1.2;
+  }
+
+  /* ----------- */
 
 
-
- 
-    body{
-        background: #edf1f5;
-        margin-top:20px;
-    }
-    .card {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-        word-wrap: break-word;
-        background-color: #fff;
-        background-clip: border-box;
-        border: 0 solid transparent;
-        border-radius: 0;
-        margin-top:20px;
-    }
-    .text-muted {
-        color: #8898aa!important;
-    }
-    .card .card-subtitle {
-        font-weight: 300;
-        margin-bottom: 10px;
-        color: #8898aa;
-    }
-    ul.list-style-none li {
-        list-style: none;
-    }
-    .progress-bar {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        color: #fff;
-        text-align: center;
-        white-space: nowrap;
-        background-color: #707cd2;
-        transition: width .6s ease;
-    }
-    .progress {
-        -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
-        box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
-        -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
-        -o-shadow: inset 0 1px 2px rgba(0,0,0,.05);
-    }
-    
-    .progress {
-        display: flex;
-        height: 4px;
-        overflow: hidden;
-        font-size: .65625rem;
-        background-color: rgba(120,130,140,.13);
-        border-radius: 0;
-        box-shadow: inset 0 0.1rem 0.1rem rgba(0,0,0,.1);
-    }
-    .display-5 {
-        font-size: 50px !important;
-        font-weight: bold;
-        line-height: 1.2;
-    }
-
-    /* ----------- */
-
-
-    body{margin-top:20px;}
+  body{margin-top:20px;}
 .py-5 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
 }
 .pt-5 {
-    padding-top: 3rem !important;
+  padding-top: 3rem !important;
 }
 .my-5 {
-    margin-top: 3rem !important;
-    margin-bottom: 3rem !important;
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
 }
 .border-0 {
-    border: 0 !important;
+  border: 0 !important;
 }
 .position-relative {
-    position: relative !important;
+  position: relative !important;
 }
 .shadow-lg {
-    box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%) !important;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%) !important;
 }
 .card {
-    position: relative;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 1px solid rgba(0,0,0,0.125);
-    border-radius: .25rem;
+  position: relative;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,0.125);
+  border-radius: .25rem;
 }
 
 .member-profile {
-    top: -50px;
-    left: 0;
+  top: -50px;
+  left: 0;
 }
 .text-center {
-    text-align: center !important;
+  text-align: center !important;
 }
 .w-100 {
-    width: 100% !important;
+  width: 100% !important;
 }
 .position-absolute {
-    position: absolute !important;
+  position: absolute !important;
 }
 
 .member-profile img {
-    width: 100px;
-    height: 100px;
+  width: 100px;
+  height: 100px;
 }
 .rounded-circle {
-    border-radius: 50% !important;
+  border-radius: 50% !important;
 }
 .mx-auto {
-    margin-right: auto !important;
-    margin-left: auto !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
 }
 .shadow-sm {
-    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
 }
 
 /*-------------------*/
 
 body{margin-top:20px;
-    background:#eee;
+  background:#eee;
+  }
+  
+  
+  /* ========================================================================
+   * DASHBOARD REAL ESTATE
+   * ======================================================================== */
+  .list-real-estate {
+    position: relative;
+    margin: 0;
+  }
+  .list-real-estate li {
+    padding: 10px 0;
+    border-bottom: 1px dashed #DDD;
+  }
+  .list-real-estate li:first-child {
+    padding-top: 0;
+  }
+  .list-real-estate li:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .list-real-estate li a {
+    text-decoration: none;
+  }
+  .list-real-estate li a p {
+    margin: 0;
+    color: #B3B3B3;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+  .list-real-estate li a h3 {
+    margin: 3px 0 0 0;
+    color: #333;
+    font-size: 20px;
+    font-weight: 300;
+  }
+  .list-real-estate li a h3 .counter {
+    font-size: 20px !important;
+  }
+  .list-real-estate li a h3 span {
+    font-size: 15px;
+  }
+  .list-real-estate li a .status i {
+    font-size: 25px;
+    margin-top: 15px;
+  }
+  
+  .sales-price {
+    margin: 10px 0;
+  }
+  
+  .ct-series-a .ct-line {
+    stroke: #8CC152;
+  }
+  .ct-series-a .ct-point {
+    stroke: #4b6d27;
+  }
+  .ct-series-a .ct-area {
+    fill: #4b6d27;
+  }
+  
+  .real-estate-quick-view {
+    position: relative;
+    background-color: #ffffff;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  .real-estate-quick-view .title {
+    margin-top: 0;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .real-estate-quick-view .title a {
+    color: #636E7B;
+  }
+  .real-estate-quick-view .media {
+    margin-top: 10px;
+  }
+  .real-estate-quick-view .media .media-heading {
+    font-size: 10px;
+    text-align: right;
+  }
+  .real-estate-quick-view .media .media-heading span {
+    display: block;
+  }
+  .real-estate-quick-view .table tbody tr td {
+    font-size: 10px;
+  }
+  
+  /* 360 - 1000 */
+  @media (max-width: 360px) {
+    .ct-label.ct-horizontal.ct-end {
+      font-size: 7px;
     }
-    
-    
-    /* ========================================================================
-     * DASHBOARD REAL ESTATE
-     * ======================================================================== */
-    .list-real-estate {
-      position: relative;
-      margin: 0;
-    }
-    .list-real-estate li {
-      padding: 10px 0;
-      border-bottom: 1px dashed #DDD;
-    }
-    .list-real-estate li:first-child {
-      padding-top: 0;
-    }
-    .list-real-estate li:last-child {
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-    .list-real-estate li a {
-      text-decoration: none;
-    }
-    .list-real-estate li a p {
-      margin: 0;
-      color: #B3B3B3;
-      text-transform: uppercase;
-      font-weight: 300;
-    }
-    .list-real-estate li a h3 {
-      margin: 3px 0 0 0;
-      color: #333;
-      font-size: 20px;
-      font-weight: 300;
-    }
-    .list-real-estate li a h3 .counter {
-      font-size: 20px !important;
-    }
-    .list-real-estate li a h3 span {
-      font-size: 15px;
-    }
-    .list-real-estate li a .status i {
-      font-size: 25px;
-      margin-top: 15px;
-    }
-    
-    .sales-price {
-      margin: 10px 0;
-    }
-    
-    .ct-series-a .ct-line {
-      stroke: #8CC152;
-    }
-    .ct-series-a .ct-point {
-      stroke: #4b6d27;
-    }
-    .ct-series-a .ct-area {
-      fill: #4b6d27;
-    }
-    
-    .real-estate-quick-view {
-      position: relative;
-      background-color: #ffffff;
-      padding: 10px;
+  }
+  @media (max-width: 320px) {
+    .real-estate-quick-view .title {
+      text-align: center;
+      margin-top: 5px;
       margin-bottom: 20px;
     }
-    .real-estate-quick-view .title {
-      margin-top: 0;
-      font-size: 15px;
-      font-weight: bold;
-    }
-    .real-estate-quick-view .title a {
-      color: #636E7B;
-    }
-    .real-estate-quick-view .media {
-      margin-top: 10px;
-    }
-    .real-estate-quick-view .media .media-heading {
-      font-size: 10px;
-      text-align: right;
-    }
-    .real-estate-quick-view .media .media-heading span {
+  
+    .media-body, .media-left, .media-right {
       display: block;
     }
-    .real-estate-quick-view .table tbody tr td {
-      font-size: 10px;
+  
+    .media-left {
+      text-align: center;
+      margin-bottom: 20px;
     }
-    
-    @media (max-width: 360px) {
-      .ct-label.ct-horizontal.ct-end {
-        font-size: 7px;
-      }
+  
+    .media-body {
+      width: 100%;
     }
-    @media (max-width: 320px) {
-      .real-estate-quick-view .title {
-        text-align: center;
-        margin-top: 5px;
-        margin-bottom: 20px;
-      }
-    
-      .media-body, .media-left, .media-right {
-        display: block;
-      }
-    
-      .media-left {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-    
-      .media-body {
-        width: 100%;
-      }
-    }
-
-
-    
+  }
 
 
 
-    /* Webpixels CSS */
+  /* Webpixels CSS */
 /* Utility and component-centric Design System based on Bootstrap for fast, responsive UI development */
 /* URL: https://github.com/webpixels/css */
 
@@ -317,3 +315,89 @@ body{margin-top:20px;
 
 /* Bootstrap Icons */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
+
+
+
+/* new code */
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.nav-item :hover {
+text-decoration: underline;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 30vh;
+}
+
+.img_2_text {
+  color:#FAF9F6;
+}
+
+.collapsing {
+text-align: center;
+}
+
+.show {
+  text-align: center;
+  }
+
+
+
+/* // X-Small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+
+  
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+
+  .carousel-item img {
+      width: 100%;
+      height: 30vh;
+      
+  }
+
+  .carousel-inner > .carousel-item > img {
+    width:40px;
+    height:60px;
+  }
+  
+  
+
+  .carousel-caption {
+      bottom: 45%;
+  }
+
+  .img_1 {
+      left: -30%;
+  }
+
+  .img_2 {
+      right: -50%;
+  }
+
+  
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {  }
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+  
+}
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {  }
