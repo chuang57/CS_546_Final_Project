@@ -353,7 +353,6 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
   } 
 */
 
-  //console.log("showId",showId);
   try {
     let apartment = await apartmentData.getApartmentById(apartmentId);
     console.log("***********************************************", apartment);
