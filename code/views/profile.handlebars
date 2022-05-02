@@ -90,13 +90,13 @@
                     <div class="col-sm-12 col-lg-8 border-left">
                         <div class="card-body">
                             <ul class="list-style-none">
-                                <li class="mt-4">
+                               {{!--  <li class="mt-4"> --}}
                                      <div class="d-flex align-items-center">
-                                     {{!--  <i class="fa fa-smile-o display-5 text-muted"></i> 
-                                        <div class="ml-2">
+                                    
+                                      {{!--  <div class="ml-2">
                                             <h5 class="mb-0">Positive Reviews</h5>
                                             <span class="text-muted">25547 Reviews</span></div>
-                                    </div> 
+                                             </div> 
                                     <div class="progress">
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 47%" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div> --}}
@@ -110,7 +110,9 @@
                                     <h5 class="mb-0">User Type: {{usertype}}</h5>
 
                                     </div>
-                                </li>
+                                    </div>
+                                   
+                               {{!--  </li> --}}
                                {{!--  <li class="mt-5">
                                     <div class="d-flex align-items-center">
                                         <i class="fa fa-frown-o display-5 text-muted"></i>
@@ -152,14 +154,14 @@
                             <h2 class="font-medium mt-5 mb-0">{{reviewLength}}</h2>
                             <span class="text-muted">{{username}}! you provided reviews to {{reviewLength}} properties.</span>
                             <div class="image-box mt-4 mb-4">
-                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Simmons"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle" width="45" alt="user"></a>
-                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fitz"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle" width="45" alt="user"></a>
-                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Phil"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle" width="45" alt="user"></a>
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Simmons"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle" width="45" alt="user"></a>
+                               {{!--  <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fitz"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle" width="45" alt="user"></a> --}}
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Phil"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle" width="45" alt="user"></a>
                                {{!--  <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Melinda"><img src="https://bootdey.com/img/Content/avatar/avatar4.png" class="rounded-circle" width="45" alt="user"></a> --}}
                               {{!--   <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Melinda"><img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="rounded-circle" width="45" alt="user"></a>
                                 <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Melinda"><img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="rounded-circle" width="45" alt="user"></a> --}}
-                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Melinda"><img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="rounded-circle" width="45" alt="user"></a>
-                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Melinda"><img src="https://bootdey.com/img/Content/avatar/avatar8.png" class="rounded-circle" width="45" alt="user"></a>
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Melinda"><img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="rounded-circle" width="45" alt="user"></a>
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Melinda"><img src="https://bootdey.com/img/Content/avatar/avatar8.png" class="rounded-circle" width="45" alt="user"></a>
                             </div>
                             <a href="/profile/{{email}}/checkAllReviews" class="btn btn-lg btn-info waves-effect waves-light">Checkout All Reviews</a>
                         </div>
@@ -167,31 +169,32 @@
                     <div class="col-sm-12 col-lg-8 border-left">
                         <div class="card-body">
                             <ul class="list-style-none">
-                                <li class="mt-4">
+                             {{!--    <li class="mt-4"> --}}
                                     <div class="d-flex align-items-center">
-                                        <i class="fa fa-smile-o display-5 text-muted"></i>
+                                     {{!--    <i class="fa fa-smile-o display-5 text-muted"></i> --}}
                                         <div class="ml-2">
                                             <h5 class="mb-0">Positive Reviews</h5>
-                                            <span class="text-muted">{{positiveRatingCount}} Reviews</span></div>
+                                            <span class="text-muted">{{positiveRatingCount}} Reviews</span>
+                                        </div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{postiveRatingRatio}}%" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{postiveRatingRatio}}% " aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                </li>
-                                <li class="mt-5">
+                              {{!--   </li> --}}
+                               {{!--  <li class="mt-5"> --}}
                                     <div class="d-flex align-items-center">
-                                        <i class="fa fa-frown-o display-5 text-muted"></i>
+                                      {{!--   <i class="fa fa-frown-o display-5 text-muted"></i> --}}
                                         <div class="ml-2">
                                             <h5 class="mb-0">Negative Reviews</h5>
                                             <span class="text-muted">{{negativeRatingCount}} Reviews</span></div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar bg-orange" role="progressbar" style="width: {{negativeRatingRatio}}%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{negativeRatingRatio}}%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                </li>
-                                <li class="mt-5 mb-5">
+                              {{!--   </li> --}}
+                              {{!--   <li class="mt-5 mb-5"> --}}
                                     <div class="d-flex align-items-center">
-                                        <i class="fa fa-meh-o display-5 text-muted"></i>
+                                   {{!--      <i class="fa fa-meh-o display-5 text-muted"></i> --}}
                                         <div class="ml-2">
                                             <h5 class="mb-0">Neutral Reviews</h5>
                                             <span class="text-muted">{{neutralRatingCount}} Reviews</span></div>
@@ -199,7 +202,7 @@
                                     <div class="progress">
                                         <div class="progress-bar bg-info" role="progressbar" style="width: {{neutralRatingRatio}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                </li>
+                              {{!--   </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -218,22 +221,54 @@
                             <h4 class="card-title">Saved Apartments</h4>
                             <h5 class="card-subtitle">Overview of Apartments</h5>
                             <h2 class="font-medium mt-5 mb-0">{{apartmentLength}}</h2>
-                            <span class="text-muted">{{username}}! you have saved {{apartmentLength}} apartments in your favorite list.</span>
+                            <span class="text-muted">{{username}}! you saved {{apartmentLength}} apartments in your favorite list.</span>
                             <div class="image-box mt-4 mb-4">
-                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Simmons"><img src="https://cdn.vectorstock.com/i/1000x1000/21/23/isolated-avatar-man-and-house-design-vector-25982123.webp" class="rounded-circle" width="45" alt="user"></a>
-                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fitz"><img src="https://cdn1.vectorstock.com/i/1000x1000/67/00/house-with-thief-avatar-character-icon-vector-14776700.jpg" class="rounded-circle" width="45" alt="user"></a>
-                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Phil"><img src="https://cdn.w600.comps.canstockphoto.com/avatar-woman-and-eco-house-design-vector-clipart_csp70865106.jpg" class="rounded-circle" width="45" alt="user"></a>
-                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Melinda"><img src="https://cdn0.iconfinder.com/data/icons/real-estate-290/60/house__home__avatar__man__building-512.png" class="rounded-circle" width="45" alt="user"></a>
-                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Simon"><img src="https://img.favpng.com/14/0/9/computer-icons-building-house-apartment-png-favpng-fcpr0B2q4meBdCfYzFyjVEgAq.jpg" class="rounded-circle" width="45" alt="user"></a>
+                                 <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Melinda"><img src="https://cdn0.iconfinder.com/data/icons/real-estate-290/60/house__home__avatar__man__building-512.png" class="rounded-circle" width="45" alt="user"></a>
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Simon"><img src="https://img.favpng.com/14/0/9/computer-icons-building-house-apartment-png-favpng-fcpr0B2q4meBdCfYzFyjVEgAq.jpg" class="rounded-circle" width="45" alt="user"></a>
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Simmons"><img src="https://cdn.vectorstock.com/i/1000x1000/21/23/isolated-avatar-man-and-house-design-vector-25982123.webp" class="rounded-circle" width="45" alt="user"></a>
+                               {{!--  <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fitz"><img src="https://cdn1.vectorstock.com/i/1000x1000/67/00/house-with-thief-avatar-character-icon-vector-14776700.jpg" class="rounded-circle" width="45" alt="user"></a> --}}
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Phil"><img src="https://cdn.w600.comps.canstockphoto.com/avatar-woman-and-eco-house-design-vector-clipart_csp70865106.jpg" class="rounded-circle" width="45" alt="user"></a>
+                               
                             
                             </div>
+                           
                             <a href="/checkAllApartments" class="btn btn-lg btn-info waves-effect waves-light">Checkout All Apartments</a>
                         </div>
                     </div>
                     <div class="col-sm-12 col-lg-8 border-left">
                         <div class="card-body">
                             <ul class="list-style-none">
-                                <li class="mt-4">
+
+                                 <div class="image-box mt-4 mb-4">
+                              {{!--   <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Simmons"><img src="https://cdn.vectorstock.com/i/1000x1000/21/23/isolated-avatar-man-and-house-design-vector-25982123.webp" class="rounded-circle" width="45" alt="user"></a> --}}
+                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Fitz"><img src="https://cdn1.vectorstock.com/i/1000x1000/67/00/house-with-thief-avatar-character-icon-vector-14776700.jpg" class="rounded-circle" width="45" alt="user"></a>
+                                {{!-- <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Phil"><img src="https://cdn.w600.comps.canstockphoto.com/avatar-woman-and-eco-house-design-vector-clipart_csp70865106.jpg" class="rounded-circle" width="45" alt="user"></a>
+                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Melinda"><img src="https://cdn0.iconfinder.com/data/icons/real-estate-290/60/house__home__avatar__man__building-512.png" class="rounded-circle" width="45" alt="user"></a>
+                                <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Simon"><img src="https://img.favpng.com/14/0/9/computer-icons-building-house-apartment-png-favpng-fcpr0B2q4meBdCfYzFyjVEgAq.jpg" class="rounded-circle" width="45" alt="user"></a>
+                             --}}
+                            </div>
+                             <table class="table table-condensed">
+                        <tbody>
+                        <tr>
+                            <td class="text-left">A Home for Every Renter</td>
+                        </tr>
+                         <tr>
+                           <td class="text-left">The perfect rental is waiting for you. Let's get moving.</td>
+                        </tr>
+                        <tr>
+                           <td class="text-left"> Renting a new place is the start of something great</td>
+                        </tr>
+                         <tr>
+                           <td class="text-left"> Hurry up! Don't miss out on these listings</td>
+                        </tr>
+                    
+
+                       
+                        </tbody>
+                             </table>
+
+                           
+                               {{!--  <li class="mt-4">
                                     <div class="d-flex align-items-center">
                                         <i class="fa fa-smile-o display-5 text-muted"></i>
                                         <div class="ml-2">
@@ -243,8 +278,8 @@
                                     <div class="progress">
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 47%" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                </li>
-                                <li class="mt-5">
+                                </li> --}}
+                               {{!--  <li class="mt-5">
                                     <div class="d-flex align-items-center">
                                         <i class="fa fa-frown-o display-5 text-muted"></i>
                                         <div class="ml-2">
@@ -254,8 +289,8 @@
                                     <div class="progress">
                                         <div class="progress-bar bg-orange" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                </li>
-                                <li class="mt-5 mb-5">
+                                </li> --}}
+                               {{!--  <li class="mt-5 mb-5">
                                     <div class="d-flex align-items-center">
                                         <i class="fa fa-meh-o display-5 text-muted"></i>
                                         <div class="ml-2">
@@ -265,7 +300,7 @@
                                     <div class="progress">
                                         <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -273,6 +308,8 @@
             </div>
         </div>
         </div>
+
+        
 
 
 
