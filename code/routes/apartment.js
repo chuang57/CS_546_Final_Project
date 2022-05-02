@@ -50,7 +50,6 @@ router.get("/newApartment", isLogin, async (req, res) => {
   }
 });
 
-
 router.post("/newApartmentInfo", isLogin, async (req, res) => {
   let photosArr = [];
   let state = req.body.state;
@@ -88,8 +87,6 @@ router.post("/newApartmentInfo", isLogin, async (req, res) => {
       email: req.session.user?.email,
       isNotLogin: !req.session.user,
     });
-
-
   } catch (e) {
     res.status(500).json({ error: e });
   }
@@ -270,7 +267,12 @@ router.get("/apartment", isLogin, async (req, res) => {
     res.status(200).render(
       "all-apartment-listing",
       {
-        allApartmentListing: allAvailableApartmentList,
+        allApartmentListing: allAvailableApartmentList.map((e) => {
+          return {
+            ...e,
+            isBookmarked: req.session.user.savedApartments.includes(e._id),
+          };
+        }),
         username: req.session.user?.username,
         email: req.session.user?.email,
         isNotLogin: !req.session.user,
@@ -283,7 +285,8 @@ router.get("/apartment", isLogin, async (req, res) => {
     );
     // }
   } catch (e) {
-    res.status(404).json({ error: e });
+    console.log(e);
+    res.status(500).json({ error: e });
   }
 });
 
@@ -325,23 +328,12 @@ router.post("/apartment", isLogin, async (req, res) => {
     //for(let i in allAvailableApartmentList){
     console.log("check.........", allAvailableApartmentList[0].photos[0]);
 
-    res.status(200).render(
-      "apartment-listing",
-      {
-        apartmentListing: allAvailableApartmentList,
-        username: req.session.user?.username,
-        email: req.session.user?.email,
-        isNotLogin: !req.session.user,
-      }
-      ////   city: allAvailableApartmentList[i].city,
-      // address:allAvailableApartmentList[i].address,
-      // rent:allAvailableApartmentList[i].rent,
-      //size:allAvailableApartmentList[i].size,
-      //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
-    );
+    res.status(200).redirect("/apartment");
     // }
   } catch (e) {
-    res.status(404).render("apartment-listing",{error: `There is no apartment found for the given Zip code: ${apartmentZipcode}`});
+    res.status(404).render("city-choosing", {
+      error: `There is no apartment found for the given Zip code: ${apartmentZipcode}`,
+    });
   }
 });
 
@@ -364,8 +356,11 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
   //console.log("showId",showId);
   try {
     let apartment = await apartmentData.getApartmentById(apartmentId);
-    console.log("***********************************************",apartment);
-    console.log("**************aditi**********************",apartment[0].reviews);
+    console.log("***********************************************", apartment);
+    console.log(
+      "**************aditi**********************",
+      apartment[0].reviews
+    );
     if (apartment) {
       // res.status(200).render('each-apartment-listing', { singalShow: show, title: show.name, summary: show.summary, image: images, rating: show.rating.average, network:network,language:show.language, genres:show.genres});
       // res.status(200).json(apartment);
@@ -375,7 +370,7 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
         "each-apartment-listing",
         {
           eachApartmentListing: apartment,
-          reviews:apartment[0].reviews,
+          reviews: apartment[0].reviews,
           username: req.session.user?.username,
           email: req.session.user?.email,
           isNotLogin: !req.session.user,

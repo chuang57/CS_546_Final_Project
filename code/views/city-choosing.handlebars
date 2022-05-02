@@ -1,24 +1,27 @@
-
-{{!-- <div>
+{{! <div>
     <form id="add-new" name="newApt" action="/newApartment" method="post">
         <button type="submit">Add New Property</button>
     </form>
-</div> --}}
+</div> }}
 
-
-<div id = "city-choosing-div"> 
-    <form id="city-choosing-form" action="/apartment" method="post">
-    <div >
-        <label for="zipcode">Search your apartment </label>
-        <input id="zipcode" name="zipcode" placeholder="Enter the zipcode">
+<div id="city-choosing-div">
+  <form id="city-choosing-form" action="/apartment" method="post">
+    <div>
+      <label for="zipcode">Search your apartment </label>
+      <input
+        id="zipcode"
+        type="number"
+        min="4"
+        name="zipcode"
+        placeholder="Enter the zipcode"
+      />
     </div>
-    <br>
-   
-        <button type="submit">Submit</button>
-    </form>
-    <br>
+    <br />
+
+    <button type="submit">Submit</button>
+  </form>
+  {{#if error}}
+    <div>{{error}}</div>
+  {{/if}}
+  <br />
 </div>
-
-
-
-
