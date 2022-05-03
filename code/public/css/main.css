@@ -5,9 +5,9 @@ h4{
   color:rgb(189, 17, 60);
 }
 
-.carousel slide
-/* h2{
-  color:rgb(26, 49, 118);
+.container{
+  display: flex;
+  justify-content: space-between;
 }
 
 form {
