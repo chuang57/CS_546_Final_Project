@@ -2,8 +2,23 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const apartmentData = data.apartment;
-const { ObjectId } = require("mongodb");
+const { ObjectId, CURSOR_FLAGS } = require("mongodb");
 const mongoconnection = require("../config/mongoConnection");
+
+const multer = require("multer");
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+      cb(null, 'public/photos/');
+  },
+
+  filename: function(req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage })
+
+const fs = require("fs");
 
 router.get("/", async (req, res) => {
   let arr = [],
@@ -40,25 +55,33 @@ router.post("/newApartment", async (req, res) => {
   }
 });
 
-router.post("/newApartmentInfo", async (req, res) => {
-  let state = req.body.state;
+router.post("/newApartmentInfo" , upload.array('photos') ,async (req, res) => {
+
   let city = req.body.city;
-  let photos = req.body.photos;
   let address = req.body.address;
   let zipcode = req.body.zipcode;
   let rent = req.body.rent;
   let size = req.body.size;
   let occupantCapacity = req.body.occupantCapacity;
-  try {
-    var obj = {
-        data: req.body.photos
-    };
-    let x = await apartmentData.create(state,city,obj,address,zipcode,rent,size,occupantCapacity);
-  } catch (e) {
-    res.status(500).json({ error: e });
-  }
+try {
+  const paths = req.files.map(file => file.path)
+  const paths2 = paths.map(file => "\\" + file)
+  let x = await apartmentData.create(
+    req.body.state,
+    req.body.city,
+    paths2,
+    req.body.address,
+    req.body.zipcode,
+    req.body.rent,
+    req.body.size,
+    req.body.occupantCapacity
+  );
+} catch (e) {
+  console.log(e)
+  res.status(500).json({ error: e });
+}
 });
-// ["https://image.shutterstock.com/image-photo/modern-architecture-urban-residential-apartment-260nw-1865190721.jpg"]
+
 router.route("/").post(async (req, res) => {
   const apartmentInfo = req.body.zipcode;
   let bandMembersInvalidFlag = false;
@@ -288,9 +311,10 @@ router.route("/apartment").post(async (req, res) => {
     //console.log("check.........",allAvailableApartmentList[0].photos[0].length());
     res.status(200).render(
       "apartment-listing",
-      { apartmentListing: allAvailableApartmentList,
+      {
+        apartmentListing: allAvailableApartmentList,
         username: req.session.user?.username,
-       }
+      }
       ////   city: allAvailableApartmentList[i].city,
       // address:allAvailableApartmentList[i].address,
       // rent:allAvailableApartmentList[i].rent,
@@ -322,16 +346,18 @@ router.get("/apartment/:id", async (req, res) => {
   //console.log("showId",showId);
   try {
     let apartment = await apartmentData.getApartmentById(apartmentId);
-    // console.log(show);
     if (apartment) {
       // res.status(200).render('each-apartment-listing', { singalShow: show, title: show.name, summary: show.summary, image: images, rating: show.rating.average, network:network,language:show.language, genres:show.genres});
       // res.status(200).json(apartment);
+      console.log("Buffers", apartment);
+      // pht = apartment.photos;
+      // console.log("Buffer", pht[0]);
 
-      console.log("-------------", apartment.photos, apartment[0].photos);
       res.status(200).render(
         "each-apartment-listing",
         {
-          eachApartmentListing: apartment,
+          // pho: pht,
+          apartmentListing: apartment,
           username: req.session.user?.username,
         }
 
