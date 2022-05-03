@@ -4,6 +4,7 @@ const data = require("../data");
 const apartmentData = data.apartment;
 const { ObjectId, CURSOR_FLAGS } = require("mongodb");
 const mongoconnection = require("../config/mongoConnection");
+const { isLogin } = require("../middleware/auth");
 
 const multer = require("multer");
 const path = require('path');
@@ -27,6 +28,8 @@ router.get("/", async (req, res) => {
   res.render("city-choosing", {
     title: "Apartment Finder",
     username: req.session.user?.username,
+    email: req.session.user?.email,
+    isNotLogin: !req.session.user,
   });
   return;
   //res.status(200).json("hello apartment finder");
@@ -47,9 +50,16 @@ router.get("/", async (req, res) => {
 //404 db errors
 //500 error in my code
 
-router.post("/newApartment", async (req, res) => {
+router.get("/newApartment", isLogin, async (req, res) => {
   try {
-    res.render("new-apartment");
+    //res.render("new-apartment");
+    console.log("aditii.....");
+    res.status(200).render("new-apartment", {
+      //success: "Your property has been successfully added",
+      username: req.session.user?.username,
+      email: req.session.user?.email,
+      isNotLogin: !req.session.user,
+    });
   } catch (e) {
     res.status(500).json({ error: e });
   }
@@ -250,15 +260,22 @@ if (genreInvalidFlag){
   }
 });
 
-router.route("/apartment").get(async (req, res) => {
+router.get("/apartment", isLogin, async (req, res) => {
   try {
     let allAvailableApartmentList = await apartmentData.getAllApartment();
 
     res.status(200).render(
       "all-apartment-listing",
       {
-        allApartmentListing: allAvailableApartmentList,
+        allApartmentListing: allAvailableApartmentList.map((e) => {
+          return {
+            ...e,
+            isBookmarked: req.session.user.savedApartments.includes(e._id),
+          };
+        }),
         username: req.session.user?.username,
+        email: req.session.user?.email,
+        isNotLogin: !req.session.user,
       }
       ////   city: allAvailableApartmentList[i].city,
       // address:allAvailableApartmentList[i].address,
@@ -268,11 +285,12 @@ router.route("/apartment").get(async (req, res) => {
     );
     // }
   } catch (e) {
-    res.status(404).json({ error: e });
+    console.log(e);
+    res.status(500).json({ error: e });
   }
 });
 
-router.route("/apartment/sortbyrent").get(async (req, res) => {
+router.get("/apartment/sortbyrent", isLogin, async (req, res) => {
   try {
     let sortAllApartmentByPrice = await apartmentData.sortAllApartmentByPrice();
     console.log("sorted", sortAllApartmentByPrice);
@@ -291,7 +309,7 @@ router.route("/apartment/sortbyrent").get(async (req, res) => {
   }
 });
 
-router.route("/apartment").post(async (req, res) => {
+router.post("/apartment", isLogin, async (req, res) => {
   const apartmentZipcode = req.body.zipcode;
   console.log("apartmentZipcode", apartmentZipcode);
   if (!apartmentZipcode) {
@@ -308,26 +326,18 @@ router.route("/apartment").post(async (req, res) => {
     //console.log("allAvailableApartmentList......",allAvailableApartmentList);
 
     //for(let i in allAvailableApartmentList){
-    //console.log("check.........",allAvailableApartmentList[0].photos[0].length());
-    res.status(200).render(
-      "apartment-listing",
-      {
-        apartmentListing: allAvailableApartmentList,
-        username: req.session.user?.username,
-      }
-      ////   city: allAvailableApartmentList[i].city,
-      // address:allAvailableApartmentList[i].address,
-      // rent:allAvailableApartmentList[i].rent,
-      //size:allAvailableApartmentList[i].size,
-      //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
-    );
+    console.log("check.........", allAvailableApartmentList[0].photos[0]);
+
+    res.status(200).redirect("/apartment");
     // }
   } catch (e) {
-    res.status(404).json({ error: e });
+    res.status(404).render("city-choosing", {
+      error: `There is no apartment found for the given Zip code: ${apartmentZipcode}`,
+    });
   }
 });
 
-router.get("/apartment/:id", async (req, res) => {
+router.get("/apartment/:id", isLogin, async (req, res) => {
   let apartmentId = req.params.id;
   apartmentId = apartmentId.trim();
   console.log("inside apartment id routes", apartmentId);
@@ -343,9 +353,13 @@ router.get("/apartment/:id", async (req, res) => {
   } 
 */
 
-  //console.log("showId",showId);
   try {
     let apartment = await apartmentData.getApartmentById(apartmentId);
+    console.log("***********************************************", apartment);
+    console.log(
+      "**************aditi**********************",
+      apartment[0].reviews
+    );
     if (apartment) {
       // res.status(200).render('each-apartment-listing', { singalShow: show, title: show.name, summary: show.summary, image: images, rating: show.rating.average, network:network,language:show.language, genres:show.genres});
       // res.status(200).json(apartment);
@@ -356,9 +370,11 @@ router.get("/apartment/:id", async (req, res) => {
       res.status(200).render(
         "each-apartment-listing",
         {
-          // pho: pht,
-          apartmentListing: apartment,
+          eachApartmentListing: apartment,
+          reviews: apartment[0].reviews,
           username: req.session.user?.username,
+          email: req.session.user?.email,
+          isNotLogin: !req.session.user,
         }
 
         ////   city: allAvailableApartmentList[i].city,
@@ -376,6 +392,8 @@ router.get("/apartment/:id", async (req, res) => {
         title: "Error",
         apartmentId: apartmentId,
         username: req.session.user?.username,
+        email: req.session.user?.email,
+        isNotLogin: !req.session.user,
       });
       return;
     }
@@ -388,6 +406,8 @@ router.get("/apartment/:id", async (req, res) => {
       title: "Error",
       apartmentId: apartmentId,
       username: req.session.user?.username,
+      email: req.session.user?.email,
+      isNotLogin: !req.session.user,
     });
     return;
   }

@@ -1,0 +1,59 @@
+{{!-- <div class="row">
+  {{#each allApartmentListing}}
+    <div>{{this.state}}</div>
+    <div>{{this.city}}</div>
+    <div>{{this.address}}</div>
+    <div>{{this.rent}}</div>
+    <div>{{this.size}}</div>
+    <div>{{this.occupantCapacity}}</div>
+
+  {{/each}} --}}
+    {{#each allApartmentListing}}
+   <div class="col-md-6 col-sm-6">
+        <div class="real-estate-quick-view shadow">
+            <h3 class="title text-capitalize"><a href="#">{{this.address}}</a></h3>
+            <div class="media">
+                <div class="media-left">
+                   {{!--  <a href="#">
+                        <img src="http://themes.djavaui.com/blankon-fullpack-admin-theme/img/media/house/2.jpg" alt="...">
+                    </a> --}}
+                </div>
+                <div class="media-body">
+                    {{!-- <h3 class="media-heading"> --}}
+                       {{!--  <span class="text-right text-strong">{{this.rent}}</span>
+                        <span class="text-right text-muted">monthly</span> --}}
+                  {{!--   </h3> --}}
+                    <table class="table table-condensed">
+                        <tbody>
+                        <tr>
+                            <td class="text-left">State</td>
+                            <td class="text-right">{{this.state}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">City</td>
+                            <td class="text-right">{{this.city}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left">Square feet</td>
+                            <td class="text-right">{{this.size}}</td>
+                        </tr>
+                         <tr>
+                            <td class="text-left">Rent</td>
+                            <td class="text-right">{{this.rent}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="text-left">Occupant Capacity</td>
+                            <td class="text-right">{{this.occupantCapacity}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    
+{{/each}}
+
+

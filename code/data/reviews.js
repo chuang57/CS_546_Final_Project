@@ -1,11 +1,14 @@
 const mongoCollections = require('../config/mongoCollections');
 const apartment = mongoCollections.apartment;
 const apartmentData = require('./apartment');
+const users = mongoCollections.users;
+const usersData = require('./users');
 const {ObjectId} = require('mongodb');
 
 module.exports = {
 
-async create(apartmentId, sessionUser, rating, description){  
+async create(apartmentId, userSessionId,sessionUser, rating, description){  
+  let updatedInfo2;
 /* let tracksInvalidFlag = false;  
 if(arguments.length !== 5 ) throw "Number of arguments should be 5"; 
 if (!bandId) throw 'You must provide a band ID to search for';
@@ -65,24 +68,35 @@ singleApartment[0].reviews.push(review);
   //_id: ObjectId(bandId)}, {"albums":newAlbum, "overallRating":singleBand.overallRating}); 
   // const updatedInfo = await bandsCollection.replaceOne({
   //  _id: ObjectId(bandId)}, {"_id": singleBand}); 
-console.log(updatedInfo);
+
    if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount)
-   throw 'could not update band successfully';
+   throw 'could not update apartment successfully';
 
    if(updatedInfo.modifiedCount === 1){
+
+    const usersCollection = await users();
      console.log("inside modified count 1 block");
-   const updatedInfo2 = await apartmentCollection.updateOne({_id: ObjectId(req.session.user._id.toString())}, { $addToSet: {reviewsWritten: _id} }); 
+     console.log("userSessionId",userSessionId);
+     console.log("222");
+     console.log(review);
+     console.log("333");
+     console.log("review._id",review._id);
+    // console.log(ObjectId(_id),_id.toString());
+    // console.log(usersCollection);
+     //console.log("req.session.user._id",req.session.user._id);
+    updatedInfo2 = await usersCollection.updateOne({_id: ObjectId(userSessionId)}, { $addToSet: {reviewsWritten: review._id.toString()} }); 
 
    }
 
-   if(updatedInfo.modifiedCount === 1) {
-   const updatedInfo2 = await bandsCollection.updateOne({
-  _id: ObjectId(bandId)}, [{ $set: {overallRating: { $round: [ { $avg: "$albums.rating" }, 1 ] }} }]);
+   if(updatedInfo2.modifiedCount === 1) {
+     console.log("users is updated with review id");
+   //const updatedInfo2 = await userCollection.updateOne({
+  //_id: ObjectId(bandId)}, [{ $set: {overallRating: { $round: [ { $avg: "$albums.rating" }, 1 ] }} }]);
    }
   //return singleBand.albums; if only the newly created band then do looping - need to ask TA
   //return singleBand;
   
-  return bandsData.get(bandId);
+  return review;
  
 },
 

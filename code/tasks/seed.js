@@ -15,7 +15,7 @@ const main = async () => {
     try {
      apart = await apartment.create( "NJ","Jersey city",["https://image.shutterstock.com/image-photo/modern-architecture-urban-residential-apartment-260nw-1865190721.jpg"],"Jersey","08854","$1400","1700 sq ft","2");
     console.log(`apartment has been created successfully!`);
-    console.log(apart);
+//     console.log(apart);
     } catch (e) {
      console.log(e); 
 } 

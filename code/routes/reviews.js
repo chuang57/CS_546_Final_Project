@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const data = require('../data');
+const data = require("../data");
 const reviewsData = data.reviews;
-const {ObjectId} = require('mongodb');
-
+const { ObjectId } = require("mongodb");
+const { isLogin } = require("../middleware/auth");
 
 /* const express = require("express");
 const router = express.Router();
@@ -19,29 +19,25 @@ const { createUser, checkUser } = require("../data/users");
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users; */
 
-
-router.get("/reviews/:id", async (req, res) => {
+router.get("/reviews/:id", isLogin, async (req, res) => {
   console.log("in get routes of reviews", req.params.id);
   res.render("reviews", {
     apartmentId: req.params.id,
     username: req.session.user?.username,
-    
+    email: req.session.user?.email,
+    isNotLogin: !req.session.user,
   });
   return;
-
 });
 
+router.post("/reviews/:id", isLogin, async (req, res) => {
 
-
-
-router.post('/reviews/:id', async (req, res) => {
-  console.log("in post routes of reviews",req.params.id);
-  console.log("req.body",req.body);
-    const reviewsInfo = req.body;
-    let tracksInvalidFlag = false; 
-     req.params.id = req.params.id.trim();
-     let sessionUser = req.session.user.username;
-   /*  if (!req.params.id) {
+  const reviewsInfo = req.body;
+  let tracksInvalidFlag = false;
+  req.params.id = req.params.id.trim();
+  let sessionUser = req.session.user.username;
+  let userSessionId = req.session.user._id;
+  /*  if (!req.params.id) {
         res.status(400).json({ error: 'You must Supply a band ID to create album' });
         return;
       }
@@ -122,19 +118,25 @@ router.post('/reviews/:id', async (req, res) => {
         res.status(400).json({ error: 'Only one decimal place value in rating is accepted.'});
         return;
     }   */
-   // console.log(albumInfo,req.params.id);
-    //If the JSON is valid and the album can be created successful, you will return all the 
-    //band data showing the albums  (as shown below) with a 200 status code.
-   //while create() func in data/albums.js returing newly created album only. 
-    try {
-        const newAlbum = await reviewsData.create(req.params.id, sessionUser, reviewsInfo.rating,reviewsInfo.description);
-        res.status(200).json(newAlbum);
-     } catch (e) {
-        res.status(400).json({ error: e });
-        
-      }
-  });
-  
+  // console.log(albumInfo,req.params.id);
+  //If the JSON is valid and the album can be created successful, you will return all the
+  //band data showing the albums  (as shown below) with a 200 status code.
+  //while create() func in data/albums.js returing newly created album only.
+  try {
+    const newReview = await reviewsData.create(
+      req.params.id,
+      userSessionId,
+      sessionUser,
+      reviewsInfo.rating,
+      reviewsInfo.description
+    );
+    console.log("newReview",newReview);
+    //eachApartmentListing
+    res.status(200).redirect("/apartment/"+newReview.apartmentid);
+  } catch (e) {
+    res.status(400).json({ error: e });
+  }
+});
 
 /* router
 .route('/album/:id')
@@ -158,7 +160,7 @@ router.post('/reviews/:id', async (req, res) => {
     }
   }); */
 
-  /* router.delete('/:id', async (req, res) => {
+/* router.delete('/:id', async (req, res) => {
     req.params.id = req.params.id.trim();
     if (!req.params.id) {
       res.status(400).json({ error: 'You must Supply an ID to delete' });
@@ -189,35 +191,33 @@ router.post('/reviews/:id', async (req, res) => {
     }
   });
  */
-  function isValidDateString(dateString) {
-    if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
-         return false;
-     let splitDate = dateString.split("/");
-     let month = parseInt(splitDate[0],10);
-     let day = parseInt(splitDate[1],10);
-     let year = parseInt(splitDate[2],10);
-     if (year < 1900 || year > 2022 || month == 0 || month > 12) {
-         return false;
-     }
-     let monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-     if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
-         monthLength[1] = 29;
-     }
-     return day > 0 && day <= monthLength[month - 1];
-   };
-   
-   function isValidRating(rating) {
-   if (rating.toString().includes('.')) {
-       if (rating.toString().split('.')[1].length !== 1){
-          //console.log("inside if2",rating.toString().split('.')[1].length);
-        return false;
-       }else{
-         return true;
-       }
-    }else{
+function isValidDateString(dateString) {
+  if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) return false;
+  let splitDate = dateString.split("/");
+  let month = parseInt(splitDate[0], 10);
+  let day = parseInt(splitDate[1], 10);
+  let year = parseInt(splitDate[2], 10);
+  if (year < 1900 || year > 2022 || month == 0 || month > 12) {
+    return false;
+  }
+  let monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
+    monthLength[1] = 29;
+  }
+  return day > 0 && day <= monthLength[month - 1];
+}
+
+function isValidRating(rating) {
+  if (rating.toString().includes(".")) {
+    if (rating.toString().split(".")[1].length !== 1) {
+      //console.log("inside if2",rating.toString().split('.')[1].length);
+      return false;
+    } else {
       return true;
-    }   
-   };
-   
-   
+    }
+  } else {
+    return true;
+  }
+}
+
 module.exports = router;
