@@ -124,17 +124,26 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     // return bandsList;
 }, */
 
-  async getAllApartmentSelectedZipCode(zipcode) {
+  async getAllApartmentSelectedZipCode(zipcode, state, city, rent, size, occupantCapacity) {
     if (!zipcode) throw "You must provide an id to search for";
     //if (typeof zipcode !== 'string') throw 'Id must be a string';
     if (zipcode.trim().length === 0)
       throw "zipcode cannot be an empty string or just spaces";
     zipcode = zipcode.trim();
+    if (!zipcode) zipcode == null
+
+    // zipcode ? zipcode : null
+
     //if (!ObjectId.isValid(id)) throw 'ID is not a valid object ID';
     const apartmentCollection = await apartment();
     const apartmentData = await apartmentCollection
       .find({
         zipcode: zipcode,
+        state: state,
+        city: city,
+        rent: rent,
+        size: size,
+        occupantCapacity: occupantCapacity,
       })
       .toArray();
 

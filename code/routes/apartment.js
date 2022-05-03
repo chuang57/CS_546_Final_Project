@@ -318,17 +318,23 @@ router.get("/apartment/sortbyrent", isLogin, async (req, res) => {
 
 router.post("/apartment", isLogin, async (req, res) => {
   const apartmentZipcode = req.body.zipcode;
-  console.log("apartmentZipcode", apartmentZipcode);
-  if (!apartmentZipcode) {
-    res.status(400).render("error", {
-      error: "Please provide zipcode to search the apartment",
-    });
-    return;
-  }
+  const apartmentState = req.body.state;
+  const apartmentCity = req.body.city;
+  const apartmentRent = req.body.rent;
+  const apartmentSize = req.body.size;
+  const apartmentOccupantCapacity = req.body.occupantCapacity;
+  console.log("state", apartmentState)
+  // console.log("apartmentZipcode", apartmentZipcode);
+  // if (!apartmentZipcode) {
+  //   res.status(400).render("error", {
+  //     error: "Please provide zipcode to search the apartment",
+  //   });
+  //   return;
+  // }
 
   try {
     let allAvailableApartmentList =
-      await apartmentData.getAllApartmentSelectedZipCode(apartmentZipcode);
+      await apartmentData.getAllApartmentSelectedZipCode(apartmentZipcode, apartmentState, apartmentCity, apartmentRent, apartmentSize, apartmentOccupantCapacity);
     //res.status(200).json(allAvailableApartmentList);
     //console.log("allAvailableApartmentList......",allAvailableApartmentList);
 
@@ -351,7 +357,8 @@ router.post("/apartment", isLogin, async (req, res) => {
     );
     // }
   } catch (e) {
-    res.status(404).render("apartment-listing",{error: `There is no show found for the given Zip code: ${apartmentZipcode}`});
+    console.log(e)
+    res.status(404).render("apartment-listing",{error: `There is no show found for the given filters: ${apartmentZipcode}`});
   }
 });
 
