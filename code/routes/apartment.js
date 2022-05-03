@@ -21,7 +21,7 @@ const upload = multer({ storage: storage })
 
 const fs = require("fs");
 
-router.get("/", async (req, res) => {
+router.get("/", isLogin, async (req, res) => {
   let arr = [],
     obj = {};
   console.log("in get routes of apartment");
@@ -50,7 +50,7 @@ router.get("/", async (req, res) => {
 //404 db errors
 //500 error in my code
 
-router.get("/newApartment", isLogin, async (req, res) => {
+router.post("/newApartment", isLogin, async (req, res) => {
   try {
     //res.render("new-apartment");
     console.log("aditii.....");
@@ -65,7 +65,7 @@ router.get("/newApartment", isLogin, async (req, res) => {
   }
 });
 
-router.post("/newApartmentInfo" , upload.array('photos') ,async (req, res) => {
+router.post("/newApartmentInfo", isLogin, upload.array('photos') ,async (req, res) => {
 
   let city = req.body.city;
   let address = req.body.address;
@@ -74,6 +74,7 @@ router.post("/newApartmentInfo" , upload.array('photos') ,async (req, res) => {
   let size = req.body.size;
   let occupantCapacity = req.body.occupantCapacity;
 try {
+  console.log("this", req.files)
   const paths = req.files.map(file => file.path)
   const paths2 = paths.map(file => "\\" + file)
   let x = await apartmentData.create(
@@ -86,6 +87,12 @@ try {
     req.body.size,
     req.body.occupantCapacity
   );
+  res.status(200).render("city-choosing", {
+    success: "Your property has been successfully added!",
+    username: req.session.user?.username,
+    email: req.session.user?.email,
+    isNotLogin: !req.session.user,
+  });
 } catch (e) {
   console.log(e)
   res.status(500).json({ error: e });
@@ -328,12 +335,23 @@ router.post("/apartment", isLogin, async (req, res) => {
     //for(let i in allAvailableApartmentList){
     console.log("check.........", allAvailableApartmentList[0].photos[0]);
 
-    res.status(200).redirect("/apartment");
+    res.status(200).render(
+      "apartment-listing",
+      {
+        apartmentListing: allAvailableApartmentList,
+        username: req.session.user?.username,
+        email: req.session.user?.email,
+        isNotLogin: !req.session.user,
+      }
+      ////   city: allAvailableApartmentList[i].city,
+      // address:allAvailableApartmentList[i].address,
+      // rent:allAvailableApartmentList[i].rent,
+      //size:allAvailableApartmentList[i].size,
+      //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
+    );
     // }
   } catch (e) {
-    res.status(404).render("city-choosing", {
-      error: `There is no apartment found for the given Zip code: ${apartmentZipcode}`,
-    });
+    res.status(404).render("apartment-listing",{error: `There is no show found for the given Zip code: ${apartmentZipcode}`});
   }
 });
 
@@ -370,7 +388,7 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
       res.status(200).render(
         "each-apartment-listing",
         {
-          eachApartmentListing: apartment,
+          apartmentListing: apartment,
           reviews: apartment[0].reviews,
           username: req.session.user?.username,
           email: req.session.user?.email,
