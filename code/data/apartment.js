@@ -59,8 +59,7 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     //if (typeof zipcode !== 'number') throw 'zipcode must be in number';
     if (zipcode.trim().length === 0)
       throw "zipcode cannot be an empty string or just spaces";
-      if (zipcode.trim().length < 5)
-      throw "zipcode cannot be less than 5 digit";  
+    if (zipcode.trim().length < 5) throw "zipcode cannot be less than 5 digit";
     zipcode = zipcode.trim();
 
     if (!rent) throw "You must provide rent of the apartment";
@@ -78,7 +77,8 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     if (!occupantCapacity)
       throw "You must provide occupantCapacity of the apartment";
     //if (typeof occupantCapacity !== 'number') throw 'occupantCapacity must be in number';
-    if (occupantCapacity > 10 && occupantCapacity < 1) throw 'occupantCapacity can not be grater than 10 and less than 1';
+    if (occupantCapacity > 10 && occupantCapacity < 1)
+      throw "occupantCapacity can not be grater than 10 and less than 1";
     if (occupantCapacity.trim().length === 0)
       throw "occupantCapacity cannot be an empty string or just spaces";
     occupantCapacity = occupantCapacity.trim();
@@ -124,28 +124,59 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     // return bandsList;
 }, */
 
-  async getAllApartmentSelectedZipCode(zipcode, state, city, rent, size, occupantCapacity) {
+  async getAllApartmentSelectedZipCode(
+    zipcode,
+    state,
+    city,
+    rent,
+    size,
+    occupantCapacity
+  ) {
     if (!zipcode) throw "You must provide an id to search for";
     //if (typeof zipcode !== 'string') throw 'Id must be a string';
     if (zipcode.trim().length === 0)
       throw "zipcode cannot be an empty string or just spaces";
     zipcode = zipcode.trim();
-    if (!zipcode) zipcode == null
-
+    if (!zipcode) zipcode == null;
+    console.log("here", state)
     // zipcode ? zipcode : null
 
     //if (!ObjectId.isValid(id)) throw 'ID is not a valid object ID';
     const apartmentCollection = await apartment();
-    const apartmentData = await apartmentCollection
+    let apartmentData = await apartmentCollection
       .find({
         zipcode: zipcode,
-        state: state,
-        city: city,
-        rent: rent,
-        size: size,
-        occupantCapacity: occupantCapacity,
       })
       .toArray();
+    if (state) {
+      for (apt of apartmentData) {
+          apartmentData = apartmentData.filter(apt => apt.state === state)
+          console.log("ooo", apartmentData)
+      }
+    }
+    if (city) {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter(apt => apt.city === city)
+      }
+    }
+    if (rent) {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter(apt => apt.rent === rent)
+        }
+    }
+    if (size) {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter(apt => apt.size === size)
+      }
+    }
+    if (occupantCapacity) {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter(apt => apt.occupantCapacity === occupantCapacity)
+      }
+    }
+
+
+    console.log("the", apartmentData);
 
     //console.log("inside data", apartmentData,"apartment id",apartmentData[0].state,apartmentData[0]._id.toString());
 
@@ -154,7 +185,8 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     }
 
     console.log("aaaaaaaaaaswerfd", apartmentData);
-    if (apartmentData === null) throw "No apartment available for this zip code";
+    if (apartmentData === null)
+      throw "No apartment available for this zip code";
     //banggo._id = banggo._id.toString();
     return apartmentData;
   },

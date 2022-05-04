@@ -335,6 +335,7 @@ router.post("/apartment", isLogin, async (req, res) => {
   try {
     let allAvailableApartmentList =
       await apartmentData.getAllApartmentSelectedZipCode(apartmentZipcode, apartmentState, apartmentCity, apartmentRent, apartmentSize, apartmentOccupantCapacity);
+    console.log("hi", allAvailableApartmentList)
     //res.status(200).json(allAvailableApartmentList);
     //console.log("allAvailableApartmentList......",allAvailableApartmentList);
 
