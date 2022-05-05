@@ -152,8 +152,8 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
       .toArray();
     if (state) {
       for (apt of apartmentData) {
-          apartmentData = apartmentData.filter(apt => apt.state === state)
-          console.log("ooo", apartmentData)
+        apartmentData = apartmentData.filter(apt => apt.state === state)
+        console.log("ooo", apartmentData)
       }
     }
     if (city) {
@@ -164,7 +164,7 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     if (rent) {
       for (apt of apartmentData) {
         apartmentData = apartmentData.filter(apt => apt.rent === rent)
-        }
+      }
     }
     if (size) {
       for (apt of apartmentData) {

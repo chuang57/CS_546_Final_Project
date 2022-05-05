@@ -19,10 +19,6 @@ router.get("/login", async (req, res) => {
   return;
 });
 
-/* router.get("/reviews/delete/:id", async (req, res) => {
-  console.log("inside delete");
- 
-}); */
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -67,7 +63,7 @@ router.post("/user/bookmark", isLogin, async (req, res) => {
   req.session.user = newuser[0];
 
   // res.send("success");
-  console.log("/user/bookmark");
+  //console.log("/user/bookmark");
   res.status(200).send("/apartment");
 });
 
@@ -100,15 +96,15 @@ router.get("/profile/:email/checkAllReviews", async (req, res) => {
     if (findemail2.gender === "female") {
       genderCheck2 = "female";
     }
-    console.log("findemail2.gender", findemail2.gender);
-    console.log("genderCheck2", genderCheck2);
+    //console.log("findemail2.gender", findemail2.gender);
+   // console.log("genderCheck2", genderCheck2);
 
     let reviewLength2 = findemail2.reviewsWritten.length;
     for (let i = 0; i < reviewLength2; i++) {
       let r2 = await getReviewfromId(findemail2.reviewsWritten[i]);
       arr.push(r2);
     }
-    console.log(arr);
+    //console.log(arr);
     res.render("checkAllReviews", {
       ...findemail2,
       arr,
@@ -161,7 +157,7 @@ router.get("/profile/:email", async (req, res) => {
     return findemail.savedApartments.includes(v._id.toString());
   });
 
-  console.log("findemail-----", findemail);
+  //console.log("findemail-----", findemail);
   /* console.log("reviewsWritten-----",findemail.reviewsWritten);
   console.log("reviewsWrittenLength",findemail.reviewsWritten.length);
   console.log("findemail.gender",findemail.gender); */
@@ -169,8 +165,6 @@ router.get("/profile/:email", async (req, res) => {
   let reviewLength = findemail.reviewsWritten.length;
   for (let i = 0; i < reviewLength; i++) {
     let r = await getReviewfromId(findemail.reviewsWritten[i]);
-    //console.log("r...........",r);
-    console.log("r.rating...........", r.rating);
 
     if (r.rating === "5" || r.rating === "4") {
       positiveRatingCount = positiveRatingCount + 1;
