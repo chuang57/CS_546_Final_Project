@@ -2,13 +2,27 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const apartmentData = data.apartment;
-
-const { ObjectId } = require("mongodb");
+const { ObjectId, CURSOR_FLAGS } = require("mongodb");
 const mongoconnection = require("../config/mongoConnection");
 const mongoCollections = require("../config/mongoCollections");
 const { isLogin } = require("../middleware/auth");
 const apartment = mongoCollections.apartment;
 const users = mongoCollections.users;
+
+const multer = require("multer");
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+      cb(null, 'public/photos/');
+  },
+
+  filename: function(req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage })
+
+const fs = require("fs");
 
 router.get("/", isLogin, async (req, res) => {
   let arr = [],
@@ -56,50 +70,42 @@ router.get("/newApartment", isLogin, async (req, res) => {
   }
 });
 
-router.post("/newApartmentInfo", isLogin, async (req, res) => {
-  let photosArr = [];
-  let state = req.body.state;
-  let city = req.body.city;
+router.post("/newApartmentInfo", isLogin, upload.array('photos') ,async (req, res) => {
 
-  // console.log("req.body.photos",req.body.photos);
-  // console.log("req.body.photos length",req.body.photos);
-  if (!Array.isArray(req.body.photos)) {
-    photosArr.push(req.body.photos);
-  } else photosArr = req.body.photos;
-  console.log("photosArr", photosArr);
-  // console.log("photosArr", photosArr);
+  let city = req.body.city;
   let address = req.body.address;
   let zipcode = req.body.zipcode;
   let rent = req.body.rent;
   let size = req.body.size;
   let occupantCapacity = req.body.occupantCapacity;
-  try {
-    /* var obj = {
-        data: req.body.photos
-    }; */
-    let x = await apartmentData.create(
-      state,
-      city,
-      photosArr,
-      address,
-      zipcode,
-      rent,
-      size,
-      occupantCapacity,
-      req.session.user.email
-    );
-    res.status(200).render("new-apartment", {
-      success: "Congratulations! Property has been added successfully.",
-      username: req.session.user?.username,
-      email: req.session.user?.email,
-      isNotLogin: !req.session.user,
-    });
-  } catch (e) {
-    res.status(400).redirect(`/newApartment?error=${e}`);
-  }
+try {
+  console.log("this", req.files)
+  const paths = req.files.map(file => file.path)
+  const paths2 = paths.map(file => "\\" + file)
+  let x = await apartmentData.create(
+    req.body.state,
+    req.body.city,
+    paths2,
+    req.body.address,
+    req.body.zipcode,
+    req.body.rent,
+    req.body.size,
+    req.body.occupantCapacity,
+    req.session.user.email
+  );
+  res.status(200).render("city-choosing", {
+    success: "Your property has been successfully added!",
+    username: req.session.user?.username,
+    email: req.session.user?.email,
+    isNotLogin: !req.session.user,
+  });
+} catch (e) {
+  console.log(e)
+  res.status(400).redirect(`/newApartment?error=${e}`);
+}
 });
-// ["https://image.shutterstock.com/image-photo/modern-architecture-urban-residential-apartment-260nw-1865190721.jpg"]
-router.route("/", isLogin).post(async (req, res) => {
+
+router.route("/").post(async (req, res) => {
   const apartmentInfo = req.body.zipcode;
   let bandMembersInvalidFlag = false;
   let genreInvalidFlag = false;
@@ -318,29 +324,48 @@ router.get("/apartment/sortbyrent", isLogin, async (req, res) => {
 
 router.post("/apartment", isLogin, async (req, res) => {
   const apartmentZipcode = req.body.zipcode;
-  console.log("apartmentZipcode", apartmentZipcode);
-  if (!apartmentZipcode) {
-    res.status(400).render("error", {
-      error: "Please provide zipcode to search the apartment",
-    });
-    return;
-  }
+  const apartmentState = req.body.state;
+  const apartmentCity = req.body.city;
+  const apartmentRent = req.body.rent;
+  const apartmentSize = req.body.size;
+  const apartmentOccupantCapacity = req.body.occupantCapacity;
+  console.log("state", apartmentState)
+  // console.log("apartmentZipcode", apartmentZipcode);
+  // if (!apartmentZipcode) {
+  //   res.status(400).render("error", {
+  //     error: "Please provide zipcode to search the apartment",
+  //   });
+  //   return;
+  // }
 
   try {
     let allAvailableApartmentList =
-      await apartmentData.getAllApartmentSelectedZipCode(apartmentZipcode);
+      await apartmentData.getAllApartmentSelectedZipCode(apartmentZipcode, apartmentState, apartmentCity, apartmentRent, apartmentSize, apartmentOccupantCapacity);
+    console.log("hi", allAvailableApartmentList)
     //res.status(200).json(allAvailableApartmentList);
     //console.log("allAvailableApartmentList......",allAvailableApartmentList);
 
     //for(let i in allAvailableApartmentList){
     console.log("check.........", allAvailableApartmentList[0].photos[0]);
 
-    res.status(200).redirect("/apartment");
+    res.status(200).render(
+      "apartment-listing",
+      {
+        apartmentListing: allAvailableApartmentList,
+        username: req.session.user?.username,
+        email: req.session.user?.email,
+        isNotLogin: !req.session.user,
+      }
+      ////   city: allAvailableApartmentList[i].city,
+      // address:allAvailableApartmentList[i].address,
+      // rent:allAvailableApartmentList[i].rent,
+      //size:allAvailableApartmentList[i].size,
+      //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
+    );
     // }
   } catch (e) {
-    res.status(404).render("city-choosing", {
-      error: `There is no apartment found for the given Zip code: ${apartmentZipcode}`,
-    });
+    console.log(e)
+    res.status(404).render("apartment-listing",{error: `There is no show found for the given filters: ${apartmentZipcode}`});
   }
 });
 
@@ -390,6 +415,9 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
     if (apartment) {
       // res.status(200).render('each-apartment-listing', { singalShow: show, title: show.name, summary: show.summary, image: images, rating: show.rating.average, network:network,language:show.language, genres:show.genres});
       // res.status(200).json(apartment);
+      console.log("Buffers", apartment);
+      // pht = apartment.photos;
+      // console.log("Buffer", pht[0]);
 
       const isDelete =
         req.session.user.usertype === "admin" ||
@@ -400,7 +428,7 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
         "each-apartment-listing",
         {
           isDelete,
-          eachApartmentListing: apartment,
+          apartmentListing: apartment,
           reviews: apartment[0].reviews,
           username: req.session.user?.username,
           email: req.session.user?.email,

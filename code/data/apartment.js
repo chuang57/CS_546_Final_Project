@@ -126,19 +126,59 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     // return bandsList;
 }, */
 
-  async getAllApartmentSelectedZipCode(zipcode) {
+  async getAllApartmentSelectedZipCode(
+    zipcode,
+    state,
+    city,
+    rent,
+    size,
+    occupantCapacity
+  ) {
     if (!zipcode) throw "You must provide an id to search for";
     //if (typeof zipcode !== 'string') throw 'Id must be a string';
     if (zipcode.trim().length === 0)
       throw "zipcode cannot be an empty string or just spaces";
     zipcode = zipcode.trim();
+    if (!zipcode) zipcode == null;
+    console.log("here", state)
+    // zipcode ? zipcode : null
+
     //if (!ObjectId.isValid(id)) throw 'ID is not a valid object ID';
     const apartmentCollection = await apartment();
-    const apartmentData = await apartmentCollection
+    let apartmentData = await apartmentCollection
       .find({
         zipcode: zipcode,
       })
       .toArray();
+    if (state) {
+      for (apt of apartmentData) {
+          apartmentData = apartmentData.filter(apt => apt.state === state)
+          console.log("ooo", apartmentData)
+      }
+    }
+    if (city) {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter(apt => apt.city === city)
+      }
+    }
+    if (rent) {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter(apt => apt.rent === rent)
+        }
+    }
+    if (size) {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter(apt => apt.size === size)
+      }
+    }
+    if (occupantCapacity) {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter(apt => apt.occupantCapacity === occupantCapacity)
+      }
+    }
+
+
+    console.log("the", apartmentData);
 
     //console.log("inside data", apartmentData,"apartment id",apartmentData[0].state,apartmentData[0]._id.toString());
 

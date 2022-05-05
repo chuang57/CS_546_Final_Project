@@ -4,8 +4,10 @@ h1 {
 h4 {
   color: rgb(189, 17, 60);
 }
-/* h2{
-  color:rgb(26, 49, 118);
+
+.container{
+  display: flex;
+  justify-content: space-between;
 }
 
 form {
@@ -182,3 +184,6 @@ ul.list-style-none li {
 .shadow-sm {
   box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
 } */
+
+
+

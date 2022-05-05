@@ -4,21 +4,87 @@
     </form>
 </div> }}
 
+
+{{!-- <div class="form-group">
+    <label for="age">age</label>
+    <input
+      type="number"
+      name="age"
+      class="form-control"
+      id="age"
+      placeholder="Age"
+    />
+  </div> --}}
+
 <div id="city-choosing-div">
   <form id="city-choosing-form" action="/apartment" method="post">
-    <div>
-      <label for="zipcode">Search your apartment </label>
+    <div class="form-group">
+      <label for="zipcode">Filter by Zipcode</label>
       <input
         id="zipcode"
         type="number"
         min="4"
         name="zipcode"
+        class="form-control"
         placeholder="Enter the zipcode"
+      />
+      </div>
+
+       <div class="form-group">
+      <label for="state">Filter by State</label>
+      <input
+        id="state"
+        type="text"
+        name="state"
+         class="form-control"
+        placeholder="Enter the state"
+      />
+      </div>
+
+       <div class="form-group">
+      <label for="city">Filter by City </label>
+      <input
+        id="city"
+        type="text"
+        name="city"
+        class="form-control"
+        placeholder="Enter the city"
+      /> </div>
+
+             <div class="form-group">
+      <label for="rent">Search your Rent </label>
+      <input
+        id="rent"
+        type="number"
+        name="rent"
+        class="form-control"
+        placeholder="Enter the rent"
+      />
+      </div>
+
+      <div class="form-group">
+      <label for="size">Search your Size </label>
+      <input
+        id="size"
+        type="number"
+        name="size"
+         class="form-control"
+        placeholder="Enter the size"
+      /></div>
+
+      <div class="form-group">
+      <label for="occupantCapacity">Search your Occupant Capacity </label>
+      <input
+        id="occupantCapacity"
+        type="number"
+        name="occupantCapacity"
+        class="form-control"
+        placeholder="Enter the Occupant Capacity"
       />
     </div>
     <br />
 
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
   {{#if error}}
     <div>{{error}}</div>

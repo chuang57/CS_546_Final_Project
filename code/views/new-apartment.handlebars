@@ -7,7 +7,7 @@
 {{/if}}
 
 
-<form id="new-apartment" action="/newApartmentInfo" method="post">
+<form id="new-apartment" enctype="multipart/form-data" action="/newApartmentInfo" method="post">
   <div class="form-group">
     <label for="state">State: </label>
     <input id="state"  class="form-control" name="state" placeholder="Enter the state" required />
