@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
       username: req.session.user?.username,
       email: req.session.user?.email,
       isNotLogin: !req.session.user,
-      errormessage: e.message
+      errormessage: e.message,
     });
     return;
   }

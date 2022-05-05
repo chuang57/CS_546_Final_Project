@@ -2,9 +2,13 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const apartmentData = data.apartment;
+
 const { ObjectId } = require("mongodb");
 const mongoconnection = require("../config/mongoConnection");
+const mongoCollections = require("../config/mongoCollections");
 const { isLogin } = require("../middleware/auth");
+const apartment = mongoCollections.apartment;
+const users = mongoCollections.users;
 
 router.get("/", isLogin, async (req, res) => {
   let arr = [],
@@ -36,6 +40,7 @@ router.get("/", isLogin, async (req, res) => {
 //500 error in my code
 
 router.get("/newApartment", isLogin, async (req, res) => {
+  const error = req.query.error;
   try {
     //res.render("new-apartment");
     console.log("aditii.....");
@@ -44,6 +49,7 @@ router.get("/newApartment", isLogin, async (req, res) => {
       username: req.session.user?.username,
       email: req.session.user?.email,
       isNotLogin: !req.session.user,
+      error,
     });
   } catch (e) {
     res.status(500).json({ error: e });
@@ -79,7 +85,8 @@ router.post("/newApartmentInfo", isLogin, async (req, res) => {
       zipcode,
       rent,
       size,
-      occupantCapacity
+      occupantCapacity,
+      req.session.user.email
     );
     res.status(200).render("new-apartment", {
       success: "Congratulations! Property has been added successfully.",
@@ -88,7 +95,7 @@ router.post("/newApartmentInfo", isLogin, async (req, res) => {
       isNotLogin: !req.session.user,
     });
   } catch (e) {
-    res.status(500).json({ error: e });
+    res.status(400).redirect(`/newApartment?error=${e}`);
   }
 });
 // ["https://image.shutterstock.com/image-photo/modern-architecture-urban-residential-apartment-260nw-1865190721.jpg"]
@@ -337,6 +344,26 @@ router.post("/apartment", isLogin, async (req, res) => {
   }
 });
 
+router.delete("/apartment/:id", isLogin, async (req, res) => {
+  let apartmentId = req.params.id;
+  apartmentId = apartmentId.trim();
+  console.log("inside apartment id routes", apartmentId);
+  const apartmentCollections = await apartment();
+  await apartmentCollections.deleteOne({ _id: ObjectId(apartmentId) });
+  const userCollections = await users();
+  await userCollections.updateOne(
+    { _id: ObjectId(req.session.user._id) },
+    {
+      $set: {
+        savedApartments: req.session.user.savedApartments.filter((v) => {
+          return v !== apartmentId;
+        }),
+      },
+    }
+  );
+  res.send("success");
+});
+
 router.get("/apartment/:id", isLogin, async (req, res) => {
   let apartmentId = req.params.id;
   apartmentId = apartmentId.trim();
@@ -364,10 +391,15 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
       // res.status(200).render('each-apartment-listing', { singalShow: show, title: show.name, summary: show.summary, image: images, rating: show.rating.average, network:network,language:show.language, genres:show.genres});
       // res.status(200).json(apartment);
 
+      const isDelete =
+        req.session.user.usertype === "admin" ||
+        req.session.user.email === apartment[0].useremail;
+
       console.log("-------------", apartment.photos, apartment[0].photos);
       res.status(200).render(
         "each-apartment-listing",
         {
+          isDelete,
           eachApartmentListing: apartment,
           reviews: apartment[0].reviews,
           username: req.session.user?.username,

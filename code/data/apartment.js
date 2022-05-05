@@ -11,12 +11,13 @@ module.exports = {
     zipcode,
     rent,
     size,
-    occupantCapacity
+    occupantCapacity,
+    useremail
   ) {
     let photosInvalidFlag = false;
 
     console.log(arguments.length);
-    if (arguments.length !== 8)
+    if (arguments.length !== 9)
       throw "Incorrect numbers of passed arguments, it should be 6";
     /* if (!name) throw 'You must provide a name to search for';
 if (typeof name !== 'string') throw 'name must be a string';
@@ -59,8 +60,7 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     //if (typeof zipcode !== 'number') throw 'zipcode must be in number';
     if (zipcode.trim().length === 0)
       throw "zipcode cannot be an empty string or just spaces";
-      if (zipcode.trim().length < 5)
-      throw "zipcode cannot be less than 5 digit";  
+    if (zipcode.trim().length < 5) throw "zipcode cannot be less than 5 digit";
     zipcode = zipcode.trim();
 
     if (!rent) throw "You must provide rent of the apartment";
@@ -78,7 +78,8 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     if (!occupantCapacity)
       throw "You must provide occupantCapacity of the apartment";
     //if (typeof occupantCapacity !== 'number') throw 'occupantCapacity must be in number';
-    if (occupantCapacity > 10 && occupantCapacity < 1) throw 'occupantCapacity can not be grater than 10 and less than 1';
+    if (occupantCapacity > 10 && occupantCapacity < 1)
+      throw "occupantCapacity can not be grater than 10 and less than 1";
     if (occupantCapacity.trim().length === 0)
       throw "occupantCapacity cannot be an empty string or just spaces";
     occupantCapacity = occupantCapacity.trim();
@@ -95,6 +96,7 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
       size: size,
       occupantCapacity: occupantCapacity,
       reviews: [],
+      useremail,
     };
 
     //console.log(newBand);
@@ -145,7 +147,8 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     }
 
     console.log("aaaaaaaaaaswerfd", apartmentData);
-    if (apartmentData === null) throw "No apartment available for this zip code";
+    if (apartmentData === null)
+      throw "No apartment available for this zip code";
     //banggo._id = banggo._id.toString();
     return apartmentData;
   },

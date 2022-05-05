@@ -1,4 +1,4 @@
- <form method="POST" action="/signup">
+<form method="POST" action="/signup">
   <div class="form-group">
     <label for="username">Username</label>
     <input
@@ -7,10 +7,11 @@
       class="form-control"
       id="username"
       placeholder="Username"
+      required
     />
   </div>
 
- <div class="form-group">
+  <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
     <input
       type="password"
@@ -18,9 +19,9 @@
       class="form-control"
       id="exampleInputPassword1"
       placeholder="Password"
+      required
     />
   </div>
-
 
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
@@ -31,10 +32,11 @@
       id="exampleInputEmail1"
       aria-describedby="emailHelp"
       placeholder="Enter email"
+      required
     />
-   {{!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
+    {{!  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> }}
   </div>
- 
+
   <div class="form-group">
     <label for="phonenumber">Phone number</label>
     <input
@@ -60,22 +62,33 @@
   <div class="form-group">
     <label for="gender">Gender </label>
     <div class="form-check form-check-inline mb-0 me-4">
-                    <input class="form-check-input" type="radio" name="gender" id="femaleGender"
-                      value="female" />
-                    <label class="form-check-label" for="femaleGender">Female</label>
-                  </div>
+      <input
+        class="form-check-input"
+        type="radio"
+        name="gender"
+        id="femaleGender"
+        value="female"
+        required
+      />
+      <label class="form-check-label" for="femaleGender">Female</label>
+    </div>
 
-                  <div class="form-check form-check-inline mb-0 me-4">
-                    <input class="form-check-input" type="radio" name="gender" id="maleGender"
-                      value="male" />
-                    <label class="form-check-label" for="maleGender">Male</label>
-                  </div>
+    <div class="form-check form-check-inline mb-0 me-4">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="gender"
+        id="maleGender"
+        value="male"
+      />
+      <label class="form-check-label" for="maleGender">Male</label>
+    </div>
 
-                 {{!--  <div class="form-check form-check-inline mb-0">
+    {{!  <div class="form-check form-check-inline mb-0">
                     <input class="form-check-input" type="radio" name="gender" id="otherGender"
                       value="other" />
                     <label class="form-check-label" for="otherGender">Other</label>
-                  </div> --}}
+                  </div> }}
   </div>
 
   <div class="form-group">
@@ -89,7 +102,7 @@
     />
   </div>
 
-{{!--    <div class="form-group">
+  {{!    <div class="form-group">
     <label for="userType">User Type</label>
 
     <select class="select" class="form-control">
@@ -97,9 +110,9 @@
     <option value="2">User</option>
     </select>
   
-  </div> --}}
+  </div> }}
 
-{{!--    <div class="form-group">
+  {{!    <div class="form-group">
     <label for="usertype">User Type</label>
     <input
       type="text"
@@ -108,34 +121,36 @@
       id="usertype"
       placeholder="Admin or User"
     />
-  </div> --}}
+  </div> }}
 
   <div class="form-group">
     <label for="usertype">Type </label>
     <div class="form-check form-check-inline mb-0 me-4">
-    <input class="form-check-input" type="radio" name="usertype" id="user" value="user" />
-    <label class="form-check-label" for="user">User</label>
-  </div>
-
-   <div class="form-check form-check-inline mb-0 me-4">
-   <input class="form-check-input" type="radio" name="usertype" id="admin" value="admin" />
-   <label class="form-check-label" for="admin">Admin</label>
+      <input
+        class="form-check-input"
+        type="radio"
+        name="usertype"
+        id="user"
+        value="user"
+      />
+      <label class="form-check-label" for="user">User</label>
     </div>
 
-                 
+    <div class="form-check form-check-inline mb-0 me-4">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="usertype"
+        id="admin"
+        value="admin"
+      />
+      <label class="form-check-label" for="admin">Admin</label>
+    </div>
+
   </div>
 
-  <a href="/">Already have an account? Click here to log-in</a>   
-  <br>
-  <br>         
+  <a href="/">Already have an account? Click here to log-in</a>
+  <br />
+  <br />
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
-
-
-
-
-
-
-
- 
