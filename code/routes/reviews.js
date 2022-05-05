@@ -19,7 +19,7 @@ const { createUser, checkUser } = require("../data/users");
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users; */
 
-router.get("reviews/:id", isLogin, async (req, res) => {
+router.get("/reviews/:id", isLogin, async (req, res) => {
   console.log("in get routes of reviews", req.params.id, req.body);
   res.render("reviews", {
     apartmentId: req.params.id,
@@ -37,8 +37,8 @@ router.post("/reviews/:id", isLogin, async (req, res) => {
   let sessionUser = req.session.user.username;
   let userSessionId = req.session.user._id;
 
-  console.log("sessionUser",sessionUser);
-  console.log("req.params.id",req.params.id);
+  console.log("sessionUser", sessionUser);
+  console.log("req.params.id", req.params.id);
   /*  if (!req.params.id) {
         res.status(400).json({ error: 'You must Supply a band ID to create album' });
         return;
@@ -113,25 +113,25 @@ router.post("/reviews/:id", isLogin, async (req, res) => {
         return;
     }  */
 
-  
+
 
   if (reviewsInfo.rating === "" || reviewsInfo.rating === "undefined") {
-      res.status(400).render("reviews", {error: "Please provide rating from 1-5", apartmentId : req.params.id });
-      return;
-   } 
-   if (reviewsInfo.description === "" || reviewsInfo.description === "undefined") {
-    res.status(400).render("reviews", {error: "Please provide your feedback", apartmentId : req.params.id });
+    res.status(400).render("reviews", { error: "Please provide rating from 1-5", apartmentId: req.params.id });
     return;
-   } 
-    if (reviewsInfo.rating> 5 || reviewsInfo.rating<1) {
-      res.status(400).render("reviews", {error: "Given rating value should be a range from 1 to 5.", apartmentId : req.params.id });
-      return;
-    } 
-   console.log("isvalidrating",isValidRating(reviewsInfo.rating));
-   if (isValidRating(reviewsInfo.rating) === false) {
-        res.status(400).render("reviews", {error: "Decimal values in rating is not accepted.", apartmentId : req.params.id });
-        return;
-    }  
+  }
+  if (reviewsInfo.description === "" || reviewsInfo.description === "undefined") {
+    res.status(400).render("reviews", { error: "Please provide your feedback", apartmentId: req.params.id });
+    return;
+  }
+  if (reviewsInfo.rating > 5 || reviewsInfo.rating < 1) {
+    res.status(400).render("reviews", { error: "Given rating value should be a range from 1 to 5.", apartmentId: req.params.id });
+    return;
+  }
+  console.log("isvalidrating", isValidRating(reviewsInfo.rating));
+  if (isValidRating(reviewsInfo.rating) === false) {
+    res.status(400).render("reviews", { error: "Decimal values in rating is not accepted.", apartmentId: req.params.id });
+    return;
+  }
   // console.log(albumInfo,req.params.id);
   //If the JSON is valid and the album can be created successful, you will return all the
   //band data showing the albums  (as shown below) with a 200 status code.
@@ -144,9 +144,9 @@ router.post("/reviews/:id", isLogin, async (req, res) => {
       reviewsInfo.rating,
       reviewsInfo.description
     );
-    console.log("newReview",newReview);
+    console.log("newReview", newReview);
     //eachApartmentListing
-    res.status(200).redirect("/apartment/"+newReview.apartmentid);
+    res.status(200).redirect("/apartment/" + newReview.apartmentid);
   } catch (e) {
     res.status(400).json({ error: e });
   }
@@ -174,40 +174,51 @@ router.post("/reviews/:id", isLogin, async (req, res) => {
     }
   }); */
 
-router.get('/delete/:id', async (req, res) => {
-    req.params.id = req.params.id.trim();
-   /*  if (!req.params.id) {
-      res.status(400).json({ error: 'You must Supply an ID to delete' });
-      return;
-    } */
-    console.log("inside delete review route 1");
-    if (!ObjectId.isValid(req.params.id)) {
-      res.status(400).json({ error: 'Provided album id is not a valid object ID.' });
-      return;}
-        if (typeof req.params.id !== 'string') {
-        res.status(400).json({ error: 'Id must be a string.' });
-        return;}
-        if (req.params.id.trim().length === 0) {
-        res.status(400).json({ error: 'Album Id cannot be an empty string or just spaces.' });
-        return;
-    }
-   
-    console.log("inside delete review route 2", req.params.id);
-    try {
-      let deletedReviews = await reviewsData.remove(req.params.id);
+router.get('/reviews/delete/:id', isLogin, async (req, res) => {
+  req.params.id = req.params.id.trim();
+  let sessionUser = req.session.user.username;
+  let userSessionId = req.session.user._id;
+  console.log("sessionUser", sessionUser);
+  console.log("userSessionId", userSessionId);
 
-      console.log("inside delete review route 3",deletedReviews);
-      if(deletedReviews === undefined){
-        res.status(404).json({error: 'Could not delete review with id'});
-        //.json(deletedAlbum);   
-      }
-      res.status(200).json({"Review Id" : req.params.id, "deleted": true });
-    } catch (e) {
-        if(e === 'review does not exists'){
-            res.status(404).json({ error: e });
-        }else res.status(400).json({ error: e });
+  if (!ObjectId.isValid(req.params.id)) {
+    res.status(400).json({ error: 'Provided review id is not a valid object ID.' });
+    return;
+  }
+  if (typeof req.params.id !== 'string') {
+    res.status(400).json({ error: 'Id must be a string.' });
+    return;
+  }
+  if (req.params.id.trim().length === 0) {
+    res.status(400).json({ error: 'review Id cannot be an empty string or just spaces.' });
+    return;
+  }
+
+  console.log("inside delete review route 2", req.params.id);
+  try {
+    let deletedReviews = await reviewsData.remove(req.params.id, userSessionId, sessionUser);
+
+    console.log("inside delete review route 3", deletedReviews);
+    if (deletedReviews === undefined) {
+      res.status(404).json({ error: 'Could not delete review with id' });
+      //.json(deletedAlbum);   
     }
-  });
+    res.status(200).json({ "Review Id": req.params.id, "deleted": true, "modifiedcount": deletedReviews });
+    //res.status(200).redirect("profile/checkAllReviews", {
+     // review: "review has been deleted successfully",
+      
+  
+  } catch (e) {
+    if (e === 'review does not exists') {
+      res.status(404).json({ error: e });
+    } else res.status(400).json({ error: e });
+  }
+});
+
+
+
+
+
 
 function isValidDateString(dateString) {
   if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) return false;

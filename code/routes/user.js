@@ -19,7 +19,7 @@ router.get("/login", async (req, res) => {
   return;
 });
 
-/* router.get("/delete/:id", async (req, res) => {
+/* router.get("/reviews/delete/:id", async (req, res) => {
   console.log("inside delete");
  
 }); */
@@ -107,8 +107,6 @@ router.get("/profile/:email/checkAllReviews", async (req, res) => {
     for (let i = 0; i < reviewLength2; i++) {
       let r2 = await getReviewfromId(findemail2.reviewsWritten[i]);
       arr.push(r2);
-      //console.log("r2...........",r2);
-      // console.log("r2.rating...........",r2);
     }
     console.log(arr);
     res.render("checkAllReviews", {
@@ -117,8 +115,8 @@ router.get("/profile/:email/checkAllReviews", async (req, res) => {
       genderCheck2,
     });
 
-    console.log("findemail2...aditi_9:28 pm",findemail2);
-    console.log("arr...aditi_9:28 pm",arr);
+   // console.log("findemail2...aditi_9:28 pm",findemail2);
+   // console.log("arr...aditi_9:28 pm",arr);
   } catch (e) {
     res.send(e);
   }
