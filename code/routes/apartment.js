@@ -7,17 +7,20 @@ const mongoconnection = require("../config/mongoConnection");
 const { isLogin } = require("../middleware/auth");
 
 const multer = require("multer");
-const path = require('path');
+const path = require("path");
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-      cb(null, 'public/photos/');
+  destination: function (req, file, cb) {
+    cb(null, "public/photos/");
   },
 
-  filename: function(req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
 });
-const upload = multer({ storage: storage })
+const upload = multer({ storage: storage });
 
 const fs = require("fs");
 
@@ -65,39 +68,44 @@ router.post("/newApartment", isLogin, async (req, res) => {
   }
 });
 
-router.post("/newApartmentInfo", isLogin, upload.array('photos') ,async (req, res) => {
-
-  let city = req.body.city;
-  let address = req.body.address;
-  let zipcode = req.body.zipcode;
-  let rent = req.body.rent;
-  let size = req.body.size;
-  let occupantCapacity = req.body.occupantCapacity;
-try {
-  console.log("this", req.files)
-  const paths = req.files.map(file => file.path)
-  const paths2 = paths.map(file => "\\" + file)
-  let x = await apartmentData.create(
-    req.body.state,
-    req.body.city,
-    paths2,
-    req.body.address,
-    req.body.zipcode,
-    req.body.rent,
-    req.body.size,
-    req.body.occupantCapacity
-  );
-  res.status(200).render("city-choosing", {
-    success: "Your property has been successfully added!",
-    username: req.session.user?.username,
-    email: req.session.user?.email,
-    isNotLogin: !req.session.user,
-  });
-} catch (e) {
-  console.log(e)
-  res.status(500).json({ error: e });
-}
-});
+router.post(
+  "/newApartmentInfo",
+  isLogin,
+  upload.array("photos"),
+  async (req, res) => {
+    let city = req.body.city;
+    let address = req.body.address;
+    let zipcode = req.body.zipcode;
+    let rent = req.body.rent;
+    let size = req.body.size;
+    let occupantCapacity = req.body.occupantCapacity;
+    try {
+      console.log("this", req.files);
+      const paths = req.files.map((file) => file.path);
+      const paths2 = paths.map((file) => "\\" + file);
+      let x = await apartmentData.create(
+        req.body.state,
+        req.body.city,
+        paths2,
+        req.body.address,
+        req.body.zipcode,
+        req.body.rent,
+        req.body.size,
+        req.body.occupantCapacity,
+        req.body.contactInfo
+      );
+      res.status(200).render("city-choosing", {
+        success: "Your property has been successfully added!",
+        username: req.session.user?.username,
+        email: req.session.user?.email,
+        isNotLogin: !req.session.user,
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(500).json({ error: e });
+    }
+  }
+);
 
 router.route("/").post(async (req, res) => {
   const apartmentInfo = req.body.zipcode;
@@ -321,9 +329,75 @@ router.post("/apartment", isLogin, async (req, res) => {
   const apartmentState = req.body.state;
   const apartmentCity = req.body.city;
   const apartmentRent = req.body.rent;
+  let rentMin = undefined;
+  let rentMax = undefined;
+  if (apartmentRent === "$1 - $1000") {
+    rentMin = 1;
+    rentMax = 1000;
+  } else if (apartmentRent === "$1000 - $2000") {
+    rentMin = 1000;
+    rentMax = 2000;
+  } else if (apartmentRent === "$2000 - $3000") {
+    rentMin = 2000;
+    rentMax = 3000;
+  } else if (apartmentRent === "$3000 - $4000") {
+    rentMin = 3000;
+    rentMax = 4000;
+  } else if (apartmentRent === "$4000 - $5000") {
+    rentMin = 4000;
+    rentMax = 5000;
+  } else if (apartmentRent === "$5000 - $6000") {
+    rentMin = 5000;
+    rentMax = 6000;
+  } else if (apartmentRent === "$6000 - $7000") {
+    rentMin = 6000;
+    rentMax = 7000;
+  } else if (apartmentRent === "$7000 - $8000") {
+    rentMin = 7000;
+    rentMax = 8000;
+  } else if (apartmentRent === "$8000 - $9000") {
+    rentMin = 8000;
+    rentMax = 9000;
+  } else if (apartmentRent === "$9000 - $10000") {
+    rentMin = 9000;
+    rentMax = 10000;
+  }
   const apartmentSize = req.body.size;
+  let sizeMin = undefined;
+  let sizeMax = undefined;
+  if (apartmentSize === "1 -$1000") {
+    rentMin = 1;
+    rentMax = 1000;
+  } else if (apartmentSize === "1000 - 2000") {
+    rentMin = 1000;
+    rentMax = 2000;
+  } else if (apartmentSize === "2000 - 3000") {
+    rentMin = 2000;
+    rentMax = 3000;
+  } else if (apartmentSize === "3000 - 4000") {
+    rentMin = 3000;
+    rentMax = 4000;
+  } else if (apartmentSize === "4000 - 5000") {
+    rentMin = 4000;
+    rentMax = 5000;
+  } else if (apartmentSize === "5000 - 6000") {
+    rentMin = 5000;
+    rentMax = 6000;
+  } else if (apartmentSize === "6000 - 7000") {
+    rentMin = 6000;
+    rentMax = 7000;
+  } else if (apartmentSize === "7000 - 8000") {
+    rentMin = 7000;
+    rentMax = 8000;
+  } else if (apartmentSize === "8000 - 9000") {
+    rentMin = 8000;
+    rentMax = 9000;
+  } else if (apartmentSize === "9000 - 10000") {
+    rentMin = 9000;
+    rentMax = 10000;
+  }
   const apartmentOccupantCapacity = req.body.occupantCapacity;
-  console.log("state", apartmentState)
+  console.log("state", apartmentState);
   // console.log("apartmentZipcode", apartmentZipcode);
   // if (!apartmentZipcode) {
   //   res.status(400).render("error", {
@@ -334,8 +408,17 @@ router.post("/apartment", isLogin, async (req, res) => {
 
   try {
     let allAvailableApartmentList =
-      await apartmentData.getAllApartmentSelectedZipCode(apartmentZipcode, apartmentState, apartmentCity, apartmentRent, apartmentSize, apartmentOccupantCapacity);
-    console.log("hi", allAvailableApartmentList)
+      await apartmentData.getAllApartmentSelectedZipCode(
+        apartmentZipcode,
+        apartmentState,
+        apartmentCity,
+        rentMin,
+        rentMax,
+        sizeMin,
+        sizeMax,
+        apartmentOccupantCapacity
+      );
+    console.log("hi", allAvailableApartmentList);
     //res.status(200).json(allAvailableApartmentList);
     //console.log("allAvailableApartmentList......",allAvailableApartmentList);
 
@@ -358,8 +441,49 @@ router.post("/apartment", isLogin, async (req, res) => {
     );
     // }
   } catch (e) {
-    console.log(e)
-    res.status(404).render("apartment-listing",{error: `There is no show found for the given filters: ${apartmentZipcode}`});
+    console.log(e);
+    res
+      .status(404)
+      .render("apartment-listing", {
+        error: `There is no show found for the given filters: ${apartmentZipcode}`,
+      });
+  }
+});
+
+router.post("/apartmentAddress", isLogin, async (req, res) => {
+  const apartmentAddress = req.body.address;
+  console.log("yo", apartmentAddress)
+
+  try {
+    let apartment = await apartmentData.getApartmentAddress(
+      apartmentAddress
+    );
+    //res.status(200).json(allAvailableApartmentList);
+    //console.log("allAvailableApartmentList......",allAvailableApartmentList);
+
+    //for(let i in allAvailableApartmentList){
+
+    res.status(200).render(
+      "each-apartment-listing",
+      {
+        apartmentListing: apartment,
+        reviews: apartment[0].reviews,
+        username: req.session.user?.username,
+        email: req.session.user?.email,
+        isNotLogin: !req.session.user,
+      }
+      ////   city: allAvailableApartmentList[i].city,
+      // address:allAvailableApartmentList[i].address,
+      // rent:allAvailableApartmentList[i].rent,
+      //size:allAvailableApartmentList[i].size,
+      //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
+    );
+    // }
+  } catch (e) {
+    console.log(e);
+    res
+      .status(404)
+      console.log(e)
   }
 });
 

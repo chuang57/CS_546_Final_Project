@@ -1,62 +1,201 @@
-{{! <div>
-    <form id="add-new" name="newApt" action="/newApartment" method="post">
-        <button type="submit">Add New Property</button>
-    </form>
-</div> }}
 
+<h1>Search For Your New Home Below!</h1>
 <div id="city-choosing-div">
   <form id="city-choosing-form" action="/apartment" method="post">
-    <div>
-      <label for="zipcode">Filter by Zipcode</label>
-      <input
-        id="zipcode"
-        type="number"
-        min="4"
-        name="zipcode"
-        placeholder="Enter the zipcode"
-      />
-      <label for="state">Filter by State</label>
-      <input
-        id="state"
-        type="text"
-        name="state"
-        placeholder="Enter the state"
-      />
-      <label for="city">Filter by City </label>
-      <input
-        id="city"
-        type="text"
-        name="city"
-        placeholder="Enter the city"
-      />
-      <label for="rent">Search your Rent </label>
-      <input
-        id="rent"
-        type="number"
-        name="rent"
-        placeholder="Enter the rent"
-      />
-      <label for="size">Search your Size </label>
-      <input
-        id="size"
-        type="number"
-        name="size"
-        placeholder="Enter the size"
-      />
-      <label for="occupantCapacity">Search your Occupant Capacity </label>
-      <input
-        id="occupantCapacity"
-        type="number"
-        name="occupantCapacity"
-        placeholder="Enter the Occupant Capacity"
-      />
-    </div>
-    <br />
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="city">City</label>
+        <input
+          id="city"
+          type="text"
+          name="city"
+          placeholder="Enter the city"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <label for="state">State</label>
+        <select
+          id="state"
+          type="text"
+          name="state"
+          placeholder="Enter the state"
+          class="form-control"
+        >
+          <option selected>Choose...</option>
+          <option>AL</option>
+          <option>AK</option>
+          <option>AZ</option>
+          <option>AR</option>
+          <option>CA</option>
+          <option>CO</option>
+          <option>CT</option>
+          <option>DE</option>
+          <option>FL</option>
+          <option>GA</option>
+          <option>HI</option>
+          <option>ID</option>
+          <option>IL</option>
+          <option>IN</option>
+          <option>IA</option>
+          <option>KS</option>
+          <option>KY</option>
+          <option>LA</option>
+          <option>ME</option>
+          <option>MD</option>
+          <option>MA</option>
+          <option>MI</option>
+          <option>MN</option>
+          <option>MS</option>
+          <option>MO</option>
+          <option>MT</option>
+          <option>NE</option>
+          <option>NV</option>
+          <option>NH</option>
+          <option>NJ</option>
+          <option>NM</option>
+          <option>NY</option>
+          <option>NC</option>
+          <option>ND</option>
+          <option>OH</option>
+          <option>OK</option>
+          <option>OR</option>
+          <option>PA</option>
+          <option>RI</option>
+          <option>SC</option>
+          <option>SD</option>
+          <option>TN</option>
+          <option>TX</option>
+          <option>UT</option>
+          <option>VT</option>
+          <option>VA</option>
+          <option>VA</option>
+          <option>WA</option>
+          <option>WV</option>
+          <option>WI</option>
+          <option>WY</option>
+  
+        </select>
 
-    <button type="submit">Submit</button>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="zipcode">Zipcode</label>
+        <input
+          id="zipcode"
+          type="number"
+          class="form-control"
+          min="4"
+          name="zipcode"
+          placeholder="Enter the zipcode"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="rent">Rent </label>
+        <select
+          id="rent"
+          type="text"
+          name="rent"
+          placeholder="Enter the rent range"
+          class="form-control"
+        >
+          <option selected>Choose...</option>
+          <option>$1 - $1000</option>
+          <option>$1000 - $2000</option>
+          <option>$2000 - $3000</option>
+          <option>$3000 - $4000</option>
+          <option>$4000 - $5000</option>
+          <option>$5000 - $6000</option>
+          <option>$6000 - $7000</option>
+          <option>$7000 - $8000</option>
+          <option>$8000 - $9000</option>
+          <option>$9000 - $10000</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="size">Size </label>
+        <select
+          id="size"
+          type="number"
+          name="size"
+          placeholder="Enter the Size"
+          class="form-control"
+        >
+          <option selected>Choose...</option>
+          <option>1 - 1000</option>
+          <option>1000 - 2000</option>
+          <option>2000 - 3000</option>
+          <option>3000 - 4000</option>
+          <option>4000 - 5000</option>
+          <option>5000 - 6000</option>
+          <option>6000 - 7000</option>
+          <option>7000 - 8000</option>
+          <option>8000 - 9000</option>
+          <option>9000 - 10000</option>
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="occupantCapacity">Occupant Capacity </label>
+        <select
+          id="occupantCapacity"
+          type="number"
+          name="occupantCapacity"
+          placeholder="Enter the Occupant Capacity"
+          class="form-control"
+        >
+          <option selected>Choose...</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+        </select>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary btn-lg btn-block"
+    >Search!</button>
   </form>
   {{#if error}}
     <div>{{error}}</div>
   {{/if}}
   <br />
-</div>
+</div> 
+
+
+
+
+
+
+
+
+
+<div id="city-choosing-div">
+  <form id="city-choosing-form" action="/apartmentAddress" method="post">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="address">Address</label>
+        <input
+          id="address"
+          type="text"
+          name="address"
+          placeholder="Enter the address"
+          class="form-control"
+        />
+      </div>
+    
+    <button
+      type="submit"
+      class="btn btn-primary btn-lg btn-block"
+    >Search!!</button>
+  </form>
+  <br />
+</div> 

@@ -11,12 +11,13 @@ module.exports = {
     zipcode,
     rent,
     size,
-    occupantCapacity
+    occupantCapacity,
+    contactInfo
   ) {
     let photosInvalidFlag = false;
 
     console.log(arguments.length);
-    if (arguments.length !== 8)
+    if (arguments.length !== 9)
       throw "Incorrect numbers of passed arguments, it should be 6";
     /* if (!name) throw 'You must provide a name to search for';
 if (typeof name !== 'string') throw 'name must be a string';
@@ -94,6 +95,7 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
       rent: rent,
       size: size,
       occupantCapacity: occupantCapacity,
+      contactInfo: contactInfo,
       reviews: [],
     };
 
@@ -128,53 +130,67 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     zipcode,
     state,
     city,
-    rent,
-    size,
+    rentMin,
+    rentMax,
+    sizeMin,
+    sizeMax,
     occupantCapacity
   ) {
-    if (!zipcode) throw "You must provide an id to search for";
+
     //if (typeof zipcode !== 'string') throw 'Id must be a string';
-    if (zipcode.trim().length === 0)
-      throw "zipcode cannot be an empty string or just spaces";
+
     zipcode = zipcode.trim();
-    if (!zipcode) zipcode == null;
-    console.log("here", state)
+  
+    
     // zipcode ? zipcode : null
 
     //if (!ObjectId.isValid(id)) throw 'ID is not a valid object ID';
     const apartmentCollection = await apartment();
-    let apartmentData = await apartmentCollection
-      .find({
-        zipcode: zipcode,
-      })
-      .toArray();
-    if (state) {
+    let apartmentData = await apartmentCollection.find({}).toArray();
+    
+    if (zipcode) {
       for (apt of apartmentData) {
-          apartmentData = apartmentData.filter(apt => apt.state === state)
-          console.log("ooo", apartmentData)
+        apartmentData = apartmentData.filter((apt) => apt.zipcode === zipcode);
+        console.log("booo", apartmentData);
+      }
+    }
+    console.log("here", state);
+    if (state != "Choose...") {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter((apt) => apt.state === state);
+        console.log("cooo", apartmentData);
       }
     }
     if (city) {
       for (apt of apartmentData) {
-        apartmentData = apartmentData.filter(apt => apt.city === city)
+        apartmentData = apartmentData.filter((apt) => apt.city === city);
       }
     }
-    if (rent) {
+    console.log("Min", rentMin)
+    if (rentMin) {
+      // console.log("yooo", apartmentData);
       for (apt of apartmentData) {
-        apartmentData = apartmentData.filter(apt => apt.rent === rent)
-        }
-    }
-    if (size) {
-      for (apt of apartmentData) {
-        apartmentData = apartmentData.filter(apt => apt.size === size)
+        apartmentData = apartmentData.filter((apt) => apt.rent >= rentMin);
+        console.log("sooo", apartmentData);
+        apartmentData = apartmentData.filter((apt) => apt.rent <= rentMax);
+        console.log("looo", apartmentData);
       }
     }
-    if (occupantCapacity) {
+    if (sizeMin) {
       for (apt of apartmentData) {
-        apartmentData = apartmentData.filter(apt => apt.occupantCapacity === occupantCapacity)
+        apartmentData = apartmentData.filter((apt) => apt.size >= sizeMin);
+        console.log("stooo", apartmentData);
+        apartmentData = apartmentData.filter((apt) => apt.size <= sizeMax);
+        console.log("looo", apartmentData);
       }
     }
-
+    if (occupantCapacity != "Choose...") {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter(
+          (apt) => apt.occupantCapacity === occupantCapacity
+        );
+      }
+    }
 
     console.log("the", apartmentData);
 
@@ -188,6 +204,19 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     if (apartmentData === null)
       throw "No apartment available for this zip code";
     //banggo._id = banggo._id.toString();
+    return apartmentData;
+  },
+
+  async getApartmentAddress(
+    address,
+  ) {
+    console.log("here", address)
+    const apartmentCollection = await apartment();
+    let apartmentData = await apartmentCollection.find({
+      address: address
+    }).toArray();
+    
+    console.log("here", apartmentData)
     return apartmentData;
   },
 
