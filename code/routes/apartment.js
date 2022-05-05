@@ -98,7 +98,7 @@ router.post(
         req.body.rent,
         req.body.size,
         req.body.occupantCapacity,
-        req.session.user.email
+        req.body.contactInfo
       );
       res.status(200).render("city-choosing", {
         success: "Your property has been successfully added!",
@@ -334,7 +334,73 @@ router.post("/apartment", isLogin, async (req, res) => {
   const apartmentState = req.body.state;
   const apartmentCity = req.body.city;
   const apartmentRent = req.body.rent;
+  let rentMin = undefined;
+  let rentMax = undefined;
+  if (apartmentRent === "$1 - $1000") {
+    rentMin = 1;
+    rentMax = 1000;
+  } else if (apartmentRent === "$1000 - $2000") {
+    rentMin = 1000;
+    rentMax = 2000;
+  } else if (apartmentRent === "$2000 - $3000") {
+    rentMin = 2000;
+    rentMax = 3000;
+  } else if (apartmentRent === "$3000 - $4000") {
+    rentMin = 3000;
+    rentMax = 4000;
+  } else if (apartmentRent === "$4000 - $5000") {
+    rentMin = 4000;
+    rentMax = 5000;
+  } else if (apartmentRent === "$5000 - $6000") {
+    rentMin = 5000;
+    rentMax = 6000;
+  } else if (apartmentRent === "$6000 - $7000") {
+    rentMin = 6000;
+    rentMax = 7000;
+  } else if (apartmentRent === "$7000 - $8000") {
+    rentMin = 7000;
+    rentMax = 8000;
+  } else if (apartmentRent === "$8000 - $9000") {
+    rentMin = 8000;
+    rentMax = 9000;
+  } else if (apartmentRent === "$9000 - $10000") {
+    rentMin = 9000;
+    rentMax = 10000;
+  }
   const apartmentSize = req.body.size;
+  let sizeMin = undefined;
+  let sizeMax = undefined;
+  if (apartmentSize === "1 -$1000") {
+    rentMin = 1;
+    rentMax = 1000;
+  } else if (apartmentSize === "1000 - 2000") {
+    rentMin = 1000;
+    rentMax = 2000;
+  } else if (apartmentSize === "2000 - 3000") {
+    rentMin = 2000;
+    rentMax = 3000;
+  } else if (apartmentSize === "3000 - 4000") {
+    rentMin = 3000;
+    rentMax = 4000;
+  } else if (apartmentSize === "4000 - 5000") {
+    rentMin = 4000;
+    rentMax = 5000;
+  } else if (apartmentSize === "5000 - 6000") {
+    rentMin = 5000;
+    rentMax = 6000;
+  } else if (apartmentSize === "6000 - 7000") {
+    rentMin = 6000;
+    rentMax = 7000;
+  } else if (apartmentSize === "7000 - 8000") {
+    rentMin = 7000;
+    rentMax = 8000;
+  } else if (apartmentSize === "8000 - 9000") {
+    rentMin = 8000;
+    rentMax = 9000;
+  } else if (apartmentSize === "9000 - 10000") {
+    rentMin = 9000;
+    rentMax = 10000;
+  }
   const apartmentOccupantCapacity = req.body.occupantCapacity;
   console.log("state", apartmentState);
   // console.log("apartmentZipcode", apartmentZipcode);
@@ -351,8 +417,10 @@ router.post("/apartment", isLogin, async (req, res) => {
         apartmentZipcode,
         apartmentState,
         apartmentCity,
-        apartmentRent,
-        apartmentSize,
+        rentMin,
+        rentMax,
+        sizeMin,
+        sizeMax,
         apartmentOccupantCapacity
       );
     console.log("hi", allAvailableApartmentList);
@@ -384,6 +452,43 @@ router.post("/apartment", isLogin, async (req, res) => {
       .render("apartment-listing", {
         error: `There is no show found for the given filters: ${apartmentZipcode}`,
       });
+  }
+});
+
+router.post("/apartmentAddress", isLogin, async (req, res) => {
+  const apartmentAddress = req.body.address;
+  console.log("yo", apartmentAddress)
+
+  try {
+    let apartment = await apartmentData.getApartmentAddress(
+      apartmentAddress
+    );
+    //res.status(200).json(allAvailableApartmentList);
+    //console.log("allAvailableApartmentList......",allAvailableApartmentList);
+
+    //for(let i in allAvailableApartmentList){
+
+    res.status(200).render(
+      "each-apartment-listing",
+      {
+        apartmentListing: apartment,
+        reviews: apartment[0].reviews,
+        username: req.session.user?.username,
+        email: req.session.user?.email,
+        isNotLogin: !req.session.user,
+      }
+      ////   city: allAvailableApartmentList[i].city,
+      // address:allAvailableApartmentList[i].address,
+      // rent:allAvailableApartmentList[i].rent,
+      //size:allAvailableApartmentList[i].size,
+      //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
+    );
+    // }
+  } catch (e) {
+    console.log(e);
+    res
+      .status(404)
+      console.log(e)
   }
 });
 
