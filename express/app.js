@@ -42,23 +42,26 @@ app.get("/signup", logging, (req, res) => {
 });
 
 app.post("/signup", logging, async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email, phonenumber, city, gender } = req.body;
+  console.log(username, password);
   try {
-    await createUser(username, password);
-  } catch (e) {}
-  res.redirect("/");
+    await createUser(username, password, email, phonenumber, city, gender);
+    res.send("Sign up Success");
+  } catch (e) {
+    res.send(`"error", ${e.message}`);
+  }
 });
 
 app.post("/login", logging, async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    await checkUser(username, password);
+    await checkUser(email, password);
+    req.session.user = { email };
+    res.send("Sign in Success");
   } catch (e) {
-    res.render("login", { message: e.message });
+    res.send(`"error", ${e.message}`);
     return;
   }
-  req.session.user = { username };
-  res.redirect("/private");
 });
 
 app.get("/private", logging, auth, async (req, res) => {
@@ -72,7 +75,7 @@ app.get("/logout", logging, async (req, res) => {
 
 router(app);
 
-app.listen(3000, () => {
+app.listen(4000, () => {
   console.log("We've now got a server!");
-  console.log("Your routes will be running on http://localhost:3000");
+  console.log("Your routes will be running on http://localhost:4000");
 });
