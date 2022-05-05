@@ -10,17 +10,20 @@ const apartment = mongoCollections.apartment;
 const users = mongoCollections.users;
 
 const multer = require("multer");
-const path = require('path');
+const path = require("path");
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-      cb(null, 'public/photos/');
+  destination: function (req, file, cb) {
+    cb(null, "public/photos/");
   },
 
-  filename: function(req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
 });
-const upload = multer({ storage: storage })
+const upload = multer({ storage: storage });
 
 const fs = require("fs");
 
@@ -66,44 +69,49 @@ router.get("/newApartment", isLogin, async (req, res) => {
       error,
     });
   } catch (e) {
+    console.log(e);
     res.status(500).json({ error: e });
   }
 });
 
-router.post("/newApartmentInfo", isLogin, upload.array('photos') ,async (req, res) => {
-
-  let city = req.body.city;
-  let address = req.body.address;
-  let zipcode = req.body.zipcode;
-  let rent = req.body.rent;
-  let size = req.body.size;
-  let occupantCapacity = req.body.occupantCapacity;
-try {
-  console.log("this", req.files)
-  const paths = req.files.map(file => file.path)
-  const paths2 = paths.map(file => "\\" + file)
-  let x = await apartmentData.create(
-    req.body.state,
-    req.body.city,
-    paths2,
-    req.body.address,
-    req.body.zipcode,
-    req.body.rent,
-    req.body.size,
-    req.body.occupantCapacity,
-    req.session.user.email
-  );
-  res.status(200).render("city-choosing", {
-    success: "Your property has been successfully added!",
-    username: req.session.user?.username,
-    email: req.session.user?.email,
-    isNotLogin: !req.session.user,
-  });
-} catch (e) {
-  console.log(e)
-  res.status(400).redirect(`/newApartment?error=${e}`);
-}
-});
+router.post(
+  "/newApartmentInfo",
+  isLogin,
+  upload.array("photos"),
+  async (req, res) => {
+    let city = req.body.city;
+    let address = req.body.address;
+    let zipcode = req.body.zipcode;
+    let rent = req.body.rent;
+    let size = req.body.size;
+    let occupantCapacity = req.body.occupantCapacity;
+    try {
+      console.log("this", req.files);
+      const paths = req.files.map((file) => file.path);
+      const paths2 = paths.map((file) => "\\" + file);
+      let x = await apartmentData.create(
+        req.body.state,
+        req.body.city,
+        paths2,
+        req.body.address,
+        req.body.zipcode,
+        req.body.rent,
+        req.body.size,
+        req.body.occupantCapacity,
+        req.session.user.email
+      );
+      res.status(200).render("city-choosing", {
+        success: "Your property has been successfully added!",
+        username: req.session.user?.username,
+        email: req.session.user?.email,
+        isNotLogin: !req.session.user,
+      });
+    } catch (e) {
+      console.log(e);
+      res.status(400).redirect(`/newApartment?error=${e}`);
+    }
+  }
+);
 
 router.route("/").post(async (req, res) => {
   const apartmentInfo = req.body.zipcode;
@@ -329,7 +337,7 @@ router.post("/apartment", isLogin, async (req, res) => {
   const apartmentRent = req.body.rent;
   const apartmentSize = req.body.size;
   const apartmentOccupantCapacity = req.body.occupantCapacity;
-  console.log("state", apartmentState)
+  console.log("state", apartmentState);
   // console.log("apartmentZipcode", apartmentZipcode);
   // if (!apartmentZipcode) {
   //   res.status(400).render("error", {
@@ -340,8 +348,15 @@ router.post("/apartment", isLogin, async (req, res) => {
 
   try {
     let allAvailableApartmentList =
-      await apartmentData.getAllApartmentSelectedZipCode(apartmentZipcode, apartmentState, apartmentCity, apartmentRent, apartmentSize, apartmentOccupantCapacity);
-    console.log("hi", allAvailableApartmentList)
+      await apartmentData.getAllApartmentSelectedZipCode(
+        apartmentZipcode,
+        apartmentState,
+        apartmentCity,
+        apartmentRent,
+        apartmentSize,
+        apartmentOccupantCapacity
+      );
+    console.log("hi", allAvailableApartmentList);
     //res.status(200).json(allAvailableApartmentList);
     //console.log("allAvailableApartmentList......",allAvailableApartmentList);
 
@@ -364,8 +379,12 @@ router.post("/apartment", isLogin, async (req, res) => {
     );
     // }
   } catch (e) {
-    console.log(e)
-    res.status(404).render("apartment-listing",{error: `There is no show found for the given filters: ${apartmentZipcode}`});
+    console.log(e);
+    res
+      .status(404)
+      .render("apartment-listing", {
+        error: `There is no show found for the given filters: ${apartmentZipcode}`,
+      });
   }
 });
 
