@@ -60,7 +60,6 @@ router.get("/newApartment", isLogin, async (req, res) => {
   const error = req.query.error;
   try {
     //res.render("new-apartment");
-    console.log("aditii.....");
     res.status(200).render("new-apartment", {
       //success: "Your property has been successfully added",
       username: req.session.user?.username,
@@ -72,6 +71,17 @@ router.get("/newApartment", isLogin, async (req, res) => {
     console.log(e);
     res.status(500).json({ error: e });
   }
+});
+
+router.get("/updateApartment", isLogin, async (req, res) => {
+  console.log("in get routes of updateApartment", req.params.id, req.body);
+  res.render("update-apartment", {
+    apartmentId: req.params.id,
+    username: req.session.user?.username,
+    email: req.session.user?.email,
+    isNotLogin: !req.session.user,
+  });
+  return;
 });
 
 router.post(
@@ -86,6 +96,7 @@ router.post(
     let size = req.body.size;
     let occupantCapacity = req.body.occupantCapacity;
     try {
+      console.log("apartment crate request sessino", req.session.user._id);
       console.log("this", req.files);
       const paths = req.files.map((file) => file.path);
       const paths2 = paths.map((file) => "\\" + file);
@@ -98,7 +109,11 @@ router.post(
         req.body.rent,
         req.body.size,
         req.body.occupantCapacity,
+
         req.body.contactInfo
+        //req.session.user.email,
+        req.session.user._id
+        
       );
       res.status(200).render("city-choosing", {
         success: "Your property has been successfully added!",

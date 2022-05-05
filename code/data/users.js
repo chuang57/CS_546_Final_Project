@@ -57,7 +57,8 @@ const createUser = async (
     age,
     usertype,
     reviewsWritten:[],
-    savedApartments:[]
+    savedApartments:[],
+    AddedProperty:[]
 
   });
   return { userInserted: true };
