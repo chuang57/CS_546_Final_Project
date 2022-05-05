@@ -1,10 +1,8 @@
 const apartmentRoutes = require("./apartment");
 const reviewsRoutes = require("./reviews");
 const userRoutes = require("./user");
-
-
 const constructorMethod = (app) => {
-  app.use("/",  apartmentRoutes);
+  app.use("/", apartmentRoutes);
   app.use("/", reviewsRoutes);
   app.use("/", userRoutes);
   app.use("*", (req, res) => {
