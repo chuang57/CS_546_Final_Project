@@ -5,20 +5,6 @@ const reviewsData = data.reviews;
 const { ObjectId } = require("mongodb");
 const { isLogin } = require("../middleware/auth");
 
-/* const express = require("express");
-const router = express.Router();
-const data = require("../data");
-const reviewsData = data.reviews;
-//const { ObjectId } = require("mongodb");
-const mongoCollections = require("../config/mongoCollections");
-const reviews = mongoCollections.reviews; */
-
-/* const express = require("express");
-const router = express.Router();
-const { createUser, checkUser } = require("../data/users");
-const mongoCollections = require("../config/mongoCollections");
-const users = mongoCollections.users; */
-
 router.get("/reviews/:id", isLogin, async (req, res) => {
   console.log("in get routes of reviews", req.params.id, req.body);
   res.render("reviews", {
@@ -31,8 +17,7 @@ router.get("/reviews/:id", isLogin, async (req, res) => {
 });
 
 router.post("/reviews/:id", isLogin, async (req, res) => {
-
-  const reviewsInfo = req.body;
+ const reviewsInfo = req.body;
   req.params.id = req.params.id.trim();
   let sessionUser = req.session.user.username;
   let userSessionId = req.session.user._id;
@@ -178,8 +163,10 @@ router.get('/reviews/delete/:id', isLogin, async (req, res) => {
   req.params.id = req.params.id.trim();
   let sessionUser = req.session.user.username;
   let userSessionId = req.session.user._id;
-  console.log("sessionUser", sessionUser);
-  console.log("userSessionId", userSessionId);
+  let userEmail = req.session.user.email;
+  //console.log("sessionUser", sessionUser);
+  //console.log("userSessionId", userSessionId);
+  //console.log("req.session.user...",req.session.user );
 
   if (!ObjectId.isValid(req.params.id)) {
     res.status(400).json({ error: 'Provided review id is not a valid object ID.' });
@@ -194,20 +181,16 @@ router.get('/reviews/delete/:id', isLogin, async (req, res) => {
     return;
   }
 
-  console.log("inside delete review route 2", req.params.id);
   try {
     let deletedReviews = await reviewsData.remove(req.params.id, userSessionId, sessionUser);
 
     console.log("inside delete review route 3", deletedReviews);
     if (deletedReviews === undefined) {
       res.status(404).json({ error: 'Could not delete review with id' });
-      //.json(deletedAlbum);   
     }
-    res.status(200).json({ "Review Id": req.params.id, "deleted": true, "modifiedcount": deletedReviews });
-    //res.status(200).redirect("profile/checkAllReviews", {
-     // review: "review has been deleted successfully",
-      
-  
+    //res.status(200).json({ "Review Id": req.params.id, "deleted": true, "modifiedcount": deletedReviews });
+    res.status(200).redirect("/profile/"+userEmail+"/checkAllReviews");
+    
   } catch (e) {
     if (e === 'review does not exists') {
       res.status(404).json({ error: e });

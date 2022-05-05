@@ -1,8 +1,9 @@
- <body>
- 
+<body>
+
   {{#each apartmentListing}}
   <header>
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
  
   <div class = "row row-cols-2">  
@@ -105,70 +106,145 @@
                 alt="map of the apartment" />
             </figure>
 >>>>>>> Stashed changes
+=======
+>>>>>>> d041d03a2a26e2884c5afee8f2baa5bbc7461683
 
-    {{!-- <div class="carousel-item">
-      <img src={{this}} class="d-block w-80" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src={{this}} class="d-block w-80" alt="...">
-    </div> --}}
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
- 
-  {{!-- <img src={{this}}>> --}}
- 
- 
- 
-{{/with}}  
-</header>
-</div>
- <section class="my-5" id="nav_about_us" >
-        <div>
-            <h4 class="display-6 text-center ">Details</h4>
-            <hr class="w-25 mx-auto">
-            <div class="container">
-                <div class="row my-5">
-                    <div class="col col-xl-6 col-md-6 col-12">
+    <div class="row row-cols-2">
 
-                        <figure>
-                            <img style="max-height: 280px; width: 100%;" class="img-fluid rounded-3 mx-auto d-block" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW44P24uZ4-GyJXYFfAiJcijO-HCgY3l9WQA&usqp=CAU" alt="" />
-                        </figure>
 
+      {{!-- <div class="container">
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+          <div class="col">
+            <div class="p-3 border bg-light"> --}}
+              {{!-- Row column --}}
+
+              <div class="col">
+                <div class="p-3 border">
+
+                  <div class="container">
+                    {{#with this.photos}}
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+
+                        <div class="carousel-item active">
+                          <img src={{this.[0]}} class="d-block w-100" alt="...">
+                        </div>
+                        {{#each this}}
+                        {{#if @first}}
+                        {{else}}
+                        <div class="carousel-item">
+                          <img src={{this}} class="d-block w-100" alt="...">
+                        </div>
+                        {{/if}}
+                        {{/each}}
+                      </div>
+
+                      {{!-- <div class="carousel-item">
+                        <img src={{this}} class="d-block w-80" alt="...">
+                      </div>
+                      <div class="carousel-item">
+                        <img src={{this}} class="d-block w-80" alt="...">
+                      </div> --}}
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
                     </div>
-                    <div class=" col col-xl-6 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column about_us_text ">
-                    {{!-- <h5 class="display-6 ">Apartment Details</h2> --}}
-                     
-                  <div class = "apartment-address"><h2>{{this.address}}</h2></div>
-                  <div class = "apartment-address"><h4>{{this.city}}, {{this.state}}, {{this.zipcode}} </h4></div>
-                  <div class = "apartment-address">Monthly Rent: ${{this.rent}}</div>
-                  <div class = "apartment-address">Size of the apartment: {{this.size}} square foot</div>
-                  <div class = "apartment-address">Occupant capacity: {{this.occupantCapacity}} members</div>
-                  <div class = "apartment-address">email: {{this.useremail}}</div>
-                 {{!--  <div class = "reviews"> <a href="/reviews/{{this._id}}" class="click">write a review</a> </div>   --}}
-                 <br>
-                   <a href="/reviews/{{this._id}}" class="btn btn-warning display-6 rounded-pill">Write a review</a>
+
+                    {{!-- <img src={{this}}>> --}}
+
+
+
+                    {{/with}}
+  </header>
+  </div>
+  <section class="my-5" id="nav_about_us">
+    <div>
+      <h4 class="display-6 text-center ">Details</h4>
+      <hr class="w-25 mx-auto">
+      <div class="container">
+        <div class="row my-5">
+          <div class="col col-xl-6 col-md-6 col-12">
+
+            <figure>
+              <img style="max-height: 280px; width: 100%;" class="img-fluid rounded-3 mx-auto d-block"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW44P24uZ4-GyJXYFfAiJcijO-HCgY3l9WQA&usqp=CAU"
+                alt="" />
+            </figure>
+
+          </div>
+          <div
+            class=" col col-xl-6 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column about_us_text ">
+            {{!-- <h5 class="display-6 ">Apartment Details</h2> --}}
+
+              <div class="apartment-address">
+                <h2>{{this.address}}</h2>
+              </div>
+              <div class="apartment-address">
+                <h4>{{this.city}}, {{this.state}}, {{this.zipcode}} </h4>
+              </div>
+              <div class="apartment-address">Monthly Rent: ${{this.rent}}</div>
+              <div class="apartment-address">Size of the apartment: {{this.size}} square foot</div>
+              <div class="apartment-address">Occupant capacity: {{this.occupantCapacity}} members</div>
+              <div class="apartment-address">email: {{this.useremail}}</div>
+              {{!-- <div class="reviews"> <a href="/reviews/{{this._id}}" class="click">write a review</a> </div> --}}
+              <br>
+              <a href="/reviews/{{this._id}}" class="btn btn-warning display-6 rounded-pill">Write a review</a>
 
               {{#if ../isDelete}}
-                <button
-                  class="btn btn-warning display-6 rounded-pill"
-                  onclick="deleteApartment('{{this._id}}')"
-                >delete</button>
+              <button class="btn btn-warning display-6 rounded-pill"
+                onclick="deleteApartment('{{this._id}}')">delete</button>
               {{/if}}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
                    {{!--  {{#each reviews}}
                     <p>Rating: {{this.rating}}, Desciption: {{this.description}}</p>
                    {{/each}}   --}}
+=======
+              {{!-- {{#each reviews}}
+              <p>Rating: {{this.rating}}, Desciption: {{this.description}}</p>
+              {{/each}} --}}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  </div>
+  <section class="mt-5 bg-dark pb-5">
+    <div>
+      <h4 class="display-6 text-center text-warning pt-3">Reviews</h4>
+      <hr class="w-25 mx-auto text-warning" />
+      <div class="container">
+
+        <div class="card-group">
+
+          <div class="card mx-2 border-0 rounded-3">
+            {{! <img
+              src="https://images.unsplash.com/photo-1637070155805-e6fbee6ec2cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80"
+              class="card-img-top" alt="..."> }}
+            {{#each reviews}}
+            <div class="card-body">
+              <h5 class="card-title">Rating: {{this.rating}}</h5>
+              <p class="card-text">Desciption: {{this.description}}</p>
+              <p class="card-text"><small class="text-muted">{{this.name}}</small></p>
+              {{! <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> }}
+>>>>>>> d041d03a2a26e2884c5afee8f2baa5bbc7461683
             </div>
+            {{! <div class="card-footer text-center">
+              <a href="#" class="btn btn-warning display-6 rounded-pill">Know More</a>
+            </div> }}
+            {{/each}}
           </div>
 
         </div>
+<<<<<<< HEAD
 =======
               
               {{!-- {{#each reviews}}
@@ -208,123 +284,75 @@
         </div> 
 
 >>>>>>> Stashed changes
+=======
+
+>>>>>>> d041d03a2a26e2884c5afee8f2baa5bbc7461683
       </div>
-    </section>
-</div>
-    <section class="mt-5 bg-dark pb-5">
-      <div>
-        <h4 class="display-6 text-center text-warning pt-3">Reviews</h4>
-        <hr class="w-25 mx-auto text-warning" />
-        <div class="container">
+    </div>
 
-          <div class="card-group">
+  </section>
 
-            <div class="card mx-2 border-0 rounded-3">
-              {{! <img src="https://images.unsplash.com/photo-1637070155805-e6fbee6ec2cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80" class="card-img-top" alt="..."> }}
-              {{#each reviews}}
-                <div class="card-body">
-                  <h5 class="card-title">Rating: {{this.rating}}</h5>
-                  <p class="card-text">Desciption: {{this.description}}</p>
-                  <p class="card-text"><small
-                      class="text-muted"
-                    >{{this.name}}</small></p>
-                  {{!  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> }}
-                </div>
-                {{!  <div class="card-footer text-center">
-                        <a href="#" class="btn btn-warning display-6 rounded-pill">Know More</a>
-                      </div> }}
-              {{/each}}
-            </div>
-
-            {{! <div class="card mx-2 border-0 rounded-3" >
-                      <img src="https://images.unsplash.com/photo-1637070155805-e6fbee6ec2cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                      </div>
-                      <div class="card-footer text-center">
-                        <a href="#" class="btn btn-warning display-6 rounded-pill">Know More</a>
-                      </div>
-                    </div> }}
-            {{!    <div class="card mx-2 border-0 rounded-3">
-                      <img src="https://images.unsplash.com/photo-1637070155805-e6fbee6ec2cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                      </div>
-                      <div class="card-footer text-center">
-                        <a href="#" class="btn btn-warning display-6 rounded-pill">Know More</a>
-                      </div>
-                    </div> }}
-
-          </div>
-
+  {{! <section class="mt-2 bg-light mb-5 pb-4" id="nav_contact">
+    <div>
+      <h4 class="display-6 text-center  ">Contact</h4>
+      <hr class="w-25 mx-auto ">
+    </div>
+    <div class="container">
+      <form class="row g-3 text-center ">
+        <div class="col-md-12">
+          <label for="inputEmail4" class="form-label">Name</label>
+          <input type="text" class="form-control" id="inputEmail4">
         </div>
-      </div>
 
-    </section>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Address</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">Address 2</label>
+          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">City</label>
+          <input type="text" class="form-control" id="inputCity">
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">State</label>
+          <select id="inputState" class="form-select">
+            <option selected>Choose...</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Zip</label>
+          <input type="text" class="form-control" id="inputZip">
+        </div>
 
-    {{!     <section class="mt-2 bg-light mb-5 pb-4" id="nav_contact">
-                <div>
-                    <h4 class="display-6 text-center  ">Contact</h4>
-                    <hr class="w-25 mx-auto ">
-                    </div>
-                    <div class="container">
-                        <form class="row g-3 text-center ">
-                            <div class="col-md-12">
-                              <label for="inputEmail4" class="form-label">Name</label>
-                              <input type="text" class="form-control" id="inputEmail4">
-                            </div>
-                        
-                            <div class="col-12">
-                              <label for="inputAddress" class="form-label">Address</label>
-                              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                            </div>
-                            <div class="col-12">
-                              <label for="inputAddress2" class="form-label">Address 2</label>
-                              <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                            </div>
-                            <div class="col-md-6">
-                              <label for="inputCity" class="form-label">City</label>
-                              <input type="text" class="form-control" id="inputCity">
-                            </div>
-                            <div class="col-md-4">
-                              <label for="inputState" class="form-label">State</label>
-                              <select id="inputState" class="form-select">
-                                <option selected>Choose...</option>
-                                <option>...</option>
-                              </select>
-                            </div>
-                            <div class="col-md-2">
-                              <label for="inputZip" class="form-label">Zip</label>
-                              <input type="text" class="form-control" id="inputZip">
-                            </div>
-                            
-                            <div class="col-12">
-                              <button type="submit" class="btn btn-primary rounded-pill display-6">Submit</button>
-                            </div>
-                          </form>
-                    </div>
-                    </section> }}
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary rounded-pill display-6">Submit</button>
+        </div>
+      </form>
+    </div>
+  </section> }}
 
-    {{!   <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-        function hidenav(){
-            
-            var element = document.getElementById("navbarSupportedContent")
-            element.classList.remove("show");
-        }
-    </script> }}
+  {{!
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script>
+    function hidenav() {
+
+      var element = document.getElementById("navbarSupportedContent")
+      element.classList.remove("show");
+    }
+  </script> }}
   {{/each}}
   <script>
-    async function deleteApartment(id) { await fetch(`/apartment/${id}`, {
-    method: 'DELETE', headers: { "Content-Type": "application/json", }} )
-    window.location.href= '/apartment' }
+    async function deleteApartment(id) {
+      await fetch(`/apartment/${id}`, {
+        method: 'DELETE', headers: { "Content-Type": "application/json", }
+      })
+      window.location.href = '/apartment'
+    }
   </script>
 </body>

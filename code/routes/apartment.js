@@ -273,7 +273,6 @@ if (genreInvalidFlag){
       apartmentInfo.size,
       apartmentInfo.occupantCapacity
     );
-    //console.log("new band",newBand);
     res.status(200).json(newApartment);
   } catch (e) {
     res.status(400).json({ error: e });
@@ -426,11 +425,6 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
 
   try {
     let apartment = await apartmentData.getApartmentById(apartmentId);
-    console.log("***********************************************", apartment);
-    console.log(
-      "**************aditi**********************",
-      apartment[0].reviews
-    );
     if (apartment) {
       // res.status(200).render('each-apartment-listing', { singalShow: show, title: show.name, summary: show.summary, image: images, rating: show.rating.average, network:network,language:show.language, genres:show.genres});
       // res.status(200).json(apartment);
@@ -441,8 +435,6 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
       const isDelete =
         req.session.user.usertype === "admin" ||
         req.session.user.email === apartment[0].useremail;
-
-      console.log("-------------", apartment.photos, apartment[0].photos);
       res.status(200).render(
         "each-apartment-listing",
         {
@@ -461,7 +453,7 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
         //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
       );
     } else {
-      // console.log("1");
+
       //console.log(e);
       //res.status(404).render('singleShow', { error_message: `There is no show found for the given ID: ${showId}`, title: "Error", showId: showId});
       res.status(404).render("each-apartment-listing", {
@@ -475,7 +467,6 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
       return;
     }
   } catch (e) {
-    // console.log("2");
     //res.status(500).json({ error: e });
     //res.status(404).render('singleShow', { error_message: `There is no show found for the given ID: ${showId}`, title: "Error", showId: showId});
     res.status(404).render("each-apartment-listing", {
