@@ -20,7 +20,7 @@ const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users; */
 
 router.get("/reviews/:id", isLogin, async (req, res) => {
-  console.log("in get routes of reviews", req.params.id);
+  console.log("in get routes of reviews", req.params.id, req.body);
   res.render("reviews", {
     apartmentId: req.params.id,
     username: req.session.user?.username,
@@ -33,10 +33,12 @@ router.get("/reviews/:id", isLogin, async (req, res) => {
 router.post("/reviews/:id", isLogin, async (req, res) => {
 
   const reviewsInfo = req.body;
-  let tracksInvalidFlag = false;
   req.params.id = req.params.id.trim();
   let sessionUser = req.session.user.username;
   let userSessionId = req.session.user._id;
+
+  console.log("sessionUser",sessionUser);
+  console.log("req.params.id",req.params.id);
   /*  if (!req.params.id) {
         res.status(400).json({ error: 'You must Supply a band ID to create album' });
         return;
@@ -110,14 +112,26 @@ router.post("/reviews/:id", isLogin, async (req, res) => {
         res.status(400).json({ error: 'Provided rating value is in incorrect format.'});
         return;
     }  */
-  /*   if (reviewsInfo.rating> 5 || reviewsInfo.rating<1) {
-        res.status(400).json({ error: 'Given rating value should be a range from 1 to 5.'});
-        return;
+
+  
+
+  if (reviewsInfo.rating === "" || reviewsInfo.rating === "undefined") {
+      res.status(400).render("reviews", {error: "Please provide rating from 1-5", apartmentId : req.params.id });
+      return;
+   } 
+   if (reviewsInfo.description === "" || reviewsInfo.description === "undefined") {
+    res.status(400).render("reviews", {error: "Please provide your feedback", apartmentId : req.params.id });
+    return;
+   } 
+    if (reviewsInfo.rating> 5 || reviewsInfo.rating<1) {
+      res.status(400).render("reviews", {error: "Given rating value should be a range from 1 to 5.", apartmentId : req.params.id });
+      return;
     } 
-    if (isValidRating(reviewsInfo.rating) === false) {
-        res.status(400).json({ error: 'Only one decimal place value in rating is accepted.'});
+   console.log("isvalidrating",isValidRating(reviewsInfo.rating));
+   if (isValidRating(reviewsInfo.rating) === false) {
+        res.status(400).render("reviews", {error: "Decimal values in rating is not accepted.", apartmentId : req.params.id });
         return;
-    }   */
+    }  
   // console.log(albumInfo,req.params.id);
   //If the JSON is valid and the album can be created successful, you will return all the
   //band data showing the albums  (as shown below) with a 200 status code.
@@ -209,8 +223,7 @@ function isValidDateString(dateString) {
 
 function isValidRating(rating) {
   if (rating.toString().includes(".")) {
-    if (rating.toString().split(".")[1].length !== 1) {
-      //console.log("inside if2",rating.toString().split('.')[1].length);
+    if (rating.toString().split(".").length !== '1') {
       return false;
     } else {
       return true;
