@@ -19,6 +19,11 @@ router.get("/login", async (req, res) => {
   return;
 });
 
+/* router.get("/delete/:id", async (req, res) => {
+  console.log("inside delete");
+ 
+}); */
+
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -95,7 +100,7 @@ router.get("/profile/:email/checkAllReviews", async (req, res) => {
     if (findemail2.gender === "female") {
       genderCheck2 = "female";
     }
-    console.log("findemail2", findemail2.gender);
+    console.log("findemail2.gender", findemail2.gender);
     console.log("genderCheck2", genderCheck2);
 
     let reviewLength2 = findemail2.reviewsWritten.length;
@@ -112,7 +117,8 @@ router.get("/profile/:email/checkAllReviews", async (req, res) => {
       genderCheck2,
     });
 
-    //console.log("findemail2",findemail2);
+    console.log("findemail2...aditi_9:28 pm",findemail2);
+    console.log("arr...aditi_9:28 pm",arr);
   } catch (e) {
     res.send(e);
   }
@@ -139,6 +145,7 @@ router.get("/checkAllApartments", isLogin, async (req, res) => {
 });
 
 router.get("/profile/:email", async (req, res) => {
+  
   let positiveRatingCount = 0;
   let negativeRatingCount = 0;
   let neutralRatingCount = 0;

@@ -189,7 +189,6 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     console.log("aaaaaaaaaaswerfd", apartmentData);
     if (apartmentData === null)
       throw "No apartment available for this zip code";
-    //banggo._id = banggo._id.toString();
     return apartmentData;
   },
 
@@ -201,7 +200,6 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
       apartmentData[i]._id = apartmentData[i]._id.toString();
     }
     if (apartmentData === null) throw "No apartment available";
-    //banggo._id = banggo._id.toString();
     return apartmentData;
   },
 
@@ -216,7 +214,6 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
       apartmentData[i]._id = apartmentData[i]._id.toString();
     }
     if (apartmentData === null) throw "No apartment available";
-    //banggo._id = banggo._id.toString();
     return apartmentData;
   },
 

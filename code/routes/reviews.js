@@ -19,7 +19,7 @@ const { createUser, checkUser } = require("../data/users");
 const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users; */
 
-router.get("/reviews/:id", isLogin, async (req, res) => {
+router.get("reviews/:id", isLogin, async (req, res) => {
   console.log("in get routes of reviews", req.params.id, req.body);
   res.render("reviews", {
     apartmentId: req.params.id,
@@ -174,15 +174,16 @@ router.post("/reviews/:id", isLogin, async (req, res) => {
     }
   }); */
 
-/* router.delete('/:id', async (req, res) => {
+router.get('/delete/:id', async (req, res) => {
     req.params.id = req.params.id.trim();
-    if (!req.params.id) {
+   /*  if (!req.params.id) {
       res.status(400).json({ error: 'You must Supply an ID to delete' });
       return;
-    }
+    } */
+    console.log("inside delete review route 1");
     if (!ObjectId.isValid(req.params.id)) {
-        res.status(400).json({ error: 'Provided album id is not a valid object ID.' });
-        return;}
+      res.status(400).json({ error: 'Provided album id is not a valid object ID.' });
+      return;}
         if (typeof req.params.id !== 'string') {
         res.status(400).json({ error: 'Id must be a string.' });
         return;}
@@ -190,21 +191,24 @@ router.post("/reviews/:id", isLogin, async (req, res) => {
         res.status(400).json({ error: 'Album Id cannot be an empty string or just spaces.' });
         return;
     }
-
+   
+    console.log("inside delete review route 2", req.params.id);
     try {
-      let deletedAlbum = await albumsData.remove(req.params.id);
-      if(deletedAlbum === undefined){
-        res.status(404).json({error: 'Could not delete band with id'});
+      let deletedReviews = await reviewsData.remove(req.params.id);
+
+      console.log("inside delete review route 3",deletedReviews);
+      if(deletedReviews === undefined){
+        res.status(404).json({error: 'Could not delete review with id'});
         //.json(deletedAlbum);   
       }
-      res.status(200).json({"albumId" : req.params.id, "deleted": true });
+      res.status(200).json({"Review Id" : req.params.id, "deleted": true });
     } catch (e) {
-        if(e === 'album does not exists'){
+        if(e === 'review does not exists'){
             res.status(404).json({ error: e });
         }else res.status(400).json({ error: e });
     }
   });
- */
+
 function isValidDateString(dateString) {
   if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) return false;
   let splitDate = dateString.split("/");

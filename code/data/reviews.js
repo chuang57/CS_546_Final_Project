@@ -64,11 +64,6 @@ singleApartment[0].reviews.push(review);
   const apartmentCollection = await apartment();
   const updatedInfo = await apartmentCollection.updateOne({_id: ObjectId(apartmentId)}, { $addToSet: {reviews: review} }); 
 
-  //const updatedInfo = await bandsCollection.replaceOne({
-  //_id: ObjectId(bandId)}, {"albums":newAlbum, "overallRating":singleBand.overallRating}); 
-  // const updatedInfo = await bandsCollection.replaceOne({
-  //  _id: ObjectId(bandId)}, {"_id": singleBand}); 
-
    if (!updatedInfo.matchedCount && !updatedInfo.modifiedCount)
    throw 'could not update apartment successfully';
 
@@ -145,30 +140,30 @@ singleApartment[0].reviews.push(review);
  
 }, */
 
-/* async remove(albumId){
+async remove(reviewId){
   if(arguments.length !== 1 ) throw "Number of arguments should be 1"; 
-  if (!albumId) throw 'You must provide an album id to search for';
-    if (typeof albumId !== 'string') throw 'album Id must be a string';
-    if (albumId.trim().length === 0)
-      throw 'album id cannot be an empty string or just spaces';
-      albumId = albumId.trim();
-    if (!ObjectId.isValid(albumId)) throw 'album id is not a valid object ID';
+  if (!reviewId) throw 'You must provide an review id to search for';
+    if (typeof reviewId !== 'string') throw 'review Id must be a string';
+    if (reviewId.trim().length === 0)
+      throw 'reviewId cannot be an empty string or just spaces';
+      reviewId = reviewId.trim();
+    if (!ObjectId.isValid(reviewId)) throw 'review Id is not a valid object ID';
 
-    const bandsCollection = await bands();
-    const band = await bandsCollection.find({ 'albums._id': ObjectId(albumId)}).toArray();
-  // console.log(band,band.length);
+    const apartmentCollection = await apartment();
+    const apartReview = await apartmentCollection.find({ 'reviews._id': ObjectId(reviewId)}).toArray();
+  console.log(apartReview,"......apartReview");
    
-   if(band.length!== 0){
-     let bandInfo =  await bandsCollection.updateOne({ _id: band[0]._id }, { $pull: { albums: { _id: ObjectId(albumId) } } });
+   if(apartReview.length!== 0){
+     let apartmentInfo =  await apartmentCollection.updateOne({ _id: band[0]._id }, { $pull: { albums: { _id: ObjectId(reviewId) } } });
      
-     if(bandInfo.modifiedCount === 1) {
-       //console.log("album has been deleted successfully");
+     if(apartmentInfo.modifiedCount === 1) {
+       console.log("review has been deleted successfully", apartmentInfo);
        //const updatedInfo2 = await bandsCollection.updateOne({
         //_id: band[0]._id}, [{ $set: {overallRating: { $round: [ { $avg: "$albums.rating" }, 1 ] }} }]);
-
+/* 
         const updatedInfo2 = await bandsCollection.updateOne({
           _id: band[0]._id}, [{ $set: {overallRating: { $round: [ { $ifNull: [ {$avg: "$albums.rating"}, 0] }, 1 ] }} }]);
-
+ */
      }
      let bandAfterDeletion = await bandsData.get(band[0]._id.toString());
      //console.log(band[0]._id.toString());
@@ -176,10 +171,36 @@ singleApartment[0].reviews.push(review);
     }  
        else {
       //return bandInfo.modifiedCount;
-      throw "album does not exists";     
+      throw "review does not exists";     
     }    
-  } */
+  }
 };
+
+
+/*   async remove(reviewId){
+  //console.log(id, typeof id);
+  /* if (!id) throw 'You must provide an id to search for';
+    if (typeof id !== 'string') throw 'Id must be a string';
+    if (id.trim().length === 0)
+      throw 'id cannot be an empty string or just spaces';
+    id = id.trim();
+    if (!ObjectId.isValid(id)) throw 'invalid object ID'; 
+
+    const apartmentCollection = await apartment();
+    const returnBand = await this.get(id);
+    //console.log(returnBand);
+    const deletionInfo = await bandsCollection.deleteOne({
+      _id: ObjectId(id)
+    });
+
+    if (deletionInfo.deletedCount === 0) {
+      throw `Could not delete band with id of ${id}`;
+    }
+    
+      //return `"${returnBand.name.toString()} band has been successfully deleted from DB!"`;    
+      return deletionInfo.deletedCount; //var: 0,1,2
+};
+ */
 
 function isValidDateString(dateString) {
  if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
