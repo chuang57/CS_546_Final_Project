@@ -465,7 +465,7 @@ router.post("/apartment", isLogin, async (req, res) => {
     res
       .status(404)
       .render("apartment-listing", {
-        error: `There is no show found for the given filters: ${apartmentZipcode}`,
+        error: `There is no apartment found for the given filters: ${apartmentZipcode}`,
       });
   }
 });
