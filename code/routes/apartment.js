@@ -110,7 +110,7 @@ router.post(
         req.body.size,
         req.body.occupantCapacity,
 
-        req.body.contactInfo
+        req.body.contactInfo,
         //req.session.user.email,
         req.session.user._id
         
