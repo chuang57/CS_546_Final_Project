@@ -19,7 +19,6 @@ router.get("/login", async (req, res) => {
   return;
 });
 
-
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -73,9 +72,11 @@ router.get("/logout", async (req, res) => {
 });
 
 router.get("/signup", async (req, res) => {
+  const { error } = req.query;
   try {
     res.render("signup", {
       signup: "User Signup",
+      error,
     });
   } catch (e) {
     res.send(e);
@@ -97,7 +98,7 @@ router.get("/profile/:email/checkAllReviews", async (req, res) => {
       genderCheck2 = "female";
     }
     //console.log("findemail2.gender", findemail2.gender);
-   // console.log("genderCheck2", genderCheck2);
+    // console.log("genderCheck2", genderCheck2);
 
     let reviewLength2 = findemail2.reviewsWritten.length;
     for (let i = 0; i < reviewLength2; i++) {
@@ -111,8 +112,8 @@ router.get("/profile/:email/checkAllReviews", async (req, res) => {
       genderCheck2,
     });
 
-   // console.log("findemail2...aditi_9:28 pm",findemail2);
-   // console.log("arr...aditi_9:28 pm",arr);
+    // console.log("findemail2...aditi_9:28 pm",findemail2);
+    // console.log("arr...aditi_9:28 pm",arr);
   } catch (e) {
     res.send(e);
   }
@@ -161,7 +162,6 @@ router.get("/checkAllAddedApartments", isLogin, async (req, res) => {
 
 
 router.get("/profile/:email", async (req, res) => {
-  
   let positiveRatingCount = 0;
   let negativeRatingCount = 0;
   let neutralRatingCount = 0;
@@ -254,6 +254,7 @@ router.post("/signup", async (req, res) => {
     );
   } catch (e) {
     console.log(e);
+    return res.redirect(`/signup?error=${e.message}`);
   }
   res.redirect("/login");
 });
