@@ -16,10 +16,8 @@ module.exports = {
     contactInfo,
     userSessionId
 
-    
-
   ) {
-   
+
     console.log(arguments.length);
     if (arguments.length !== 10)
       throw "Incorrect numbers of passed arguments, it should be 8";
@@ -40,19 +38,9 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     if (city.trim().length === 0)
       throw "city cannot be an empty string or just spaces";
     city = city.trim();
+    if (!isNaN(city)) throw `${city} is not a valid value for city.`;
+    if (containsSpecialChars(city) === true) throw "city cannot contain special characters";
 
-    // if (!photos) throw 'You must provide photos of apartment';
-    // if (!photos ||  !Array.isArray(photos)) throw 'You must provide an array of photos';
-    // if (photos.length === 0) throw 'You must supply at least one photos';
-    // for (i in photos) {
-    //   if (typeof photos[i] !== 'string' || photos[i].trim().length === 0) {
-    //     photosInvalidFlag = true;
-    //     break;
-    //   }
-    //   photos[i] = photos[i].trim();
-    // }
-    // if (photosInvalidFlag)
-    //       throw 'One or more photos is an empty';
 
     if (!address) throw "You must provide address of the apartment";
     if (typeof address !== "string") throw "address must be a string";
@@ -66,18 +54,27 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
       throw "zipcode cannot be an empty string or just spaces";
     if (zipcode.trim().length < 5) throw "zipcode cannot be less than 5 digit";
     zipcode = zipcode.trim();
+    if (isNaN(zipcode)) throw `${zipcode} is not a valid value for zipcode.`;
+    if (isValidDetails(zipcode) === false) throw `${zipcode} is not a valid value for zipcode.`;
+    if (containsSpecialChars(zipcode) === true) throw "zipcode cannot contain special characters";
 
     if (!rent) throw "You must provide rent of the apartment";
     //if (typeof rent !== 'number') throw 'rent must be in number';
     if (rent.trim().length === 0)
       throw "rent cannot be an empty string or just spaces";
     rent = rent.trim();
+    if (isNaN(rent)) throw `${rent} is not a valid value for rent. it should be in numbers`;
+    if (isValidDetails(rent) === false) throw `${rent} is not a valid value for rent.`;
+    if (containsSpecialChars(rent) === true) throw "rent cannot contain special characters.";
 
     if (!size) throw "You must provide size of the apartment";
     //if (typeof size !== 'number') throw 'size must be in square feet';
     if (size.trim().length === 0)
       throw "size cannot be an empty string or just spaces";
     size = size.trim();
+    if (isNaN(size)) throw `${size} is not a valid value for size.`;
+    if (isValidDetails(size) === false) throw `${size} is not a valid value for size.`;
+    if (containsSpecialChars(size) === true) throw "Entered size is Incorrect.";
 
     if (!occupantCapacity)
       throw "You must provide occupantCapacity of the apartment";
@@ -87,6 +84,20 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     if (occupantCapacity.trim().length === 0)
       throw "occupantCapacity cannot be an empty string or just spaces";
     occupantCapacity = occupantCapacity.trim();
+    if (isNaN(occupantCapacity)) throw `${occupantCapacity} is not a valid value for occupantCapacity.`;
+
+
+    if (!contactInfo) throw "You must provide contactInfo";
+    if (typeof contactInfo !== "string") throw "contactInfo must be a string";
+    if (contactInfo.trim().length === 0)
+      throw "contactInfo cannot be an empty string or just spaces";
+    contactInfo = contactInfo.trim();
+
+    if (contactInfo.trim().length !== 10) throw "contactInfo cannot be less than/greater than 10 digit";
+    if (!isNaN(contactInfo)) throw `${contactInfo} is not a valid value for contactInfo.`;
+    if (isValidDetails(contactInfo) === false) throw `${contactInfo} is not a valid value for contactInfo.`;
+    if (containsSpecialChars(contactInfo) === true) throw "Contact Information is Incorrect.";
+
 
     //state, city, photos, address, zipcode, rent, size, occupantCapacity
     let newApartment = {
@@ -104,45 +115,31 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     };
 
     //console.log(newBand);
-    let updatedInfo2 ;
+    let updatedInfo2;
     const apartmentCollection = await apartment();
     const insertInfo = await apartmentCollection.insertOne(newApartment);
 
-    console.log("insertInfo",insertInfo);
+    console.log("insertInfo", insertInfo);
     if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add apartment";
-    
-    console.log("insertInfo insertInfo.acknowledged",insertInfo.acknowledged);
-  if(insertInfo.acknowledged === true){
-        let userId = insertInfo.insertedId ;
-        const usersCollection = await users();
-        console.log("........inside added property.......");
-        updatedInfo2 = await usersCollection.updateOne({ _id: ObjectId(userSessionId) }, { $addToSet: { AddedProperty: userId.toString() } });
-  }
-    
-    
+
+    console.log("insertInfo insertInfo.acknowledged", insertInfo.acknowledged);
+    if (insertInfo.acknowledged === true) {
+      let userId = insertInfo.insertedId;
+      const usersCollection = await users();
+      console.log("........inside added property.......");
+      updatedInfo2 = await usersCollection.updateOne({ _id: ObjectId(userSessionId) }, { $addToSet: { AddedProperty: userId.toString() } });
+    }
+
+
     console.log("updatedInfo2..xx", updatedInfo2);
 
     const newId = insertInfo.insertedId.toString();
     //const returnBand = await this.get(newId);
     //  return returnBand;
-    
+
     return newId;
   },
 
-  /* async getAll(){
-  let element, arr = [];
-  const bandsCollection = await bands();
-    const bandsList = await bandsCollection.find({}).toArray();
-    if (!bandsList) throw 'Could not get all bands';
-    for(let i = 0;i<bandsList.length;i++){
-        element = bandsList[i];
-       element._id = element._id.toString();
-       arr.push(element); 
-      // bandsList[i]._id.toString();
-    }
-    return arr;
-    // return bandsList;
-}, */
 
   async getAllApartmentSelectedZipCode(
     zipcode,
@@ -158,14 +155,14 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     //if (typeof zipcode !== 'string') throw 'Id must be a string';
 
     zipcode = zipcode.trim();
-  
-    
+
+
     // zipcode ? zipcode : null
 
     //if (!ObjectId.isValid(id)) throw 'ID is not a valid object ID';
     const apartmentCollection = await apartment();
     let apartmentData = await apartmentCollection.find({}).toArray();
-    
+
     if (zipcode) {
       for (apt of apartmentData) {
         apartmentData = apartmentData.filter((apt) => apt.zipcode === zipcode);
@@ -224,6 +221,7 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     return apartmentData;
   },
 
+
   async getApartmentAddress(
     address,
   ) {
@@ -232,7 +230,7 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     let apartmentData = await apartmentCollection.find({
       address: address
     }).toArray();
-    
+
     console.log("here", apartmentData)
     return apartmentData;
   },
@@ -282,14 +280,8 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
       })
       .toArray();
 
-    //console.log("inside data", apartmentData,"apartment id",apartmentData[0].state,apartmentData[0]._id.toString());
-
-    console.log("asedf", apartmentIdData);
-    // apartmentIdData = apartmentIdData.toString();
-    // console.log("qwerty",apartmentIdData[0].reviews);
     if (apartmentIdData === null)
       throw "No apartment available for this search";
-    //banggo._id = banggo._id.toString();
     return apartmentIdData;
   },
 
@@ -433,4 +425,18 @@ function yearValidation(year) {
     throw "Year can not be 0";
   }
 }
+
+function isValidDetails(rating) {
+  if (rating.toString().includes('.')) {
+    if (rating.toString().split('.')[1].length !== 1) {
+      //console.log("inside if2",rating.toString().split('.')[1].length);
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    return true;
+  }
+
+};
 //module.exports = exportedMethods;

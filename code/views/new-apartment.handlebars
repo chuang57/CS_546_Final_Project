@@ -9,15 +9,16 @@
 
 <form id="new-apartment" enctype="multipart/form-data" action="/newApartmentInfo" method="post">
   <div class="form-group">
-    <label for="state">State</label>
+    <label for="state">State:</label>
         <select
           id="state"
           type="text"
           name="state"
-          placeholder="Enter the state"
+          placeholder="choose..."
           class="form-control"
         >
-          <option selected>Choose...</option>
+         {{!--  <option selected>Choose...</option> --}}
+          <option value="" disabled selected>Choose...</option>
           <option>AL</option>
           <option>AK</option>
           <option>AZ</option>
@@ -112,7 +113,8 @@
           placeholder="Enter the Occupant Capacity"
           class="form-control"
         >
-          <option selected>Choose...</option>
+         {{!--  <option selected>Choose...</option> --}}
+          <option value="" disabled selected>Choose...</option>
           <option>1</option>
           <option>2</option>
           <option>3</option>
@@ -137,7 +139,9 @@
   </div>
   
 
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Submit your property</button>
   </form>
+
+
 
 

@@ -20,6 +20,7 @@ const createUser = async (
   console.log("email", email);
   console.log("usertype..", usertype);
   const lowerUsername = username.toLowerCase();
+  const email = email.toLowerCase();
   if (!lowerUsername || !password) {
     throw new Error("Username or password is empty");
   }
@@ -47,6 +48,29 @@ const createUser = async (
   if (String(Number(phonenumber)) == "NaN") {
     throw new Error("Phone number must be number");
   }
+
+  if(age<0) {
+    throw new Error("Age can not be negative");
+  }
+  
+  if (!city) throw new Error("You must provide city");
+  if (typeof city !== "string") throw new Error("city must be a string");
+  if (city.trim().length === 0)
+    throw new Error("city cannot be an empty string or just spaces");
+  city = city.trim();
+  if (!isNaN(city)) throw new Error(`${city} is not a valid value for city.`);
+  if (containsSpecialChars(city) === true) throw new Error("city cannot contain special characters");
+
+  if (!phonenumber) throw "You must provide phonenumber";
+  if (typeof phonenumber !== "string") throw "phonenumber must be a string";
+  if (phonenumber.trim().length === 0)
+    throw "phonenumber cannot be an empty string or just spaces";
+    phonenumber = phonenumber.trim();
+  if (phonenumber.trim().length !== 10) throw "phonenumber cannot be less than/greater than 10 digit";
+  if (!isNaN(phonenumber)) throw `${phonenumber} is not a valid value for phonenumber.`;
+  if (isValidDetails(phonenumber) === false) throw `${contactInfo} is not a valid value for phonenumber.`;
+  if (containsSpecialChars(phonenumber) === true) throw "Contact Information is Incorrect.";
+
 
   const salt = await bcrypt.genSalt(10);
 
@@ -99,23 +123,12 @@ const checkUser = async (email, password, req) => {
   return { authenticated: true };
 };
 
-const getReviewfromId = async (reviewId) => {
-  /* const userCollections = await users();
-  const userRecord = await userCollections.find({
-    _id: ObjectId(userid),
-  }).toArray();
-  console.log("userRecord",userRecord);
 
-  if (!userRecord) {
-    throw new Error("No user record found");
-  }
-  //req.session.user = findemail;
-  //return { authenticated: true };
-  return userRecord; */
+
+const getReviewfromId = async (reviewId) => {
 
   if (!ObjectId.isValid(reviewId)) throw "review id is not a valid object ID";
   const apartmentCollection = await apartment();
-  // const band = await bandsCollection.find({ 'albums._id': ObjectId(albumId)}).toArray();
   const aprtment = await apartmentCollection
     .find(
       { "reviews._id": ObjectId(reviewId) },
@@ -134,4 +147,23 @@ const getReviewfromId = async (reviewId) => {
   return aprtment[0].reviews[0];
 };
 
+
+function containsSpecialChars(str) {
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  return specialChars.test(str);
+}
+
+function isValidDetails(rating) {
+  if (rating.toString().includes('.')) {
+    if (rating.toString().split('.')[1].length !== 1) {
+      //console.log("inside if2",rating.toString().split('.')[1].length);
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    return true;
+  }
+
+};
 module.exports = { createUser, checkUser, getReviewfromId };
