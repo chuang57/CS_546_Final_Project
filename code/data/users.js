@@ -29,8 +29,6 @@ const createUser = async (
     );
   }
 
-  if 
-
   const userCollections = await users();
   if (
     await userCollections.findOne({
@@ -45,7 +43,6 @@ const createUser = async (
       "password should be a valid string and should be at least 4 characters long."
     );
   }
-
 
   if (String(Number(phonenumber)) == "NaN") {
     throw new Error("Phone number must be number");
