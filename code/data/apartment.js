@@ -101,7 +101,6 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
       occupantCapacity: occupantCapacity,
       contactInfo: contactInfo,
       reviews: [],
-      useremail,
     };
 
     //console.log(newBand);
