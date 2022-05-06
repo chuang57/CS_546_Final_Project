@@ -51,8 +51,6 @@
         <a class="nav-item nav-link active" href="/login">Login</a>
         <a class="nav-item nav-link active" href="/login">Log Out</a>
         {{else}}
-        <a class="nav-item nav-link active" href="/">Search apartment
-          <span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link active" href="/apartment">Apartments
           <span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link active" href="/newApartment">Add New
@@ -65,11 +63,8 @@
 
         {{#if allApartmentListing}}
         <a class="nav-item nav-link" href="/apartment/sortbyrent">Sort by
-          rent</a>
+          rent</a> 
         {{! <a class="nav-item nav-link disabled" href="#">Disabled</a> }}
-        <form class="d-flex">
-          <button class=".btn-nav navbar-right btn-outline-success" type="submit">Sort by price</button>
-        </form>
 
         {{! <ul class="nav navbar-nav navbar-right">
           <li><a href="/login" class="">login</a>
