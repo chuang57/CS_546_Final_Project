@@ -443,7 +443,7 @@ router.post("/apartment", isLogin, async (req, res) => {
     //console.log("allAvailableApartmentList......",allAvailableApartmentList);
 
     //for(let i in allAvailableApartmentList){
-    console.log("check.........", allAvailableApartmentList[0].photos[0]);
+   // console.log("check.........", allAvailableApartmentList[0].photos[0]);
 
     res.status(200).render(
       "apartment-listing",
