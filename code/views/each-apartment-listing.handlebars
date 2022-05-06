@@ -109,6 +109,7 @@
                                 map.addLayer(layer);
                             } else {
                                 alert('Geocode was not successful for the following reason: ' + status);
+                                //alert(status + ' for this address');
                             }
                         });
                     </script>
@@ -128,7 +129,7 @@
               <div class="apartment-address">Monthly Rent: ${{this.rent}}</div>
               <div class="apartment-address">Size of the apartment: {{this.size}} square foot</div>
               <div class="apartment-address">Occupant capacity: {{this.occupantCapacity}} members</div>
-              <div class="apartment-address">email: {{this.useremail}}</div>
+              <div class="apartment-address">Contact property: {{this.contactInfo}}</div>
               {{!-- <div class="reviews"> <a href="/reviews/{{this._id}}" class="click">write a review</a> </div> --}}
               <br>
               <a href="/reviews/{{this._id}}" class="btn btn-warning display-6 rounded-pill">Write a review</a>
