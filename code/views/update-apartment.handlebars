@@ -1,0 +1,43 @@
+<form id="update-apartment" enctype="multipart/form-data" action="/updateApartmentInfo" method="post">
+  <div class="form-group">
+    <label for="state">State: </label>
+    <input id="state" class="form-control" name="state" placeholder="Enter the state" required />
+  </div>
+
+  <div class="form-group">
+    <label for="city">City: </label>
+    <input id="city" class="form-control" name="city" placeholder="Enter the city" required />
+  </div>
+
+  <div class="form-group">
+    <label for="photos">Photos: </label>
+    <input type="file" multiple="multiple" id="photos" name="photos" class="form-control" placeholder="Attach Photos" />
+  </div>
+
+  <div class="form-group">
+    <label for="address">Address: </label>
+    <input id="address" name="address" class="form-control" placeholder="Enter address" required />
+  </div>
+
+  <div class="form-group">
+    <label for="zipcode">Zipcode: </label>
+    <input id="zipcode" name="zipcode" class="form-control" placeholder="Enter the zipcode" required />
+  </div>
+
+  <div class="form-group">
+    <label for="rent">Rent: </label>
+    <input id="rent" name="rent" class="form-control" placeholder="Enter the rent" />
+  </div>
+
+  <div class="form-group">
+    <label for="size">Square Footage: </label>
+    <input id="size" name="size" class="form-control" placeholder="Enter the square footage" />
+  </div>
+
+  <div class="form-group">
+    <label for="occupantCapacity">Occupant Capacity: </label>
+    <input id="occupantCapacity" name="occupantCapacity" placeholder="Enter the occupant capacity"
+      class="form-control" />
+  </div>
+
+  <button type="submit" class="btn btn-primary">Update</button>

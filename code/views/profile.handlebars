@@ -25,19 +25,19 @@
                     <div class="col-sm-12 col-lg-8 border-left">
                         <div class="card-body">
                             <ul class="list-style-none">
-                             
-                                    <div class="d-flex align-items-center">
-                                        <div class="ml-2">
-                                            <h5 class="mb-0">Username: {{username}}</h5>
-                                            <h5 class="mb-0">Email: {{email}}</h5>
-                                            <h5 class="mb-0">Phone Number: {{phonenumber}}</h5>
-                                            <h5 class="mb-0">City: {{city}}</h5>
-                                            <h5 class="mb-0">Gender: {{gender}}</h5>
-                                            <h5 class="mb-0">Age: {{age}}</h5>
-                                            <h5 class="mb-0">User Type: {{usertype}}</h5>
 
-                                        </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="ml-2">
+                                        <h5 class="mb-0">Username: {{username}}</h5>
+                                        <h5 class="mb-0">Email: {{email}}</h5>
+                                        <h5 class="mb-0">Phone Number: {{phonenumber}}</h5>
+                                        <h5 class="mb-0">City: {{city}}</h5>
+                                        <h5 class="mb-0">Gender: {{gender}}</h5>
+                                        <h5 class="mb-0">Age: {{age}}</h5>
+                                        <h5 class="mb-0">User Type: {{usertype}}</h5>
+
                                     </div>
+                                </div>
                             </ul>
                         </div>
                     </div>
@@ -200,4 +200,83 @@
             </div>
         </div>
     </div>
+    {{!--
+    {{update apartment}} --}}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Update Apartments</h4>
+                            <h5 class="card-subtitle">Overview of Apartments</h5>
+                            <h2 class="font-medium mt-5 mb-0">{{addedPropertyLength}}</h2>
+                            <span class="text-muted">{{username}}! you added {{addedPropertyLength}} properties to our
+                                website.</span>
+                            <div class="image-box mt-4 mb-4">
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Melinda"><img
+                                        src="https://cdn0.iconfinder.com/data/icons/real-estate-290/60/house__home__avatar__man__building-512.png"
+                                        class="rounded-circle" width="45" alt="user"></a>
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Simon"><img
+                                        src="https://img.favpng.com/14/0/9/computer-icons-building-house-apartment-png-favpng-fcpr0B2q4meBdCfYzFyjVEgAq.jpg"
+                                        class="rounded-circle" width="45" alt="user"></a>
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Simmons"><img
+                                        src="https://cdn.vectorstock.com/i/1000x1000/21/23/isolated-avatar-man-and-house-design-vector-25982123.webp"
+                                        class="rounded-circle" width="45" alt="user"></a>
+
+                                <a href="/" class="mr-2" data-toggle="tooltip" data-placement="top" title=""
+                                    data-original-title="Phil"><img
+                                        src="https://cdn.w600.comps.canstockphoto.com/avatar-woman-and-eco-house-design-vector-clipart_csp70865106.jpg"
+                                        class="rounded-circle" width="45" alt="user"></a>
+
+
+                            </div>
+
+                            <a href="/checkAllAddedApartments"
+                                class="btn btn-lg btn-info waves-effect waves-light">Update
+                                Apartments</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-lg-8 border-left">
+                        <div class="card-body">
+                            <ul class="list-style-none">
+                                <div class="image-box mt-4 mb-4">
+                                    <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title=""
+                                        data-original-title="Fitz"><img
+                                            src="https://cdn1.vectorstock.com/i/1000x1000/67/00/house-with-thief-avatar-character-icon-vector-14776700.jpg"
+                                            class="rounded-circle" width="45" alt="user"></a>
+                                </div>
+                                <table class="table table-condensed">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left">A Home for Every Renter</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">The perfect rental is waiting for you. Let's get
+                                                moving.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left"> Renting a new place is the start of something great
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left"> Hurry up! Don't miss out on these listings</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>

@@ -139,6 +139,28 @@ router.get("/checkAllApartments", isLogin, async (req, res) => {
   return;
 });
 
+
+router.get("/checkAllAddedApartments", isLogin, async (req, res) => {
+  const apartmentCollections = await apartment();
+  const allAddedApartmentListing = (
+    await apartmentCollections.find({}).toArray()
+  ).filter((v) => {
+    return req.session.user.AddedProperty.includes(v._id.toString());
+  });
+
+  console.log("allAddedApartmentListing..",allAddedApartmentListing)
+  try {
+    res.render("checkAllAddedApartments", {
+      allAddedApartmentListing,
+    });
+  } catch (e) {
+    res.send(e);
+  }
+  return;
+});
+
+
+
 router.get("/profile/:email", async (req, res) => {
   let positiveRatingCount = 0;
   let negativeRatingCount = 0;
@@ -157,7 +179,8 @@ router.get("/profile/:email", async (req, res) => {
     return findemail.savedApartments.includes(v._id.toString());
   });
 
-  //console.log("findemail-----", findemail);
+  console.log("findemail-----", findemail);
+  console.log("findemail-----", findemail._id.toString());
   /* console.log("reviewsWritten-----",findemail.reviewsWritten);
   console.log("reviewsWrittenLength",findemail.reviewsWritten.length);
   console.log("findemail.gender",findemail.gender); */
@@ -185,8 +208,10 @@ router.get("/profile/:email", async (req, res) => {
     genderCheck = "female";
   }
 
+  let addedPropertyLength = findemail.AddedProperty.length;
   // console.log("allRevieWritten",allReviewsWritten);
   //console.log("allApartmentListing",allApartmentListing);
+
   res.render("profile", {
     ...findemail,
     allApartmentListing,
@@ -199,6 +224,7 @@ router.get("/profile/:email", async (req, res) => {
     postiveRatingRatio,
     negativeRatingRatio,
     neutralRatingRatio,
+    addedPropertyLength,
   });
   return;
 });

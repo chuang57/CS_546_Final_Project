@@ -1,5 +1,6 @@
 const mongoCollections = require("../config/mongoCollections");
 const apartment = mongoCollections.apartment;
+const users = mongoCollections.users;
 const { ObjectId } = require("mongodb");
 
 module.exports = {
@@ -12,13 +13,16 @@ module.exports = {
     rent,
     size,
     occupantCapacity,
-    useremail
-  ) {
-    let photosInvalidFlag = false;
+    contactInfo,
+    userSessionId
 
+    
+
+  ) {
+   
     console.log(arguments.length);
-    if (arguments.length !== 9)
-      throw "Incorrect numbers of passed arguments, it should be 6";
+    if (arguments.length !== 10)
+      throw "Incorrect numbers of passed arguments, it should be 8";
     /* if (!name) throw 'You must provide a name to search for';
 if (typeof name !== 'string') throw 'name must be a string';
 if(containsSpecialChars(name)) throw 'Name cannot contain special characters';
@@ -95,19 +99,33 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
       rent: rent,
       size: size,
       occupantCapacity: occupantCapacity,
+      contactInfo: contactInfo,
       reviews: [],
-      useremail,
     };
 
     //console.log(newBand);
+    let updatedInfo2 ;
     const apartmentCollection = await apartment();
     const insertInfo = await apartmentCollection.insertOne(newApartment);
-    if (!insertInfo.acknowledged || !insertInfo.insertedId)
-      throw "Could not add apartment";
+
+    console.log("insertInfo",insertInfo);
+    if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add apartment";
+    
+    console.log("insertInfo insertInfo.acknowledged",insertInfo.acknowledged);
+  if(insertInfo.acknowledged === true){
+        let userId = insertInfo.insertedId ;
+        const usersCollection = await users();
+        console.log("........inside added property.......");
+        updatedInfo2 = await usersCollection.updateOne({ _id: ObjectId(userSessionId) }, { $addToSet: { AddedProperty: userId.toString() } });
+  }
+    
+    
+    console.log("updatedInfo2..xx", updatedInfo2);
 
     const newId = insertInfo.insertedId.toString();
     //const returnBand = await this.get(newId);
     //  return returnBand;
+    
     return newId;
   },
 
@@ -130,53 +148,67 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     zipcode,
     state,
     city,
-    rent,
-    size,
+    rentMin,
+    rentMax,
+    sizeMin,
+    sizeMax,
     occupantCapacity
   ) {
-    if (!zipcode) throw "You must provide an id to search for";
+
     //if (typeof zipcode !== 'string') throw 'Id must be a string';
-    if (zipcode.trim().length === 0)
-      throw "zipcode cannot be an empty string or just spaces";
+
     zipcode = zipcode.trim();
-    if (!zipcode) zipcode == null;
-    console.log("here", state)
+  
+    
     // zipcode ? zipcode : null
 
     //if (!ObjectId.isValid(id)) throw 'ID is not a valid object ID';
     const apartmentCollection = await apartment();
-    let apartmentData = await apartmentCollection
-      .find({
-        zipcode: zipcode,
-      })
-      .toArray();
-    if (state) {
+    let apartmentData = await apartmentCollection.find({}).toArray();
+    
+    if (zipcode) {
       for (apt of apartmentData) {
-        apartmentData = apartmentData.filter(apt => apt.state === state)
-        console.log("ooo", apartmentData)
+        apartmentData = apartmentData.filter((apt) => apt.zipcode === zipcode);
+        console.log("booo", apartmentData);
+      }
+    }
+    console.log("here", state);
+    if (state != "Choose...") {
+      for (apt of apartmentData) {
+        apartmentData = apartmentData.filter((apt) => apt.state === state);
+        console.log("cooo", apartmentData);
       }
     }
     if (city) {
       for (apt of apartmentData) {
-        apartmentData = apartmentData.filter(apt => apt.city === city)
+        apartmentData = apartmentData.filter((apt) => apt.city === city);
       }
     }
-    if (rent) {
+    console.log("Min", rentMin)
+    if (rentMin) {
+      // console.log("yooo", apartmentData);
       for (apt of apartmentData) {
-        apartmentData = apartmentData.filter(apt => apt.rent === rent)
+        apartmentData = apartmentData.filter((apt) => apt.rent >= rentMin);
+        console.log("sooo", apartmentData);
+        apartmentData = apartmentData.filter((apt) => apt.rent <= rentMax);
+        console.log("looo", apartmentData);
       }
     }
-    if (size) {
+    if (sizeMin) {
       for (apt of apartmentData) {
-        apartmentData = apartmentData.filter(apt => apt.size === size)
+        apartmentData = apartmentData.filter((apt) => apt.size >= sizeMin);
+        console.log("stooo", apartmentData);
+        apartmentData = apartmentData.filter((apt) => apt.size <= sizeMax);
+        console.log("looo", apartmentData);
       }
     }
-    if (occupantCapacity) {
+    if (occupantCapacity != "Choose...") {
       for (apt of apartmentData) {
-        apartmentData = apartmentData.filter(apt => apt.occupantCapacity === occupantCapacity)
+        apartmentData = apartmentData.filter(
+          (apt) => apt.occupantCapacity === occupantCapacity
+        );
       }
     }
-
 
     console.log("the", apartmentData);
 
@@ -189,6 +221,19 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     console.log("aaaaaaaaaaswerfd", apartmentData);
     if (apartmentData === null)
       throw "No apartment available for this zip code";
+    return apartmentData;
+  },
+
+  async getApartmentAddress(
+    address,
+  ) {
+    console.log("here", address)
+    const apartmentCollection = await apartment();
+    let apartmentData = await apartmentCollection.find({
+      address: address
+    }).toArray();
+    
+    console.log("here", apartmentData)
     return apartmentData;
   },
 
