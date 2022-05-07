@@ -114,9 +114,9 @@ module.exports = {
     for (let i in apartmentData) {
       alreadyAvailableApartment = apartmentData[i].address ; 
       console.log("alreadyAvailableApartment",alreadyAvailableApartment);
-      if(alreadyAvailableApartment === address){
+      /* if(alreadyAvailableApartment === address){
         throw "apartment with this address is already available. please add new property with different address";
-      }
+      } */
     }
 
    
@@ -180,8 +180,9 @@ module.exports = {
       }
     }
     if (city) {
+     // city= city.toLowerCase();
       for (apt of apartmentData) {
-        apartmentData = apartmentData.filter((apt) => apt.city === city);
+        apartmentData = apartmentData.filter((apt) => apt.city.toLowerCase() === city.toLowerCase());
       }
     }
     console.log("Min", rentMin)
