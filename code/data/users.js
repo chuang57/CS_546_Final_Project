@@ -67,7 +67,7 @@ const createUser = async (
     throw "phonenumber cannot be an empty string or just spaces";
     phonenumber = phonenumber.trim();
   if (phonenumber.trim().length !== 10) throw "phonenumber cannot be less than/greater than 10 digit";
-  if (!isNaN(phonenumber)) throw `${phonenumber} is not a valid value for phonenumber.`;
+  if (isNaN(phonenumber)) throw `${phonenumber} is not a valid value for phonenumber.`;
   if (isValidDetails(phonenumber) === false) throw `${contactInfo} is not a valid value for phonenumber.`;
   if (containsSpecialChars(phonenumber) === true) throw "Contact Information is Incorrect.";
 
@@ -108,10 +108,11 @@ const checkUser = async (email, password, req) => {
       "password should be a valid string and should be at least 4 characters long."
     );
   }
-
+  email = email.toLowerCase();
   const findemail = await userCollections.findOne({
-    email,
+    email
   });
+  //email = email.toLowerCase();
   console.log(email, password, findemail);
   if (!findemail) {
     throw new Error("Either the email or password is invalid");
