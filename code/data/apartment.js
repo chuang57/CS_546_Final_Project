@@ -107,9 +107,20 @@ module.exports = {
       reviews: [],
     };
 
-    //console.log(newBand);
-    let updatedInfo2;
+    let updatedInfo2, alreadyAvailableApartment;
     const apartmentCollection = await apartment();
+    const apartmentData = await apartmentCollection.find({}).toArray();
+
+    for (let i in apartmentData) {
+      alreadyAvailableApartment = apartmentData[i].address ; 
+      console.log("alreadyAvailableApartment",alreadyAvailableApartment);
+      if(alreadyAvailableApartment === address){
+        throw "apartment with this address is already available. please add new property with different address";
+      }
+    }
+
+   
+
     const insertInfo = await apartmentCollection.insertOne(newApartment);
 
     console.log("insertInfo", insertInfo);
@@ -119,7 +130,6 @@ module.exports = {
     if (insertInfo.acknowledged === true) {
       let userId = insertInfo.insertedId;
       const usersCollection = await users();
-      console.log("........inside added property.......");
       updatedInfo2 = await usersCollection.updateOne({ _id: ObjectId(userSessionId) }, { $addToSet: { AddedProperty: userId.toString() } });
     }
 
