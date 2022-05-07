@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-lg-4">
                         <div class="card-body">
-                            <h4 class="card-title">User Details</h4>
+                            <h2 class="card-title">User Details</h2>
                             {{#if genderCheck}}
                             <a href="#" class="mr-2" data-toggle="tooltip" data-placement="top" title=""
                                 data-original-title="Phil"><img src="https://bootdey.com/img/Content/avatar/avatar3.png"
@@ -19,7 +19,7 @@
 
                             {{/if}}
 
-                            <h5> Hello {{{username}}}</h5>
+                            <h3> Hello {{{username}}}</h3>
                         </div>
                     </div>
                     <div class="col-sm-12 col-lg-8 border-left">
@@ -28,13 +28,13 @@
 
                                 <div class="d-flex align-items-center">
                                     <div class="ml-2">
-                                        <h5 class="mb-0">Username: {{username}}</h5>
-                                        <h5 class="mb-0">Email: {{email}}</h5>
-                                        <h5 class="mb-0">Phone Number: {{phonenumber}}</h5>
-                                        <h5 class="mb-0">City: {{city}}</h5>
-                                        <h5 class="mb-0">Gender: {{gender}}</h5>
-                                        <h5 class="mb-0">Age: {{age}}</h5>
-                                        <h5 class="mb-0">User Type: {{usertype}}</h5>
+                                        <h4 class="mb-0">Username: {{username}}</h4>
+                                        <h4 class="mb-0">Email: {{email}}</h4>
+                                        <h4 class="mb-0">Phone Number: {{phonenumber}}</h4>
+                                        <h4 class="mb-0">City: {{city}}</h4>
+                                        <h4 class="mb-0">Gender: {{gender}}</h4>
+                                        <h4 class="mb-0">Age: {{age}}</h4>
+                                        <h4 class="mb-0">User Type: {{usertype}}</h4>
 
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                         <div class="card-body">
                             <h4 class="card-title">Reviews</h4>
                             <h5 class="card-subtitle">Overview of Review</h5>
-                            <h2 class="font-medium mt-5 mb-0">{{reviewLength}}</h2>
+                            <h3 class="font-medium mt-5 mb-0">{{reviewLength}}</h3>
                             <span class="text-muted">{{username}}! you provided reviews to {{reviewLength}}
                                 properties.</span>
                             <div class="image-box mt-4 mb-4">
@@ -76,7 +76,7 @@
                                         width="45" alt="user"></a>
                             </div>
                             <a href="/profile/{{email}}/checkAllReviews"
-                                class="btn btn-lg btn-info waves-effect waves-light">Checkout All Reviews</a>
+                                class="btn btn-lg waves-effect waves-light btn-primary">Checkout All Reviews</a>
                         </div>
                     </div>
                     <div class="col-sm-12 col-lg-8 border-left">
@@ -84,19 +84,20 @@
                             <ul class="list-style-none">
                                 <div class="d-flex align-items-center">
                                     <div class="ml-2">
-                                        <h5 class="mb-0">Positive Reviews</h5>
+                                        <h4 class="mb-0">Positive Reviews</h4>
                                         <span class="text-muted">{{positiveRatingCount}} Reviews</span>
                                     </div>
                                 </div>
                                 <div class="progress">
-                                    <div class="progress-bar bg-success" role="progressbar"
+                                    <label for = "progressbar1">
+                                    <div id = "progressbar1" class="progress-bar bg-success" role="progressbar"
                                         style="width: {{postiveRatingRatio}}% " aria-valuenow="47" aria-valuemin="0"
                                         aria-valuemax="100"></div>
                                 </div>
 
                                 <div class="d-flex align-items-center">
                                     <div class="ml-2">
-                                        <h5 class="mb-0">Negative Reviews</h5>
+                                        <h4 class="mb-0">Negative Reviews</h4>
                                         <span class="text-muted">{{negativeRatingCount}} Reviews</span>
                                     </div>
                                 </div>
@@ -107,7 +108,7 @@
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <div class="ml-2">
-                                        <h5 class="mb-0">Neutral Reviews</h5>
+                                        <h4 class="mb-0">Neutral Reviews</h4>
                                         <span class="text-muted">{{neutralRatingCount}} Reviews</span>
                                     </div>
                                 </div>
@@ -134,7 +135,7 @@
                         <div class="card-body">
                             <h4 class="card-title">Saved Apartments</h4>
                             <h5 class="card-subtitle">Overview of Apartments</h5>
-                            <h2 class="font-medium mt-5 mb-0">{{apartmentLength}}</h2>
+                            <h3 class="font-medium mt-5 mb-0">{{apartmentLength}}</h3>
                             <span class="text-muted">{{username}}! you saved {{apartmentLength}} apartments in your
                                 favorite
                                 list.</span>
@@ -160,7 +161,7 @@
 
                             </div>
 
-                            <a href="/checkAllApartments" class="btn btn-lg btn-info waves-effect waves-light">Checkout
+                            <a href="/checkAllApartments" class="btn btn-lg btn-primary waves-effect waves-light">Checkout
                                 All
                                 Apartments</a>
                         </div>
@@ -211,7 +212,7 @@
                         <div class="card-body">
                             <h4 class="card-title">Update Apartments</h4>
                             <h5 class="card-subtitle">Overview of Apartments</h5>
-                            <h2 class="font-medium mt-5 mb-0">{{addedPropertyLength}}</h2>
+                            <h3 class="font-medium mt-5 mb-0">{{addedPropertyLength}}</h3>
                             <span class="text-muted">{{username}}! you added {{addedPropertyLength}} properties to our
                                 website.</span>
                             <div class="image-box mt-4 mb-4">
@@ -237,7 +238,7 @@
                             </div>
 
                             <a href="/checkAllAddedApartments"
-                                class="btn btn-lg btn-info waves-effect waves-light">Update
+                                class="btn btn-lg btn-primary waves-effect waves-light">Update
                                 Apartments</a>
                         </div>
                     </div>
