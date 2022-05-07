@@ -148,7 +148,9 @@ router.get("/checkAllAddedApartments", isLogin, async (req, res) => {
     return req.session.user.AddedProperty.includes(v._id.toString());
   });
 
-  console.log("allAddedApartmentListing..",allAddedApartmentListing)
+  console.log("allAddedApartmentListing..",allAddedApartmentListing);
+  console.log("req.session._id",req.session._id,req.session.id);
+ 
   try {
     res.render("checkAllAddedApartments", {
       allAddedApartmentListing,

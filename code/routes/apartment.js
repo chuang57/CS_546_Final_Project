@@ -26,6 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 const fs = require("fs");
+const { getApartmentById } = require("../data/apartment");
 
 router.get("/", isLogin, async (req, res) => {
   let arr = [],
@@ -73,15 +74,91 @@ router.get("/newApartment", isLogin, async (req, res) => {
   }
 });
 
-router.get("/updateApartment", isLogin, async (req, res) => {
+router.get("/:id/updateApartment", isLogin, async (req, res) => {
   console.log("in get routes of updateApartment", req.params.id, req.body);
+  let x = await apartmentData.getApartmentById(req.params.id);
+
+  console.log("x",x);
+  let state = x[0].state;
+  let city = x[0].city;
+  let address = x[0].address;
+  let zipcode = x[0].zipcode;
+  let rent = x[0].rent;
+  let size= x[0].size;
+  let occupantCapacity = x[0].occupantCapacity;
+  let contactInfo = x[0].contactInfo;
+
   res.render("update-apartment", {
     apartmentId: req.params.id,
     username: req.session.user?.username,
     email: req.session.user?.email,
     isNotLogin: !req.session.user,
+    state:state,
+    city:city,
+    address:address,
+    zipcode:zipcode,
+    rent:rent,
+    size:size,
+    occupantCapacity:occupantCapacity,
+    contactInfo:contactInfo
   });
   return;
+});
+
+
+
+router.post("/:id/updateApartmentInfo", isLogin, upload.array("photos"), async (req, res) => {
+  console.log("in post routes of updateApartment info", req.params.id, req.body);
+  let state = req.body.state;
+  let city = req.body.city;
+  let address = req.body.address;
+  let zipcode = req.body.zipcode;
+  let rent = req.body.rent;
+  let size = req.body.size;
+  let occupantCapacity = req.body.occupantCapacity;
+  try{
+    console.log("this", req.files);
+    const paths = req.files.map((file) => file.path);
+    const paths2 = paths.map((file) => "\\" + file);
+    let x = await apartmentData.update(
+      req.params.id,
+      req.body.state,
+      req.body.city,
+      paths2,
+      req.body.address,
+      req.body.zipcode,
+      req.body.rent,
+      req.body.size,
+      req.body.occupantCapacity,
+      req.body.contactInfo,
+      //req.session.user.email,
+      req.session.user._id
+      
+    );
+
+    console.log("x...",x);
+    const apartmentCollections = await apartment();
+  const allAddedApartmentListing = (
+    await apartmentCollections.find({}).toArray()
+  ).filter((v) => {
+    return req.session.user.AddedProperty.includes(v._id.toString());
+  });
+
+
+  console.log("allAddedApartmentListing..........",allAddedApartmentListing);
+    res.status(200).render("checkAllAddedApartments", {
+      success: "Your property has been successfully added!",
+      allAddedApartmentListing: allAddedApartmentListing,
+      username: req.session.user?.username,
+      email: req.session.user?.email,
+      isNotLogin: !req.session.user,
+    });
+  }
+  catch(e)
+  {
+    res.status(400).redirect(`/:id/updateApartment?error=${e}`);
+  }
+
 });
 
 router.post(
