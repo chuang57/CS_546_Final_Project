@@ -1,5 +1,5 @@
-h1 {
-  color: rgb(26, 49, 118);
+.heading {
+  color: #2a77b5;
 }
 h4 {
   color: rgb(189, 17, 60);
@@ -39,11 +39,11 @@ button{
   border-radius: 10px;
 }
 
-*/
-a {
+ a {
   font-size: inherit;
-  color: blue;
-}
+  color: #2a77b5
+ 
+} 
 
 /* p{
   font-size: 20px;

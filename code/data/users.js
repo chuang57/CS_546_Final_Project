@@ -20,7 +20,7 @@ const createUser = async (
   console.log("email", email);
   console.log("usertype..", usertype);
   const lowerUsername = username.toLowerCase();
-  const email = email.toLowerCase();
+  email = email.toLowerCase();
   if (!lowerUsername || !password) {
     throw new Error("Username or password is empty");
   }
