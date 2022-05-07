@@ -18,7 +18,7 @@ module.exports = {
 
   ) {
 
-    console.log(arguments.length);
+    //console.log(arguments.length);
     if (arguments.length !== 10)
       throw "Incorrect numbers of passed arguments, it should be 8";
     if (!state) throw "You must provide state ";
@@ -112,21 +112,20 @@ module.exports = {
     const apartmentData = await apartmentCollection.find({}).toArray();
 
     for (let i in apartmentData) {
-      alreadyAvailableApartment = apartmentData[i].address ; 
-      console.log("alreadyAvailableApartment",alreadyAvailableApartment);
-      /* if(alreadyAvailableApartment === address){
+      alreadyAvailableApartment = apartmentData[i].address;
+      //console.log("alreadyAvailableApartment",alreadyAvailableApartment);
+      if (alreadyAvailableApartment === address) {
         throw "apartment with this address is already available. please add new property with different address";
-      } */
+      }
     }
 
-   
+
 
     const insertInfo = await apartmentCollection.insertOne(newApartment);
 
-    console.log("insertInfo", insertInfo);
+    //console.log("insertInfo", insertInfo);
     if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add apartment";
-
-    console.log("insertInfo insertInfo.acknowledged", insertInfo.acknowledged);
+    //console.log("insertInfo insertInfo.acknowledged", insertInfo.acknowledged);
     if (insertInfo.acknowledged === true) {
       let userId = insertInfo.insertedId;
       const usersCollection = await users();
@@ -134,7 +133,7 @@ module.exports = {
     }
 
 
-    console.log("updatedInfo2..xx", updatedInfo2);
+    //console.log("updatedInfo2..xx", updatedInfo2);
 
     const newId = insertInfo.insertedId.toString();
     //const returnBand = await this.get(newId);
@@ -169,38 +168,39 @@ module.exports = {
     if (zipcode) {
       for (apt of apartmentData) {
         apartmentData = apartmentData.filter((apt) => apt.zipcode === zipcode);
-        console.log("booo", apartmentData);
+        //console.log("booo", apartmentData);
       }
     }
-    console.log("here", state);
+    //console.log("here", state);
     if (state) {
       for (apt of apartmentData) {
         apartmentData = apartmentData.filter((apt) => apt.state === state);
-        console.log("cooo", apartmentData);
+        //console.log("cooo", apartmentData);
       }
     }
     if (city) {
-     // city= city.toLowerCase();
+      if (!isNaN(city)) throw `${city} is not a valid value for city.`;
+      if (containsSpecialChars(city) === true) throw "city cannot contain special characters";
+
       for (apt of apartmentData) {
         apartmentData = apartmentData.filter((apt) => apt.city.toLowerCase() === city.toLowerCase());
       }
     }
-    console.log("Min", rentMin)
+    //console.log("Min", rentMin)
     if (rentMin) {
       // console.log("yooo", apartmentData);
       for (apt of apartmentData) {
         apartmentData = apartmentData.filter((apt) => apt.rent >= rentMin);
-        console.log("sooo", apartmentData);
         apartmentData = apartmentData.filter((apt) => apt.rent <= rentMax);
-        console.log("looo", apartmentData);
+
       }
     }
     if (sizeMin) {
       for (apt of apartmentData) {
         apartmentData = apartmentData.filter((apt) => apt.size >= sizeMin);
-        console.log("stooo", apartmentData);
+        //console.log("stooo", apartmentData);
         apartmentData = apartmentData.filter((apt) => apt.size <= sizeMax);
-        console.log("looo", apartmentData);
+        //console.log("looo", apartmentData);
       }
     }
     if (occupantCapacity) {
@@ -211,7 +211,7 @@ module.exports = {
       }
     }
 
-    console.log("the", apartmentData);
+    //console.log("the", apartmentData);
 
     //console.log("inside data", apartmentData,"apartment id",apartmentData[0].state,apartmentData[0]._id.toString());
 
@@ -219,7 +219,7 @@ module.exports = {
       apartmentData[i]._id = apartmentData[i]._id.toString();
     }
 
-    console.log("aaaaaaaaaaswerfd", apartmentData);
+    //console.log("aaaaaaaaaaswerfd", apartmentData);
     if (apartmentData === null)
       throw "No apartment available for this zip code";
     return apartmentData;
@@ -235,7 +235,7 @@ module.exports = {
       address: address
     }).toArray();
 
-    console.log("here", apartmentData)
+    //console.log("here", apartmentData)
     return apartmentData;
   },
 
@@ -272,11 +272,11 @@ module.exports = {
     apartmentId = apartmentId.trim();
     //if (!ObjectId.isValid(id)) throw 'ID is not a valid object ID';
 
-    console.log("aprt id..", apartmentId, typeof apartmentId);
+    //console.log("aprt id..", apartmentId, typeof apartmentId);
 
     apartmentId = ObjectId(apartmentId);
 
-    console.log("aprt id object..", apartmentId, typeof apartmentId);
+    //console.log("aprt id object..", apartmentId, typeof apartmentId);
     const apartmentCollection = await apartment();
     const apartmentIdData = await apartmentCollection
       .find({
@@ -289,31 +289,7 @@ module.exports = {
     return apartmentIdData;
   },
 
-  /* async remove(id){
-  //console.log(id, typeof id);
-  if (!id) throw 'You must provide an id to search for';
-    if (typeof id !== 'string') throw 'Id must be a string';
-    if (id.trim().length === 0)
-      throw 'id cannot be an empty string or just spaces';
-    id = id.trim();
-    if (!ObjectId.isValid(id)) throw 'invalid object ID';
-
-    const bandsCollection = await bands();
-    const returnBand = await this.get(id);
-    //console.log(returnBand);
-    const deletionInfo = await bandsCollection.deleteOne({
-      _id: ObjectId(id)
-    });
-
-    if (deletionInfo.deletedCount === 0) {
-      throw `Could not delete band with id of ${id}`;
-    }
-    
-      //return `"${returnBand.name.toString()} band has been successfully deleted from DB!"`;    
-      return deletionInfo.deletedCount; //var: 0,1,2
-},
- */
-
+ 
   async update(
     apartmentId,
     state,
@@ -325,9 +301,9 @@ module.exports = {
     size,
     occupantCapacity,
     contactInfo,
-    userSessionId){
-    
-      if (!state) throw "You must provide state ";
+    userSessionId) {
+
+    if (!state) throw "You must provide state ";
     if (typeof state !== "string") throw "address must be a string";
     if (state.trim().length === 0)
       throw "state cannot be an empty string or just spaces";
@@ -398,38 +374,39 @@ module.exports = {
     if (containsSpecialChars(contactInfo) === true) throw "Contact Information is Incorrect.";
 
 
-      let updateApartment = {
-       // _id: ObjectId(apartmentId),
-        state: state,
-        city: city,
-        photos: photosArr,
-        address: address,
-        zipcode: zipcode,
-        rent: rent,
-        size: size,
-        occupantCapacity: occupantCapacity,
-        contactInfo: contactInfo,
-        reviews: [],
-      };
-  
-     
-  const apartmentCollection = await apartment();
-  const returnApartment = await this.getApartmentById(apartmentId);
- 
-  const updatedInfo = await apartmentCollection.updateOne({
-     _id: ObjectId(apartmentId)},
-    {
-      $set: updateApartment
-    }); 
-  if (updatedInfo.modifiedCount === 0) {
-    throw 'could not update apartment successfully';
+    let updateApartment = {
+      // _id: ObjectId(apartmentId),
+      state: state,
+      city: city,
+      photos: photosArr,
+      address: address,
+      zipcode: zipcode,
+      rent: rent,
+      size: size,
+      occupantCapacity: occupantCapacity,
+      contactInfo: contactInfo,
+      reviews: [],
+    };
+
+
+    const apartmentCollection = await apartment();
+    const returnApartment = await this.getApartmentById(apartmentId);
+
+    const updatedInfo = await apartmentCollection.updateOne({
+      _id: ObjectId(apartmentId)
+    },
+      {
+        $set: updateApartment
+      });
+    if (updatedInfo.modifiedCount === 0) {
+      throw 'could not update apartment successfully';
+    }
+
+    //console.log("updatedInfo...this apartment", updatedInfo);
+    const returnApartment1 = await this.getApartmentById(apartmentId);
+    //console.log("returnApartment1", returnApartment1);
+    return returnApartment1;
   }
-  
-  console.log("updatedInfo...this apartment", updatedInfo);
-  const returnApartment1 = await this.getApartmentById(apartmentId);
-  console.log("returnApartment1",returnApartment1);
-  return returnApartment1;
-}
 };
 
 // return true if it contains special characters

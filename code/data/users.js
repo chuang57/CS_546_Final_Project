@@ -17,8 +17,8 @@ const createUser = async (
   age,
   usertype
 ) => {
-  console.log("email", email);
-  console.log("usertype..", usertype);
+  //console.log("email", email);
+  //console.log("usertype..", usertype);
   const lowerUsername = username.toLowerCase();
   email = email.toLowerCase();
   if (!lowerUsername || !password) {
@@ -113,7 +113,7 @@ const checkUser = async (email, password, req) => {
     email
   });
   //email = email.toLowerCase();
-  console.log(email, password, findemail);
+  //console.log(email, password, findemail);
   if (!findemail) {
     throw new Error("Either the email or password is invalid");
   }
