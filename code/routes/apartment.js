@@ -477,7 +477,7 @@ router.post("/apartmentAddress", isLogin, async (req, res) => {
       username: req.session.user?.username,
       email: req.session.user?.email,
       isNotLogin: !req.session.user,
-      errorAddress: `You must enter an address`,
+      errorAddress: `You must enter an address!`,
     });
     return
   }else if(apartmentAddress.trim().length === 0){
@@ -486,7 +486,7 @@ router.post("/apartmentAddress", isLogin, async (req, res) => {
       username: req.session.user?.username,
       email: req.session.user?.email,
       isNotLogin: !req.session.user,
-      errorAddress: `You must enter an address that is not just spaces`,
+      errorAddress: `You must enter an address that is not just spaces!`,
     });
     return
   }else if(typeof apartmentAddress != "string"){
@@ -495,7 +495,7 @@ router.post("/apartmentAddress", isLogin, async (req, res) => {
       username: req.session.user?.username,
       email: req.session.user?.email,
       isNotLogin: !req.session.user,
-      errorAddress: `Address must be a string.`,
+      errorAddress: `Address must be a string!`,
     });
     return
   }

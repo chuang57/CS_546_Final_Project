@@ -17,14 +17,8 @@ const createUser = async (
   age,
   usertype
 ) => {
-<<<<<<< HEAD
-  //console.log("email", email);
-  //console.log("usertype..", usertype);
-  const lowerUsername = username.toLowerCase();
-=======
   console.log("email", email);
   console.log("usertype..", usertype);
->>>>>>> parent of 2bcddc4 (Merge branch 'main' of https://github.com/chuang57/CS_546_Final_Project)
   email = email.toLowerCase();
   const lowerUsername = username.toLowerCase();
   if (!lowerUsername || !password) {
@@ -34,6 +28,10 @@ const createUser = async (
     throw new Error(
       "user name should be a valid string and should be at least 4 characters long."
     );
+  }
+
+  if (!email.includes("@") || !email.includes(".")) {
+    throw new Error("It is not email formet");
   }
 
   const userCollections = await users();
@@ -55,7 +53,10 @@ const createUser = async (
     throw new Error("Phone number must be number");
   }
 
-<<<<<<< HEAD
+  if (String(Number(username)) !== "NaN") {
+    throw new Error("user name must be string");
+  }
+
   if(age<0) {
     throw new Error("Age can not be negative");
   }
@@ -68,19 +69,16 @@ const createUser = async (
   if (!isNaN(city)) throw new Error(`${city} is not a valid value for city.`);
   if (containsSpecialChars(city) === true) throw new Error("city cannot contain special characters");
 
-  if (!phonenumber) throw "You must provide phonenumber";
-  if (typeof phonenumber !== "string") throw "phonenumber must be a string";
+  if (!phonenumber) throw new Error ("You must provide phonenumber");
   if (phonenumber.trim().length === 0)
-    throw "phonenumber cannot be an empty string or just spaces";
+  throw new Error ("phonenumber cannot be an empty string or just spaces");
     phonenumber = phonenumber.trim();
-  if (phonenumber.trim().length !== 10) throw "phonenumber cannot be less than/greater than 10 digit";
-  if (isNaN(phonenumber)) throw `${phonenumber} is not a valid value for phonenumber.`;
-  if (isValidDetails(phonenumber) === false) throw `${contactInfo} is not a valid value for phonenumber.`;
-  if (containsSpecialChars(phonenumber) === true) throw "Contact Information is Incorrect.";
+  if (phonenumber.trim().length !== 10) throw new Error ("phonenumber cannot be less than/greater than 10 digit");
+  if (isNaN(phonenumber)) throw new Error (`${phonenumber} is not a valid value for phonenumber.`);
+  if (isValidDetails(phonenumber) === false) throw new Error (`${contactInfo} is not a valid value for phonenumber.`);
+  if (containsSpecialChars(phonenumber) === true) throw new Error ("Contact Information is Incorrect.");
 
 
-=======
->>>>>>> parent of 2bcddc4 (Merge branch 'main' of https://github.com/chuang57/CS_546_Final_Project)
   const salt = await bcrypt.genSalt(10);
 
   await userCollections.insertOne({
@@ -110,6 +108,15 @@ const checkUser = async (email, password, req) => {
     );
   }
 
+  console.log("email", email);
+  console.log("@", email.includes("@"));
+  console.log(".", email.includes("."));
+
+  if (!email.includes("@") || !email.includes(".")) {
+    throw new Error("It is not email formet");
+  }
+
+
   const userCollections = await users();
 
   if (typeof password !== "string" || password.length < 6) {
@@ -118,6 +125,7 @@ const checkUser = async (email, password, req) => {
     );
   }
 
+  email = email.toLowerCase();
   const findemail = await userCollections.findOne({
     email
   });
@@ -135,8 +143,6 @@ const checkUser = async (email, password, req) => {
 
 
 const getReviewfromId = async (reviewId) => {
-<<<<<<< HEAD
-=======
   /* const userCollections = await users();
   const userRecord = await userCollections.find({
     _id: ObjectId(userid),
@@ -149,9 +155,8 @@ const getReviewfromId = async (reviewId) => {
   //req.session.user = findemail;
   //return { authenticated: true };
   return userRecord; */
->>>>>>> parent of 2bcddc4 (Merge branch 'main' of https://github.com/chuang57/CS_546_Final_Project)
 
-  if (!ObjectId.isValid(reviewId)) throw "review id is not a valid object ID";
+  if (!ObjectId.isValid(reviewId)) throw new Error ("review id is not a valid object ID");
   const apartmentCollection = await apartment();
   // const band = await bandsCollection.find({ 'albums._id': ObjectId(albumId)}).toArray();
   const aprtment = await apartmentCollection
@@ -172,7 +177,6 @@ const getReviewfromId = async (reviewId) => {
   return aprtment[0].reviews[0];
 };
 
-<<<<<<< HEAD
 
 function containsSpecialChars(str) {
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -192,6 +196,4 @@ function isValidDetails(rating) {
   }
 
 };
-=======
->>>>>>> parent of 2bcddc4 (Merge branch 'main' of https://github.com/chuang57/CS_546_Final_Project)
 module.exports = { createUser, checkUser, getReviewfromId };

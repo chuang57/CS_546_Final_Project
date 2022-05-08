@@ -3,6 +3,33 @@
 const form = document.getElementById("address-form");
     form.addEventListener("submit", (e) => {
       try {
+        console.log("h")
+        const apartmentAddress = document.getElementById("address").value;
+        if (!apartmentAddress){
+            e.preventDefault();
+            console.log("hi")
+            document.getElementById("error-address").innerHTML =
+            "You must enter an address";
+        }else if(apartmentAddress.trim().length === 0){
+            e.preventDefault();
+            console.log("hii")
+            document.getElementById("error-address").innerHTML =
+            "You must enter an address that is not just spaces";
+        }else if(typeof apartmentAddress != "string"){
+            e.preventDefault();
+            console.log("yoyo")
+            document.getElementById("error-address").innerHTML =
+            "Address must be a string"; 
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+
+    const formFilter = document.getElementById("address-form");
+    form.addEventListener("submit", (e) => {
+      try {
         const apartmentAddress = document.getElementById("address").value;
         if (!apartmentAddress){
             e.preventDefault();

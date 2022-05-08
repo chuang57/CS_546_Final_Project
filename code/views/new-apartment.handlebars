@@ -104,7 +104,28 @@
   </div>
 
   <div class="form-group">
-    <label for="occupantCapacity">Occupant Capacity: </label>
+    <label for = "occupantCapacity">Occupant Capacity</label>
+        <select
+          id="occupantCapacity"
+          type="number"
+          name="occupantCapacity"
+          placeholder="Enter the Occupant Capacity"
+          class="form-control"
+        >
+         {{!--  <option selected>Choose...</option> --}}
+          <option value="" disabled selected>Choose...</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+        </select>
+  </div>
 
   <div class='form-group'>
     <label for='contactInfo'>Contact info: </label>
@@ -119,8 +140,34 @@
   <button type='submit' class='btn btn-primary'>Submit</button>
 </form>
 
-
-
+<script src='https://rawgit.com/leizongmin/js-xss/master/dist/xss.js'></script>
+<script>
+  document.querySelector('#new-apartment').addEventListener('submit', (e) => {
+    console.log("submit : " );
+    e.preventDefault(); 
+    const { state , city, photos, address, zipcode, rent, size,occupantCapacity ,contactInfo} = e.target;
+    const newFormData = new FormData();
+    const photosInput = $("#photos")[0];
+    newFormData.append("photos", photosInput);
+    newFormData.append("state", state.value);
+    newFormData.append("address", address.value);
+    newFormData.append("city", city.value);
+    newFormData.append("zipcode", zipcode.value);
+    newFormData.append("rent", rent.value);
+    newFormData.append("size", size.value);
+    newFormData.append("occupantCapacity", occupantCapacity.value);
+    newFormData.append("contactInfo", contactInfo.value);
+    
+    let data = '{';
+    for (var [key, value] of newFormData.entries()) {
+      data += '"' + key + '"' + ' : ' + '"' + value + '",';
+    }
+    console.log("currentData : ", data);
+    console.log(data[data.length-1]);
+    data = data.slice(0, -1);
+    console.log("currentData : ", data);
+    data += '}';
+    data = filterXSS(data);
 
     $.ajax({
       url: '/newApartmentInfo',
@@ -129,17 +176,17 @@
       data: JSON.parse(data),  
       beforeSend:function(jqXHR) {
         console.log("beforesend : ", jqXHR);
-      },// 서버 요청 전 호출 되는 함수 return false; 일 경우 요청 중단
+      },
       success:function(jqXHR) {
         window.location.href ='/apartment'
-      },// 요청 완료 시
+      },
       error:function(jqXHR) {
         console.log("error : ", jqXHR);
         document.querySelector('#error').innerHTML = jqXHR.responseText;
-      },// 요청 실패.
+      },
       complete:function(jqXHR) {
         console.log("complete : ", jqXHR);
-      }// 요청의 실패, 성공과 상관 없이 완료 될 경우 호출
+      }
     })
   }) 
 </script>
