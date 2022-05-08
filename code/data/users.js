@@ -55,6 +55,10 @@ const createUser = async (
     throw new Error("Phone number must be number");
   }
 
+  if (String(Number(username)) !== "NaN") {
+    throw new Error("user name must be string");
+  }
+
   if (age < 0) {
     throw new Error("Age can not be negative");
   }
