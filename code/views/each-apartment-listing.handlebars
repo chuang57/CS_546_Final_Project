@@ -67,6 +67,33 @@
       <h2 class="display-6 text-center ">Details</h4>
       <hr class="w-25 mx-auto">
       <div class="container">
+        <div
+            class=" col col-xl-6 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column about_us_text ">
+            {{!-- <h5 class="display-6 ">Apartment Details</h2> --}}
+
+              <div class="apartment-address">
+                <h2>{{this.address}}</h2>
+              </div>
+              <div class="apartment-address">
+                <h3>{{this.city}}, {{this.state}}, {{this.zipcode}} </h3>
+              </div>
+              <div class="apartment-address">Monthly Rent: ${{this.rent}}</div>
+              <div class="apartment-address">Size of the apartment: {{this.size}} square foot</div>
+              <div class="apartment-address">Occupant capacity: {{this.occupantCapacity}} members</div>
+              <div class="apartment-address">Contact property: {{this.contactInfo}}</div>
+              {{!-- <div class="reviews"> <a href="/reviews/{{this._id}}" class="click">write a review</a> </div> --}}
+              <br>
+              <a href="/reviews/{{this._id}}" class="btn btn-primary display-6 rounded-pill">Write a review</a>
+
+              {{#if ../isDelete}}
+              <button class="btn btn-primary display-6 rounded-pill"
+                onclick="deleteApartment('{{this._id}}')">delete</button>
+              {{/if}}
+              {{!-- {{#each reviews}}
+              <p>Rating: {{this.rating}}, Desciption: {{this.description}}</p>
+              {{/each}} --}}
+          </div>
+        </div>
         <div class="row my-5">
           <div class="col col-xl-6 col-md-6 col-12">
 
@@ -119,33 +146,6 @@
                 </div>
 
           </div>
-          <div
-            class=" col col-xl-6 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column about_us_text ">
-            {{!-- <h5 class="display-6 ">Apartment Details</h2> --}}
-
-              <div class="apartment-address">
-                <h2>{{this.address}}</h2>
-              </div>
-              <div class="apartment-address">
-                <h3>{{this.city}}, {{this.state}}, {{this.zipcode}} </h3>
-              </div>
-              <div class="apartment-address">Monthly Rent: ${{this.rent}}</div>
-              <div class="apartment-address">Size of the apartment: {{this.size}} square foot</div>
-              <div class="apartment-address">Occupant capacity: {{this.occupantCapacity}} members</div>
-              <div class="apartment-address">Contact property: {{this.contactInfo}}</div>
-              {{!-- <div class="reviews"> <a href="/reviews/{{this._id}}" class="click">write a review</a> </div> --}}
-              <br>
-              <a href="/reviews/{{this._id}}" class="btn btn-primary display-6 rounded-pill">Write a review</a>
-
-              {{#if ../isDelete}}
-              <button class="btn btn-primary display-6 rounded-pill"
-                onclick="deleteApartment('{{this._id}}')">delete</button>
-              {{/if}}
-              {{!-- {{#each reviews}}
-              <p>Rating: {{this.rating}}, Desciption: {{this.description}}</p>
-              {{/each}} --}}
-          </div>
-        </div>
 
       </div>
     </div>
