@@ -148,9 +148,7 @@ router.get("/checkAllAddedApartments", isLogin, async (req, res) => {
     return req.session.user.AddedProperty.includes(v._id.toString());
   });
 
-  //console.log("allAddedApartmentListing..",allAddedApartmentListing);
-  //console.log("req.session._id",req.session._id,req.session.id);
- 
+  console.log("allAddedApartmentListing..",allAddedApartmentListing)
   try {
     res.render("checkAllAddedApartments", {
       allAddedApartmentListing,
@@ -181,8 +179,8 @@ router.get("/profile/:email", async (req, res) => {
     return findemail.savedApartments.includes(v._id.toString());
   });
 
-  //console.log("findemail-----", findemail);
-  //console.log("findemail-----", findemail._id.toString());
+  console.log("findemail-----", findemail);
+  console.log("findemail-----", findemail._id.toString());
   /* console.log("reviewsWritten-----",findemail.reviewsWritten);
   console.log("reviewsWrittenLength",findemail.reviewsWritten.length);
   console.log("findemail.gender",findemail.gender); */
@@ -255,7 +253,7 @@ router.post("/signup", async (req, res) => {
       usertype
     );
   } catch (e) {
-    //console.log(e);
+    console.log(e);
     return res.redirect(`/signup?error=${e.message}`);
   }
   res.redirect("/login");

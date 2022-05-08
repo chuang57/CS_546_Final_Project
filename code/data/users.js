@@ -17,10 +17,16 @@ const createUser = async (
   age,
   usertype
 ) => {
+<<<<<<< HEAD
   //console.log("email", email);
   //console.log("usertype..", usertype);
   const lowerUsername = username.toLowerCase();
+=======
+  console.log("email", email);
+  console.log("usertype..", usertype);
+>>>>>>> parent of 2bcddc4 (Merge branch 'main' of https://github.com/chuang57/CS_546_Final_Project)
   email = email.toLowerCase();
+  const lowerUsername = username.toLowerCase();
   if (!lowerUsername || !password) {
     throw new Error("Username or password is empty");
   }
@@ -49,6 +55,7 @@ const createUser = async (
     throw new Error("Phone number must be number");
   }
 
+<<<<<<< HEAD
   if(age<0) {
     throw new Error("Age can not be negative");
   }
@@ -72,6 +79,8 @@ const createUser = async (
   if (containsSpecialChars(phonenumber) === true) throw "Contact Information is Incorrect.";
 
 
+=======
+>>>>>>> parent of 2bcddc4 (Merge branch 'main' of https://github.com/chuang57/CS_546_Final_Project)
   const salt = await bcrypt.genSalt(10);
 
   await userCollections.insertOne({
@@ -108,12 +117,11 @@ const checkUser = async (email, password, req) => {
       "password should be a valid string and should be at least 4 characters long."
     );
   }
-  email = email.toLowerCase();
+
   const findemail = await userCollections.findOne({
     email
   });
-  //email = email.toLowerCase();
-  //console.log(email, password, findemail);
+  console.log(email, password, findemail);
   if (!findemail) {
     throw new Error("Either the email or password is invalid");
   }
@@ -127,9 +135,25 @@ const checkUser = async (email, password, req) => {
 
 
 const getReviewfromId = async (reviewId) => {
+<<<<<<< HEAD
+=======
+  /* const userCollections = await users();
+  const userRecord = await userCollections.find({
+    _id: ObjectId(userid),
+  }).toArray();
+  console.log("userRecord",userRecord);
+
+  if (!userRecord) {
+    throw new Error("No user record found");
+  }
+  //req.session.user = findemail;
+  //return { authenticated: true };
+  return userRecord; */
+>>>>>>> parent of 2bcddc4 (Merge branch 'main' of https://github.com/chuang57/CS_546_Final_Project)
 
   if (!ObjectId.isValid(reviewId)) throw "review id is not a valid object ID";
   const apartmentCollection = await apartment();
+  // const band = await bandsCollection.find({ 'albums._id': ObjectId(albumId)}).toArray();
   const aprtment = await apartmentCollection
     .find(
       { "reviews._id": ObjectId(reviewId) },
@@ -148,6 +172,7 @@ const getReviewfromId = async (reviewId) => {
   return aprtment[0].reviews[0];
 };
 
+<<<<<<< HEAD
 
 function containsSpecialChars(str) {
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -167,4 +192,6 @@ function isValidDetails(rating) {
   }
 
 };
+=======
+>>>>>>> parent of 2bcddc4 (Merge branch 'main' of https://github.com/chuang57/CS_546_Final_Project)
 module.exports = { createUser, checkUser, getReviewfromId };

@@ -24,7 +24,6 @@
     }
   </style>
   <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
-      <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBlsIQWGfYvZQFI3XptUFNo_aPQTgUXT_E"></script>
   </head>
 
 <body>
@@ -45,8 +44,7 @@
         {{#if isNotLogin}}
         <a class="nav-item nav-link active" href="/login">Login
           <span class="sr-only">(current)</span></a>
-        {{!-- <a class="nav-item nav-link hidden" href="/signup">Sign Up</a> --}}
-      {{!--   <a href="/signup">Sign Up</a> --}}
+        <a class="nav-item nav-link hidden" href="/signup">Sign Up</a>
 
         {{else}}
         {{#if signup}}
@@ -87,13 +85,13 @@
     </div>
     {{#if username}}
     <a class="userprofile" href="/profile/{{email}}">
-       {{username}}
+      {{username}}
     </a>
     {{/if}}
   </nav>
 
   <main class="container">
-    <h1 class="heading">Discover Your New Home. Helping renters find their perfect fit</h1>
+    <h1>Discover Your New Home. Helping renters find their perfect fit</h1>
     <div class="row">
       <div class="col">
         {{{body}}}

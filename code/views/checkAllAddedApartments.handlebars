@@ -1,14 +1,18 @@
-{{#if success}}
-<h2>{{success}}</h2>
-{{/if}}
+{{!-- <div class="row">
+  {{#each allApartmentListing}}
+    <div>{{this.state}}</div>
+    <div>{{this.city}}</div>
+    <div>{{this.address}}</div>
+    <div>{{this.rent}}</div>
+    <div>{{this.size}}</div>
+    <div>{{this.occupantCapacity}}</div>
 
+  {{/each}} --}}
 
-     {{#each allAddedApartmentListing}}
+    {{#each allAddedApartmentListing}}
    <div class="col-md-6 col-sm-6">
-       
         <div class="real-estate-quick-view shadow">
-           
-            <h2 class="title text-capitalize"><a href="/apartment/{{this._id}}" class="text-dark">{{this.address}}</a></h2>
+            <h3 class="title text-capitalize"><a href="/apartment/{{this._id}}" class="text-dark">{{this.address}}</a></h3>
             <div class="media">
                 <div class="media-left">
                    {{!--  <a href="#">
@@ -45,20 +49,16 @@
                         </tr>
                          <tr>
                             <td class="text-left">Update apartment details</td>
-                            <td class="text-right"><a href="/{{this._id}}/updateApartment">click here to update</a></td>
+                            <td class="text-right"><a href="/updateApartment">click here to update</a></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-        
         </div>
-           
     </div>
-
-     {{/each}}
    
     
-
+{{/each}}
 
 
