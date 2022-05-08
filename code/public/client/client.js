@@ -14,7 +14,7 @@ const form = document.getElementById("address-form");
             "You must enter an address that is not just spaces";
         }else if(typeof apartmentAddress != "string"){
             e.preventDefault();
-            console.log("yoyo")
+
             document.getElementById("error-address").innerHTML =
             "Address must be a string"; 
         }
@@ -58,7 +58,7 @@ const form = document.getElementById("address-form");
             "Invalid state";
         }else if(typeof city != "string"){
             e.preventDefault();
-            console.log("yoyo")
+
             document.getElementById("error").innerHTML =
             "City must be a string"; 
         }
@@ -83,7 +83,7 @@ const form = document.getElementById("address-form");
             "Invalid address";
         }else if(typeof address != "string"){
             e.preventDefault();
-            console.log("yoyo")
+
             document.getElementById("error").innerHTML =
             "Address must be a string"; 
         }
@@ -94,7 +94,7 @@ const form = document.getElementById("address-form");
             "You must enter a zipcode";
         }else if(typeof zipcode != "number"){
             e.preventDefault();
-            console.log("yoyo")
+
             document.getElementById("error").innerHTML =
             "Zipcode must be a number!!!!"; 
         }
@@ -109,7 +109,7 @@ const form = document.getElementById("address-form");
             "Invalid rent";
         }else if(typeof rent != "number"){
             e.preventDefault();
-            console.log("yoyo")
+
             document.getElementById("error").innerHTML =
             "Rent must be a string"; 
         }
@@ -124,7 +124,7 @@ const form = document.getElementById("address-form");
             "Invalid size";
         }else if(typeof size != "number"){
             e.preventDefault();
-            console.log("yoyo")
+
             document.getElementById("error").innerHTML =
             "Size must be a string"; 
         }
@@ -145,7 +145,7 @@ const form = document.getElementById("address-form");
             "Invalid contact";
         }else if(typeof contact != "string"){
             e.preventDefault();
-            console.log("yoyo")
+
             document.getElementById("error").innerHTML =
             "contact must be a string"; 
         }

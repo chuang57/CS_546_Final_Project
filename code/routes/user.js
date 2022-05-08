@@ -8,7 +8,7 @@ const users = mongoCollections.users;
 const apartment = mongoCollections.apartment;
 
 router.get("/login", async (req, res) => {
-  //console.log(req.session.user);
+
   req.session.user = undefined;
   res.render("login", {
     title: "User Login",
@@ -61,8 +61,6 @@ router.post("/user/bookmark", isLogin, async (req, res) => {
 
   req.session.user = newuser[0];
 
-  // res.send("success");
-  //console.log("/user/bookmark");
   res.status(200).send("/apartment");
 });
 
@@ -97,23 +95,21 @@ router.get("/profile/:email/checkAllReviews", async (req, res) => {
     if (findemail2.gender === "female") {
       genderCheck2 = "female";
     }
-    //console.log("findemail2.gender", findemail2.gender);
-    // console.log("genderCheck2", genderCheck2);
+   
 
     let reviewLength2 = findemail2.reviewsWritten.length;
     for (let i = 0; i < reviewLength2; i++) {
       let r2 = await getReviewfromId(findemail2.reviewsWritten[i]);
       arr.push(r2);
     }
-    //console.log(arr);
+   
     res.render("checkAllReviews", {
       ...findemail2,
       arr,
       genderCheck2,
     });
 
-    // console.log("findemail2...aditi_9:28 pm",findemail2);
-    // console.log("arr...aditi_9:28 pm",arr);
+
   } catch (e) {
     res.send(e);
   }
@@ -130,8 +126,9 @@ router.get("/checkAllApartments", isLogin, async (req, res) => {
 
   try {
     res.render("checkAllApartments", {
-      signup: "User Signup",
+      //signup: "User Signup",
       allApartmentListing,
+      //isNotLogin: !req.session.user,
     });
   } catch (e) {
     res.send(e);
@@ -140,24 +137,25 @@ router.get("/checkAllApartments", isLogin, async (req, res) => {
 });
 
 
-router.get("/checkAllAddedApartments", isLogin, async (req, res) => {
-  const apartmentCollections = await apartment();
-  const allAddedApartmentListing = (
-    await apartmentCollections.find({}).toArray()
-  ).filter((v) => {
-    return req.session.user.AddedProperty.includes(v._id.toString());
-  });
+// router.get("/checkAllAddedApartments", isLogin, async (req, res) => {
+//   const apartmentCollections = await apartment();
+//   const allAddedApartmentListing = (
+//     await apartmentCollections.find({}).toArray()
+//   ).filter((v) => {
+//     return req.session.user.AddedProperty.includes(v._id.toString());
+//   });
 
-  console.log("allAddedApartmentListing..",allAddedApartmentListing)
-  try {
-    res.render("checkAllAddedApartments", {
-      allAddedApartmentListing,
-    });
-  } catch (e) {
-    res.send(e);
-  }
-  return;
-});
+
+//   try {
+//     res.render("checkAllAddedApartments", {
+//       allAddedApartmentListing,
+//       isNotLogin: !req.session.user,
+//     });
+//   } catch (e) {
+//     res.send(e);
+//   }
+//   return;
+// });
 
 
 
@@ -179,11 +177,8 @@ router.get("/profile/:email", async (req, res) => {
     return findemail.savedApartments.includes(v._id.toString());
   });
 
-  console.log("findemail-----", findemail);
-  console.log("findemail-----", findemail._id.toString());
-  /* console.log("reviewsWritten-----",findemail.reviewsWritten);
-  console.log("reviewsWrittenLength",findemail.reviewsWritten.length);
-  console.log("findemail.gender",findemail.gender); */
+
+
 
   let reviewLength = findemail.reviewsWritten.length;
   for (let i = 0; i < reviewLength; i++) {
@@ -208,9 +203,7 @@ router.get("/profile/:email", async (req, res) => {
     genderCheck = "female";
   }
 
-  let addedPropertyLength = findemail.AddedProperty.length;
-  // console.log("allRevieWritten",allReviewsWritten);
-  //console.log("allApartmentListing",allApartmentListing);
+
 
   res.render("profile", {
     ...findemail,
@@ -224,7 +217,7 @@ router.get("/profile/:email", async (req, res) => {
     postiveRatingRatio,
     negativeRatingRatio,
     neutralRatingRatio,
-    //addedPropertyLength,
+    isNotLogin: !req.session.user,
   });
   return;
 });

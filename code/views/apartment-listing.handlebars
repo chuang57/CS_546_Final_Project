@@ -8,11 +8,7 @@
 <div class="container">
 <div class="row row-cols-4"> 
    
-    {{!-- <div class="container">
-      <div class="row row-cols-4"> --}}
-  {{!--      <div class="col">
-          <div class="p-3 border bg-light"> --}}
-            {{!-- Row column --}}
+
              {{#each apartmentListing}}
              <div class = "col">
               <div class = "p-3 border bg-light" >
@@ -24,10 +20,9 @@
 
                {{#with this.photos}}
               <img class="card-img-top1" src={{this.[0]}} alt="Card image cap">     
-        {{!--       alt="Card image cap" , src="public/"{{this.[0]}}--}}
+
                {{/with}}
-         {{!--      {{/if}}   --}}
-            {{!--  {{/each}}   --}}
+
 
 
 
@@ -77,12 +72,7 @@
             </div>
             </div>
             
-            {{!-- // --}}
-      {{!--    </div>
-        </div> --}}
-      
-    {{!--   </div>
-    </div>  --}}
+
  {{/each}}
   </div>
  
@@ -97,22 +87,3 @@
 
   </div> 
 
-
-    {{!-- <div> {{{this.appartmentName}}}</div>
-    <div>{{{this.state}}}</div>
-    <div>{{{this.city}}}</div>
-    <div>{{{this.address}}}</div>
-    {{#each this.photos}}
-    <img src="{{{ this }}}"></img>
-    {{/each}}
-    <div>{{{this.zipcode}}}</div>
-    <div>{{{this.rentprice}}}</div>
-    <div>{{{this.price}}}</div>
-    <div>{{{this.size}}}</div>
-    <div>{{{this.occupantCapacity}}}</div>
-    {{#each this.reviews}}
-    <div>{{{ this.name }}}</div>
-    <div>{{{ this.rating }}}</div>
-    <div>{{{ this.desc }}}</div>
-    {{/each}}
-    {{/each}} --}}

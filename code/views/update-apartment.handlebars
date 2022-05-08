@@ -3,10 +3,7 @@
 {{/if}}
 
 <form id="update-apartment" enctype="multipart/form-data" action="/{{apartmentId}}/updateApartmentInfo" method="post">
-  {{!-- <div class="form-group">
-    <label for="state">State: </label>
-    <input id="state" class="form-control" name="state" placeholder="Enter the state" required />
-  </div> --}}
+
   <div class="form-group">
     <label for="state">State:</label>
         <select
@@ -16,7 +13,6 @@
           placeholder="choose..."
           class="form-control"
         >
-         {{!--  <option selected>Choose...</option> --}}
           <option value="" disabled selected>Choose...</option>
           <option>AL</option>
           <option>AK</option>
@@ -104,8 +100,6 @@
 
   <div class="form-group">
     <label for="occupantCapacity">Occupant Capacity: </label>
-   {{!--  <input id="occupantCapacity" name="occupantCapacity" placeholder="Enter the occupant capacity"
-      class="form-control" /> --}}
         <select
           id="occupantCapacity"
           class="form-control"

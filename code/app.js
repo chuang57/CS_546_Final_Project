@@ -15,7 +15,6 @@ const hbs = exphbs.create({
   helpers: {
     img: function (inp) {
       const x = Buffer.from(inp).toString('base64');
-      console.log("this", x)
       return x
     }
   }

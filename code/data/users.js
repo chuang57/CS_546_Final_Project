@@ -5,7 +5,6 @@ const users = mongoCollections.users;
 const apartment = mongoCollections.apartment;
 const { ObjectId } = require("mongodb");
 
-const isAlpha = (str) => /^[a-zA-Z]*$/.test(str);
 
 const createUser = async (
   email,
@@ -17,8 +16,7 @@ const createUser = async (
   age,
   usertype
 ) => {
-  console.log("email", email);
-  console.log("usertype..", usertype);
+
   const lowerUsername = username.toLowerCase();
   email = email.toLowerCase();
   if (!lowerUsername || !password) {
@@ -128,7 +126,7 @@ const checkUser = async (email, password, req) => {
   const findemail = await userCollections.findOne({
     email,
   });
-  console.log(email, password, findemail);
+
   if (!findemail) {
     throw new Error("Either the email or password is invalid");
   }
@@ -140,22 +138,11 @@ const checkUser = async (email, password, req) => {
 };
 
 const getReviewfromId = async (reviewId) => {
-  /* const userCollections = await users();
-  const userRecord = await userCollections.find({
-    _id: ObjectId(userid),
-  }).toArray();
-  console.log("userRecord",userRecord);
 
-  if (!userRecord) {
-    throw new Error("No user record found");
-  }
-  //req.session.user = findemail;
-  //return { authenticated: true };
-  return userRecord; */
 
   if (!ObjectId.isValid(reviewId)) throw new Error ("review id is not a valid object ID");
   const apartmentCollection = await apartment();
-  // const band = await bandsCollection.find({ 'albums._id': ObjectId(albumId)}).toArray();
+
   const aprtment = await apartmentCollection
     .find(
       { "reviews._id": ObjectId(reviewId) },
@@ -170,7 +157,7 @@ const getReviewfromId = async (reviewId) => {
 
   if (aprtment.length === 0)
     throw "no review exist for the given id: " + reviewId;
-  //console.log(JSON.stringify(band[0].albums[0],null,4));
+
   return aprtment[0].reviews[0];
 };
 
@@ -182,7 +169,7 @@ function containsSpecialChars(str) {
 function isValidDetails(rating) {
   if (rating.toString().includes(".")) {
     if (rating.toString().split(".")[1].length !== 1) {
-      //console.log("inside if2",rating.toString().split('.')[1].length);
+
       return false;
     } else {
       return true;

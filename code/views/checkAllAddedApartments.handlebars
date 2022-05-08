@@ -1,13 +1,4 @@
-{{!-- <div class="row">
-  {{#each allApartmentListing}}
-    <div>{{this.state}}</div>
-    <div>{{this.city}}</div>
-    <div>{{this.address}}</div>
-    <div>{{this.rent}}</div>
-    <div>{{this.size}}</div>
-    <div>{{this.occupantCapacity}}</div>
 
-  {{/each}} --}}
   {{#if success}}
 <h2>{{success}}</h2>
 {{/if}}
@@ -18,15 +9,10 @@
             <h3 class="title text-capitalize"><a href="/apartment/{{this._id}}" class="text-dark">{{this.address}}</a></h3>
             <div class="media">
                 <div class="media-left">
-                   {{!--  <a href="#">
-                        <img src="http://themes.djavaui.com/blankon-fullpack-admin-theme/img/media/house/2.jpg" alt="...">
-                    </a> --}}
+
                 </div>
                 <div class="media-body">
-                    {{!-- <h3 class="media-heading"> --}}
-                       {{!--  <span class="text-right text-strong">{{this.rent}}</span>
-                        <span class="text-right text-muted">monthly</span> --}}
-                  {{!--   </h3> --}}
+
                     <table class="table table-condensed">
                         <tbody>
                         <tr>
