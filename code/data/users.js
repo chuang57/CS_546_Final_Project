@@ -28,14 +28,6 @@ const createUser = async (
     );
   }
 
-  console.log("email", email);
-  console.log("@", email.includes("@"));
-  console.log(".", email.includes("."));
-
-  if (!email.includes("@") || !email.includes(".")) {
-    throw new Error("It is not email formet");
-  }
-
   const userCollections = await users();
   if (
     await userCollections.findOne({
@@ -69,17 +61,18 @@ const createUser = async (
     throw new Error("city cannot contain special characters");
 
   if (!phonenumber) throw "You must provide phonenumber";
+  if (typeof phonenumber !== "string") throw "phonenumber must be a string";
   if (phonenumber.trim().length === 0)
-    throw new Error("phonenumber cannot be an empty string or just spaces");
+    throw "phonenumber cannot be an empty string or just spaces";
   phonenumber = phonenumber.trim();
   if (phonenumber.trim().length !== 10)
-    throw new Error("phonenumber cannot be less than/greater than 10 digit");
+    throw "phonenumber cannot be less than/greater than 10 digit";
   if (isNaN(phonenumber))
-    throw new Error(`${phonenumber} is not a valid value for phonenumber.`);
+    throw `${phonenumber} is not a valid value for phonenumber.`;
   if (isValidDetails(phonenumber) === false)
-    throw new Error(`${contactInfo} is not a valid value for phonenumber.`);
+    throw `${contactInfo} is not a valid value for phonenumber.`;
   if (containsSpecialChars(phonenumber) === true)
-    throw new Error("Contact Information is Incorrect.");
+    throw "Contact Information is Incorrect.";
 
   const salt = await bcrypt.genSalt(10);
 
@@ -108,14 +101,6 @@ const checkUser = async (email, password, req) => {
     throw new Error(
       "email should be a valid string and should be at least 4 characters long."
     );
-  }
-
-  console.log("email", email);
-  console.log("@", email.includes("@"));
-  console.log(".", email.includes("."));
-
-  if (!email.includes("@") || !email.includes(".")) {
-    throw new Error("It is not email formet");
   }
 
   const userCollections = await users();
