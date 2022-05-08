@@ -164,8 +164,30 @@
     </select>
   </div>
 
-  <div class='form-group'>
-    <label for='contactInfo'>Contact info: </label>
+        <select
+          id="occupantCapacity"
+          type="number"
+          name="occupantCapacity"
+          placeholder="Enter the Occupant Capacity"
+          class="form-control"
+        >
+         {{!--  <option selected>Choose...</option> --}}
+          <option value="" disabled selected>Choose...</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+        </select>
+  </div>
+
+   <div class="form-group">
+    <label for="contactInfo">Contact info: </label>
     <input
       id='contactInfo'
       name='contactInfo'
@@ -173,9 +195,10 @@
       class='form-control'
     />
   </div>
+  
 
-  <button type='submit' class='btn btn-primary'>Submit</button>
-</form>
+  <button type="submit" class="btn btn-primary">Submit your property</button>
+  </form>
 
 <script src='https://rawgit.com/leizongmin/js-xss/master/dist/xss.js'></script>
 <script>
@@ -215,17 +238,17 @@
       data: JSON.parse(data),  
       beforeSend:function(jqXHR) {
         console.log("beforesend : ", jqXHR);
-      },// 서버 요청 전 호출 되는 함수 return false; 일 경우 요청 중단
+      },
       success:function(jqXHR) {
         window.location.href ='/apartment'
-      },// 요청 완료 시
+      },
       error:function(jqXHR) {
         console.log("error : ", jqXHR);
         document.querySelector('#error').innerHTML = jqXHR.responseText;
-      },// 요청 실패.
+      },
       complete:function(jqXHR) {
         console.log("complete : ", jqXHR);
-      }// 요청의 실패, 성공과 상관 없이 완료 될 경우 호출
+      }
     })
   }) 
 </script>

@@ -40,15 +40,18 @@
                       <div class="carousel-item">
                         <img src={{this}} class="d-block w-80" alt="...">
                       </div> --}}
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                      <label for="my-input1"></label>
+
+                      <button id="my-input1" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
                         data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                       {{!--  <span class="visually-hidden">Previous</span> --}}
                       </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                       <label for="my-input2"></label>
+                      <button id="my-input2" class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
                         data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                       {{!--  <span class="visually-hidden">Next</span> --}}
                       </button>
                     </div>
 
@@ -61,28 +64,59 @@
   </div>
   <section class="my-5" id="nav_about_us">
     <div>
-      <h4 class="display-6 text-center ">Details</h4>
+      <h2 class="display-6 text-center ">Details</h4>
       <hr class="w-25 mx-auto">
       <div class="container">
         <div class="row my-5">
           <div class="col col-xl-6 col-md-6 col-12">
 
             <div id="map" class="map"></div>
-                  <script type="text/javascript">
-                      var map = new ol.Map({
-                          target: 'map',
-                          layers: [
-                              new ol.layer.Tile({
-                                  source: new ol.source.OSM()
-                              })
-                          ],
-                          view: new ol.View({
-                              center: ol.proj.fromLonLat([-74.02662649999999, 40.7432899]),
-                              zoom: 18
-                          })
-                      });
-                  </script>
-            </div>
+                    <script type="text/javascript">
+                        var geocoder = new google.maps.Geocoder();
+                        var address = "{{this.address}}";
+                        geocoder.geocode( { 'address': address}, function(results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                var latitude = results[0].geometry.location.lat();
+                                var longitude = results[0].geometry.location.lng();
+                                var pos = [longitude, latitude]
+                                var map = new ol.Map({
+                                    target: 'map',
+                                    layers: [
+                                        new ol.layer.Tile({
+                                            source: new ol.source.OSM()
+                                        })
+                                    ],
+                                    view: new ol.View({
+                                        center: ol.proj.fromLonLat(pos),
+                                        zoom: 18
+                                    })
+                                });
+                                var feature = new ol.Feature({
+                                    // type:new ol.style.Style({anchor: [0.5, 1],image: new ol.style.Icon({src: 'https://openlayers.org/en/latest/examples/data/icon.png'})}),
+                                    geometry: new ol.geom.Point(ol.proj.fromLonLat(pos))
+                                })
+                                feature.setStyle(new ol.style.Style({
+                                    image: new ol.style.Icon(({
+                                        anchor: [0.5, 36],
+                                        anchorXUnits: "fraction",
+                                        anchorYUnits: "pixels",
+                                        opacity: 1,
+                                        src: "https://openlayers.org/en/latest/examples/data/icon.png",
+                                    })),
+                                }));
+                                var layer = new ol.layer.Vector({
+                                    source: new ol.source.Vector({
+                                        features: [feature]
+                                    })
+                                });
+                                map.addLayer(layer);
+                            } else {
+                                alert('Geocode was not successful for the following reason: ' + status);
+                                //alert(status + ' for this address');
+                            }
+                        });
+                    </script>
+                </div>
 
           </div>
           <div
@@ -93,18 +127,18 @@
                 <h2>{{this.address}}</h2>
               </div>
               <div class="apartment-address">
-                <h4>{{this.city}}, {{this.state}}, {{this.zipcode}} </h4>
+                <h3>{{this.city}}, {{this.state}}, {{this.zipcode}} </h3>
               </div>
               <div class="apartment-address">Monthly Rent: ${{this.rent}}</div>
               <div class="apartment-address">Size of the apartment: {{this.size}} square foot</div>
               <div class="apartment-address">Occupant capacity: {{this.occupantCapacity}} members</div>
-              <div class="apartment-address">email: {{this.useremail}}</div>
+              <div class="apartment-address">Contact property: {{this.contactInfo}}</div>
               {{!-- <div class="reviews"> <a href="/reviews/{{this._id}}" class="click">write a review</a> </div> --}}
               <br>
-              <a href="/reviews/{{this._id}}" class="btn btn-warning display-6 rounded-pill">Write a review</a>
+              <a href="/reviews/{{this._id}}" class="btn btn-primary display-6 rounded-pill">Write a review</a>
 
               {{#if ../isDelete}}
-              <button class="btn btn-warning display-6 rounded-pill"
+              <button class="btn btn-primary display-6 rounded-pill"
                 onclick="deleteApartment('{{this._id}}')">delete</button>
               {{/if}}
               {{!-- {{#each reviews}}
