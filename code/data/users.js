@@ -34,12 +34,12 @@ const createUser = async (
       email: email,
     })
   ) {
-    throw new Error("There is already a user with that username");
+    throw new Error("There is already a user with that email");
   }
 
   if (typeof password !== "string" || password.length < 6) {
     throw new Error(
-      "password should be a valid string and should be at least 4 characters long."
+      "password should be a valid string and should be at least 6 characters long."
     );
   }
 
