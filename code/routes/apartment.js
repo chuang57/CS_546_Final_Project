@@ -8,7 +8,7 @@ const mongoCollections = require("../config/mongoCollections");
 const { isLogin } = require("../middleware/auth");
 const apartment = mongoCollections.apartment;
 const users = mongoCollections.users;
-const { getApartmentById } = require("../data/apartment");
+//const { getApartmentById } = require("../data/apartment");
 
 const multer = require("multer");
 const path = require("path");
@@ -74,7 +74,7 @@ router.get("/newApartment", isLogin, async (req, res) => {
   }
 });
 
-router.get("/:id/updateApartment", isLogin, async (req, res) => {
+/* router.get("/:id/updateApartment", isLogin, async (req, res) => {
   console.log("in get routes of updateApartment", req.params.id, req.body);
   let x = await apartmentData.getApartmentById(req.params.id);
 
@@ -101,12 +101,16 @@ router.get("/:id/updateApartment", isLogin, async (req, res) => {
     size:size,
     occupantCapacity:occupantCapacity,
     contactInfo:contactInfo
+   
   });
   return;
-});
+}); */
 
 
-router.post("/:id/updateApartmentInfo", isLogin, upload.array("photos"), async (req, res) => {
+/* router.post("/:id/updateApartmentInfo",
+  isLogin, 
+  upload.array("photos"), 
+  async (req, res) => {
   console.log("in post routes of updateApartment info", req.params.id, req.body);
   let state = req.body.state;
   let city = req.body.city;
@@ -116,14 +120,17 @@ router.post("/:id/updateApartmentInfo", isLogin, upload.array("photos"), async (
   let size = req.body.size;
   let occupantCapacity = req.body.occupantCapacity;
   try{
-    console.log("this", req.files);
-    const paths = req.files.map((file) => file.path);
-    const paths2 = paths.map((file) => "\\" + file);
+   // console.log("this", req.files);
+   // const paths = req.files.map((file) => file.path);
+   // const paths2 = paths.map((file) => "\\" + file);
+  // let id = ObjectId(req.params.id);
+   console.log("id........");
     let x = await apartmentData.update(
       req.params.id,
+      //id,
       req.body.state,
       req.body.city,
-      paths2,
+     // paths2,
       req.body.address,
       req.body.zipcode,
       req.body.rent,
@@ -158,7 +165,7 @@ router.post("/:id/updateApartmentInfo", isLogin, upload.array("photos"), async (
     res.status(400).redirect(`/:id/updateApartment?error=${e}`);
   }
 
-});
+}); */
 
 router.post(
   "/newApartmentInfo",
@@ -172,8 +179,6 @@ router.post(
   // let rent = xss(req.body.rent);
   // let size = xss(req.body.size);
   // let occupantCapacity = xss(req.body.occupantCapacity);
-
-
     try {
       let state = req.body.state
       let city = req.body.city

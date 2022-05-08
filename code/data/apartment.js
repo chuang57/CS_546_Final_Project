@@ -328,6 +328,8 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     contactInfo,
     userSessionId
   ) {
+
+    console.log('inside update');
     if (!state) throw "You must provide state ";
     if (typeof state !== "string") throw "address must be a string";
     if (state.trim().length === 0)
@@ -410,7 +412,9 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     //var res = website.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
     // let webPattern = /^(http:\/\/){1}(www\.){1}.[-a-zA-Z]{4,}(\.com)$/;
     // if(!webPattern.test(website)) throw 'You must provide correct website';
+  
 
+    console.log("inside update 2");
     let updateApartment = {
       // _id: ObjectId(apartmentId),
       state: state,
@@ -424,7 +428,9 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
       contactInfo: contactInfo,
       reviews: [],
     };
+  
 
+    console.log("inside update 3");
     const apartmentCollection = await apartment();
     const returnApartment = await this.getApartmentById(apartmentId);
 
