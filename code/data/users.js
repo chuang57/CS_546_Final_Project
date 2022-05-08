@@ -19,6 +19,7 @@ const createUser = async (
 ) => {
   console.log("email", email);
   console.log("usertype..", usertype);
+  email = email.toLowerCase();
   const lowerUsername = username.toLowerCase();
   if (!lowerUsername || !password) {
     throw new Error("Username or password is empty");
@@ -68,6 +69,7 @@ const createUser = async (
 };
 
 const checkUser = async (email, password, req) => {
+  email = email.toLowerCase();
   if (!email || !password) {
     throw new Error("email or password is empty");
   }
