@@ -98,13 +98,13 @@ router.get("/:id/updateApartment", isLogin, async (req, res) => {
 
 router.post("/:id/updateApartmentInfo", isLogin, upload.array("photos"), async (req, res) => {
   //console.log("in post routes of updateApartment info", req.params.id, req.body);
-  let state = xss(req.body.state);
-  let city = xss(req.body.city);
-  let address = xss(req.body.address);
-  let zipcode = xss(req.body.zipcode);
-  let rent = xss(req.body.rent);
-  let size = xss(req.body.size);
-  let occupantCapacity = xss(req.body.occupantCapacity);
+  let state = req.body.state;
+  let city = req.body.city;
+  let address = req.body.address;
+  let zipcode = req.body.zipcode;
+  let rent = req.body.rent;
+  let size = req.body.size;
+  let occupantCapacity = req.body.occupantCapacity;
   try{
    // console.log("this", req.files);
     const paths = req.files.map((file) => file.path);
