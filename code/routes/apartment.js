@@ -113,7 +113,6 @@ router.post(
         req.body.contactInfo,
         //req.session.user.email,
         req.session.user._id
-        
       );
       res.status(200).render("city-choosing", {
         success: "Your property has been successfully added!",
@@ -462,48 +461,58 @@ router.post("/apartment", isLogin, async (req, res) => {
     // }
   } catch (e) {
     console.log(e);
-    res
-      .status(404)
-      .render("apartment-listing", {
-        error: `There is no show found for the given filters: ${apartmentZipcode}`,
-      });
+    res.status(404).render("apartment-listing", {
+      error: `There is no show found for the given filters: ${apartmentZipcode}`,
+    });
   }
 });
 
 router.post("/apartmentAddress", isLogin, async (req, res) => {
   const apartmentAddress = req.body.address;
-  console.log("yo", apartmentAddress)
+  if (!apartmentAddress) {
+    res.status(404).render("city-choosing", {
+      title: "Apartment Finder",
+      username: req.session.user?.username,
+      email: req.session.user?.email,
+      isNotLogin: !req.session.user,
+      errorAddress: `You must enter an address`,
+    });
+    return
+  }else if(apartmentAddress.trim().length === 0){
+    res.status(404).render("city-choosing", {
+      title: "Apartment Finder",
+      username: req.session.user?.username,
+      email: req.session.user?.email,
+      isNotLogin: !req.session.user,
+      errorAddress: `You must enter an address that is not just spaces`,
+    });
+    return
+  }else if(typeof apartmentAddress != "string"){
+    res.status(404).render("city-choosing", {
+      title: "Apartment Finder",
+      username: req.session.user?.username,
+      email: req.session.user?.email,
+      isNotLogin: !req.session.user,
+      errorAddress: `Address must be a string.`,
+    });
+    return
+  }
 
   try {
-    let apartment = await apartmentData.getApartmentAddress(
-      apartmentAddress
-    );
-    //res.status(200).json(allAvailableApartmentList);
-    //console.log("allAvailableApartmentList......",allAvailableApartmentList);
+    let apartment = await apartmentData.getApartmentAddress(apartmentAddress);
+    console.log("yooooooooo")
 
-    //for(let i in allAvailableApartmentList){
-
-    res.status(200).render(
-      "each-apartment-listing",
-      {
-        apartmentListing: apartment,
-        reviews: apartment[0].reviews,
-        username: req.session.user?.username,
-        email: req.session.user?.email,
-        isNotLogin: !req.session.user,
-      }
-      ////   city: allAvailableApartmentList[i].city,
-      // address:allAvailableApartmentList[i].address,
-      // rent:allAvailableApartmentList[i].rent,
-      //size:allAvailableApartmentList[i].size,
-      //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
-    );
-    // }
+    res.status(200).render("each-apartment-listing", {
+      apartmentListing: apartment,
+      reviews: apartment[0].reviews,
+      username: req.session.user?.username,
+      email: req.session.user?.email,
+      isNotLogin: !req.session.user,
+    });
   } catch (e) {
     console.log(e);
-    res
-      .status(404)
-      console.log(e)
+    res.status(404);
+    console.log(e);
   }
 });
 
@@ -573,7 +582,6 @@ router.get("/apartment/:id", isLogin, async (req, res) => {
         //occupantCapacity:allAvailableApartmentList[i].occupantCapacity }
       );
     } else {
-
       //console.log(e);
       //res.status(404).render('singleShow', { error_message: `There is no show found for the given ID: ${showId}`, title: "Error", showId: showId});
       res.status(404).render("each-apartment-listing", {

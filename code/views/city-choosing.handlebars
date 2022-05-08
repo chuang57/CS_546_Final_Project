@@ -178,6 +178,12 @@
 
 
 <h1>Or search for an individual aparmtent by address!</h1>
+<p id="error-address"></p>
+
+ {{#if errorAddress}}
+    <div>{{errorAddress}}</div>
+  {{/if}}
+
 <div id="city-choosing-div">
   <form id="address-form" action="/apartmentAddress" method="post">
     <div class="form-row">
@@ -199,3 +205,7 @@
   </form>
   <br />
 </div> 
+
+<script src="../public/client/client.js">
+
+</script>
