@@ -15,11 +15,7 @@ module.exports = {
     occupantCapacity,
     contactInfo,
     userSessionId
-
-    
-
   ) {
-   
     console.log(arguments.length);
     if (arguments.length !== 10)
       throw "Incorrect numbers of passed arguments, it should be 8";
@@ -104,28 +100,31 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     };
 
     //console.log(newBand);
-    let updatedInfo2 ;
+    let updatedInfo2;
     const apartmentCollection = await apartment();
     const insertInfo = await apartmentCollection.insertOne(newApartment);
 
-    console.log("insertInfo",insertInfo);
-    if (!insertInfo.acknowledged || !insertInfo.insertedId) throw "Could not add apartment";
-    
-    console.log("insertInfo insertInfo.acknowledged",insertInfo.acknowledged);
-  if(insertInfo.acknowledged === true){
-        let userId = insertInfo.insertedId ;
-        const usersCollection = await users();
-        console.log("........inside added property.......");
-        updatedInfo2 = await usersCollection.updateOne({ _id: ObjectId(userSessionId) }, { $addToSet: { AddedProperty: userId.toString() } });
-  }
-    
-    
+    console.log("insertInfo", insertInfo);
+    if (!insertInfo.acknowledged || !insertInfo.insertedId)
+      throw "Could not add apartment";
+
+    console.log("insertInfo insertInfo.acknowledged", insertInfo.acknowledged);
+    if (insertInfo.acknowledged === true) {
+      let userId = insertInfo.insertedId;
+      const usersCollection = await users();
+      console.log("........inside added property.......");
+      updatedInfo2 = await usersCollection.updateOne(
+        { _id: ObjectId(userSessionId) },
+        { $addToSet: { AddedProperty: userId.toString() } }
+      );
+    }
+
     console.log("updatedInfo2..xx", updatedInfo2);
 
     const newId = insertInfo.insertedId.toString();
     //const returnBand = await this.get(newId);
     //  return returnBand;
-    
+
     return newId;
   },
 
@@ -154,18 +153,16 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     sizeMax,
     occupantCapacity
   ) {
-
     //if (typeof zipcode !== 'string') throw 'Id must be a string';
 
     zipcode = zipcode.trim();
-  
-    
+
     // zipcode ? zipcode : null
 
     //if (!ObjectId.isValid(id)) throw 'ID is not a valid object ID';
     const apartmentCollection = await apartment();
     let apartmentData = await apartmentCollection.find({}).toArray();
-    
+
     if (zipcode) {
       for (apt of apartmentData) {
         apartmentData = apartmentData.filter((apt) => apt.zipcode === zipcode);
@@ -181,10 +178,10 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     }
     if (city) {
       for (apt of apartmentData) {
-        apartmentData = apartmentData.filter((apt) => apt.city === city);
+        apartmentData = apartmentData.filter((apt) => apt.city.toLowerCase() === city.toLowerCase());
       }
     }
-    console.log("Min", rentMin)
+    console.log("Min", rentMin);
     if (rentMin) {
       // console.log("yooo", apartmentData);
       for (apt of apartmentData) {
@@ -224,16 +221,16 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
     return apartmentData;
   },
 
-  async getApartmentAddress(
-    address,
-  ) {
-    console.log("here", address)
+  async getApartmentAddress(address) {
+    console.log("here", address);
     const apartmentCollection = await apartment();
-    let apartmentData = await apartmentCollection.find({
-      address: address
-    }).toArray();
-    
-    console.log("here", apartmentData)
+    let apartmentData = await apartmentCollection
+      .find({
+        address: address,
+      })
+      .toArray();
+
+    console.log("here", apartmentData);
     return apartmentData;
   },
 
@@ -318,97 +315,136 @@ if(!isNaN(name)) throw `${name} is not a valid value for name.`;
 },
  */
 
-  /* async update(id, name, genre, website, recordLabel, bandMembers, yearFormed){
- let genreInvalidFlag = false;
- let bandMembersInvalidFlag = false;
- if(arguments.length !== 7 ) throw "Number of arguments should be 7";
-  if (!id) throw 'You must provide an id to search for';
-  if (typeof id !== 'string') throw 'Id must be a string';
-  if (id.trim().length === 0)
-    throw 'Id cannot be an empty string or just spaces';
-  id = id.trim();
-  if (!ObjectId.isValid(id)) throw 'Id is an invalid object ID';
+  async update(
+    apartmentId,
+    state,
+    city,
+    photosArr,
+    address,
+    zipcode,
+    rent,
+    size,
+    occupantCapacity,
+    contactInfo,
+    userSessionId
+  ) {
+    if (!state) throw "You must provide state ";
+    if (typeof state !== "string") throw "address must be a string";
+    if (state.trim().length === 0)
+      throw "state cannot be an empty string or just spaces";
+    state = state.trim();
 
-  if (!name) throw 'You must provide a name for your band';
-  if (typeof name !== 'string') throw 'Name must be a string';
+    if (!city) throw "You must provide city";
+    if (typeof city !== "string") throw "city must be a string";
+    if (city.trim().length === 0)
+      throw "city cannot be an empty string or just spaces";
+    city = city.trim();
+    if (!isNaN(city)) throw `${city} is not a valid value for city.`;
+    if (containsSpecialChars(city) === true)
+      throw "city cannot contain special characters";
 
-  //if(containsSpecialChars(name)) throw 'Name cannot contain special characters';
-  if (name.trim().length === 0)
-    throw 'Name cannot be an empty string or string with just spaces';  
-  //if(!isNaN(name)) throw `${name} is not a valid value for name.` ;
-  name = name.trim();
+    if (!address) throw "You must provide address of the apartment";
+    if (typeof address !== "string") throw "address must be a string";
+    if (address.trim().length === 0)
+      throw "address cannot be an empty string or just spaces";
+    address = address.trim();
 
-  if (!genre) throw 'You must provide genre to search for';
-if (!genre ||  !Array.isArray(genre)) throw 'You must provide an array of genre';
-if (genre.length === 0) throw 'You must supply at least one genre';
-for (i in genre) {
-  if (typeof genre[i] !== 'string' || genre[i].trim().length === 0) {
-    genreInvalidFlag = true;
-    break;
-  }
-  genre[i] = genre[i].trim();
-}
-if (genreInvalidFlag)
-      throw 'One or more genre is not a string or is an empty string or genre value is number';
+    if (!zipcode) throw "You must provide zipcode of the apartment";
+    //if (typeof zipcode !== 'number') throw 'zipcode must be in number';
+    if (zipcode.trim().length === 0)
+      throw "zipcode cannot be an empty string or just spaces";
+    if (zipcode.trim().length < 5) throw "zipcode cannot be less than 5 digit";
+    zipcode = zipcode.trim();
+    if (isNaN(zipcode)) throw `${zipcode} is not a valid value for zipcode.`;
+    if (isValidDetails(zipcode) === false)
+      throw `${zipcode} is not a valid value for zipcode.`;
+    if (containsSpecialChars(zipcode) === true)
+      throw "zipcode cannot contain special characters";
 
-      if (!website) throw 'You must provide website to search for';
-      if (typeof website !== 'string') throw 'name must be a string';
-      
-      //var res = website.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-      let webPattern = /^(http:\/\/){1}(www\.){1}.[-a-zA-Z]{4,}(\.com)$/;
-      if(!webPattern.test(website)) throw 'You must provide correct website';
-      
-      
-      if (!recordLabel) throw 'You must provide recordLabel to search for';
-      if (typeof recordLabel !== 'string') throw 'recordLabel must be a string';
-      if (recordLabel.trim().length === 0)
-      throw 'Name cannot be an empty string or just spaces';
-      recordLabel = recordLabel.trim();
-      
-      if (!bandMembers) throw 'You must provide bandMembers to search for';
-      if (!Array.isArray(bandMembers)) throw 'You must provide an array of band Members';
-      if (bandMembers.length === 0) throw 'You must supply at least one band Members';
-      for (i in bandMembers) {
-        if (typeof bandMembers[i] !== 'string' || bandMembers[i].trim().length === 0 ) {
-         
-          bandMembersInvalidFlag = true;
-          break;
-        }
-        bandMembers[i] = bandMembers[i].trim();
+    if (!rent) throw "You must provide rent of the apartment";
+    //if (typeof rent !== 'number') throw 'rent must be in number';
+    if (rent.trim().length === 0)
+      throw "rent cannot be an empty string or just spaces";
+    rent = rent.trim();
+    if (isNaN(rent))
+      throw `${rent} is not a valid value for rent. it should be in numbers`;
+    if (isValidDetails(rent) === false)
+      throw `${rent} is not a valid value for rent.`;
+    if (containsSpecialChars(rent) === true)
+      throw "rent cannot contain special characters.";
+
+    if (!size) throw "You must provide size of the apartment";
+    //if (typeof size !== 'number') throw 'size must be in square feet';
+    if (size.trim().length === 0)
+      throw "size cannot be an empty string or just spaces";
+    size = size.trim();
+    if (isNaN(size)) throw `${size} is not a valid value for size.`;
+    if (isValidDetails(size) === false)
+      throw `${size} is not a valid value for size.`;
+    if (containsSpecialChars(size) === true) throw "Entered size is Incorrect.";
+
+    if (!occupantCapacity)
+      throw "You must provide occupantCapacity of the apartment";
+    //if (typeof occupantCapacity !== 'number') throw 'occupantCapacity must be in number';
+    if (occupantCapacity > 10 && occupantCapacity < 1)
+      throw "occupantCapacity can not be grater than 10 and less than 1";
+    if (occupantCapacity.trim().length === 0)
+      throw "occupantCapacity cannot be an empty string or just spaces";
+    occupantCapacity = occupantCapacity.trim();
+    if (isNaN(occupantCapacity))
+      throw `${occupantCapacity} is not a valid value for occupantCapacity.`;
+
+    if (!contactInfo) throw "You must provide contactInfo";
+    if (typeof contactInfo !== "string") throw "contactInfo must be a string";
+    if (contactInfo.trim().length === 0)
+      throw "contactInfo cannot be an empty string or just spaces";
+    contactInfo = contactInfo.trim();
+    if (contactInfo.trim().length !== 10)
+      throw "contactInfo cannot be less than/greater than 10 digit";
+    if (isNaN(contactInfo))
+      throw `${contactInfo} is not a valid value for contactInfo.`;
+    if (isValidDetails(contactInfo) === false)
+      throw `${contactInfo} is not a valid value for contactInfo.`;
+    if (containsSpecialChars(contactInfo) === true)
+      throw "Contact Information is Incorrect.";
+    //var res = website.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    // let webPattern = /^(http:\/\/){1}(www\.){1}.[-a-zA-Z]{4,}(\.com)$/;
+    // if(!webPattern.test(website)) throw 'You must provide correct website';
+
+    let updateApartment = {
+      // _id: ObjectId(apartmentId),
+      state: state,
+      city: city,
+      photos: photosArr,
+      address: address,
+      zipcode: zipcode,
+      rent: rent,
+      size: size,
+      occupantCapacity: occupantCapacity,
+      contactInfo: contactInfo,
+      reviews: [],
+    };
+
+    const apartmentCollection = await apartment();
+    const returnApartment = await this.getApartmentById(apartmentId);
+
+    const updatedInfo = await apartmentCollection.updateOne(
+      {
+        _id: ObjectId(apartmentId),
+      },
+      {
+        $set: updateApartment,
       }
-      if (bandMembersInvalidFlag)
-            throw 'One or more band members is not a string or is an empty string or band member value is number';
-      
-      if (!yearFormed) throw 'You must provide yearsFormed to search for';
-      if(typeof yearFormed !== 'number') throw 'You must provide years in numbers';
-      yearValidation(yearFormed); 
-    
-  
-  const bandsCollection = await bands();
-  const returnBand = await this.get(id);
-  // if(returnBand.name.trim() === name) throw 'Name is same as exisitng name. You must provide a different name!' 
-  //since a put request will replace the data even if it's the same.
-  let updateBand = {
-    name: name,
-    genre: genre,
-    website: website,
-    recordLabel: recordLabel,
-    bandMembers: bandMembers,
-    yearFormed: yearFormed
-  };
- 
-  const updatedInfo = await bandsCollection.updateOne({
-     _id: ObjectId(id)},
-    {
-      $set: updateBand
-    }); 
-  if (updatedInfo.modifiedCount === 0) {
-    throw 'could not update band successfully';
-  }
-  
-  const returnBand1 = await this.get(id);
-  return returnBand1;
-} */
+    );
+    if (updatedInfo.modifiedCount === 0) {
+      throw "could not update apartment successfully";
+    }
+
+    console.log("updatedInfo...this apartment", updatedInfo);
+    const returnApartment1 = await this.getApartmentById(apartmentId);
+    console.log("returnApartment1", returnApartment1);
+    return returnApartment1;
+  },
 };
 
 // return true if it contains special characters

@@ -6,7 +6,6 @@
 <h4>{{error}}</h4>
 {{/if}}
 
-
 <form id="new-apartment" enctype="multipart/form-data" action="/newApartmentInfo" method="post">
   <div class="form-group">
     <label for="state">State</label>
@@ -89,17 +88,17 @@
 
   <div class="form-group">
     <label for="zipcode">Zipcode: </label>
-    <input id="zipcode" name="zipcode" class="form-control" placeholder="Enter the zipcode" required />
+    <input id="zipcode" type="number" name="zipcode" class="form-control" placeholder="Enter the zipcode" required />
   </div>
 
   <div class="form-group">
     <label for="rent">Rent: </label>
-    <input id="rent" name="rent" class="form-control" placeholder="Enter the rent" />
+    <input id="rent" type="number" name="rent" class="form-control" placeholder="Enter the rent" />
   </div>
 
   <div class="form-group">
     <label for="size">Square Footage: </label>
-    <input id="size" name="size"  class="form-control" placeholder="Enter the square footage" />
+    <input id="size" type="number" name="size"  class="form-control" placeholder="Enter the square footage" />
   </div>
 
   <div class="form-group">
@@ -112,7 +111,7 @@
           placeholder="Enter the Occupant Capacity"
           class="form-control"
         >
-          <option selected>Choose...</option>
+          <option value="" disabled selected>Choose...</option>
           <option>1</option>
           <option>2</option>
           <option>3</option>
@@ -136,9 +135,61 @@
     />
   </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Submit your property</button>
   </form>
 
+<script src='https://rawgit.com/leizongmin/js-xss/master/dist/xss.js'></script>
+{{!-- <script>
+  document.querySelector('#new-apartment').addEventListener('submit', (e) => {
+    console.log("submit : " );
+    e.preventDefault(); 
+    const { state , city, photos, address, zipcode, rent, size,occupantCapacity ,contactInfo} = e.target;
+    const newFormData = new FormData();
+    const photosInput = $("#photos")[0];
+    newFormData.append("photos", photosInput);
+    newFormData.append("state", state.value);
+    newFormData.append("address", address.value);
+    newFormData.append("city", city.value);
+    newFormData.append("zipcode", zipcode.value);
+    newFormData.append("rent", rent.value);
+    newFormData.append("size", size.value);
+    newFormData.append("occupantCapacity", occupantCapacity.value);
+    newFormData.append("contactInfo", contactInfo.value);
+    
+    let data = '{';
+    for (var [key, value] of newFormData.entries()) {
+      data += '"' + key + '"' + ' : ' + '"' + value + '",';
+    }
+    console.log("currentData : ", data);
+    console.log(data[data.length-1]);
+    data = data.slice(0, -1);
+    console.log("currentData : ", data);
+    data += '}';
+    data = filterXSS(data);
+
+
+
+    $.ajax({
+      url: '/newApartmentInfo',
+      async: true,
+      type: 'POST',
+      data: JSON.parse(data),  
+      beforeSend:function(jqXHR) {
+        console.log("beforesend : ", jqXHR);
+      },
+      success:function(jqXHR) {
+        window.location.href ='/apartment'
+      },
+      error:function(jqXHR) {
+        console.log("error : ", jqXHR);
+        document.querySelector('#error').innerHTML = jqXHR.responseText;
+      },
+      complete:function(jqXHR) {
+        console.log("complete : ", jqXHR);
+      }
+    })
+  }) 
+</script> --}}
 
 
 

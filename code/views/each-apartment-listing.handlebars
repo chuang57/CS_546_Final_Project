@@ -68,21 +68,51 @@
           <div class="col col-xl-6 col-md-6 col-12">
 
             <div id="map" class="map"></div>
-                  <script type="text/javascript">
-                      var map = new ol.Map({
-                          target: 'map',
-                          layers: [
-                              new ol.layer.Tile({
-                                  source: new ol.source.OSM()
-                              })
-                          ],
-                          view: new ol.View({
-                              center: ol.proj.fromLonLat([-74.02662649999999, 40.7432899]),
-                              zoom: 18
-                          })
-                      });
-                  </script>
-            </div>
+                    <script type="text/javascript">
+                        var geocoder = new google.maps.Geocoder();
+                        var address = "{{this.address}}";
+                        geocoder.geocode( { 'address': address}, function(results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                var latitude = results[0].geometry.location.lat();
+                                var longitude = results[0].geometry.location.lng();
+                                var pos = [longitude, latitude]
+                                var map = new ol.Map({
+                                    target: 'map',
+                                    layers: [
+                                        new ol.layer.Tile({
+                                            source: new ol.source.OSM()
+                                        })
+                                    ],
+                                    view: new ol.View({
+                                        center: ol.proj.fromLonLat(pos),
+                                        zoom: 18
+                                    })
+                                });
+                                var feature = new ol.Feature({
+                                    // type:new ol.style.Style({anchor: [0.5, 1],image: new ol.style.Icon({src: 'https://openlayers.org/en/latest/examples/data/icon.png'})}),
+                                    geometry: new ol.geom.Point(ol.proj.fromLonLat(pos))
+                                })
+                                feature.setStyle(new ol.style.Style({
+                                    image: new ol.style.Icon(({
+                                        anchor: [0.5, 36],
+                                        anchorXUnits: "fraction",
+                                        anchorYUnits: "pixels",
+                                        opacity: 1,
+                                        src: "https://openlayers.org/en/latest/examples/data/icon.png",
+                                    })),
+                                }));
+                                var layer = new ol.layer.Vector({
+                                    source: new ol.source.Vector({
+                                        features: [feature]
+                                    })
+                                });
+                                map.addLayer(layer);
+                            } else {
+                                alert('Geocode was not successful for the following reason: ' + status);
+                            }
+                        });
+                    </script>
+                </div>
 
           </div>
           <div
@@ -98,7 +128,7 @@
               <div class="apartment-address">Monthly Rent: ${{this.rent}}</div>
               <div class="apartment-address">Size of the apartment: {{this.size}} square foot</div>
               <div class="apartment-address">Occupant capacity: {{this.occupantCapacity}} members</div>
-              <div class="apartment-address">email: {{this.useremail}}</div>
+              <div class="apartment-address">Contact property: {{this.contactInfo}}</div>
               {{!-- <div class="reviews"> <a href="/reviews/{{this._id}}" class="click">write a review</a> </div> --}}
               <br>
               <a href="/reviews/{{this._id}}" class="btn btn-warning display-6 rounded-pill">Write a review</a>

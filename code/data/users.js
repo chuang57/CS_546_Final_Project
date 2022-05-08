@@ -20,6 +20,7 @@ const createUser = async (
   console.log("email", email);
   console.log("usertype..", usertype);
   const lowerUsername = username.toLowerCase();
+  email = email.toLowerCase();
   if (!lowerUsername || !password) {
     throw new Error("Username or password is empty");
   }
@@ -27,6 +28,10 @@ const createUser = async (
     throw new Error(
       "user name should be a valid string and should be at least 4 characters long."
     );
+  }
+
+  if (!email.includes("@") || !email.includes(".")) {
+    throw new Error("It is not email formet");
   }
 
   const userCollections = await users();
@@ -47,6 +52,38 @@ const createUser = async (
   if (String(Number(phonenumber)) == "NaN") {
     throw new Error("Phone number must be number");
   }
+
+  if (String(Number(username)) !== "NaN") {
+    throw new Error("user name must be string");
+  }
+
+  if (age < 0) {
+    throw new Error("Age can not be negative");
+  }
+
+  
+  if (!city) throw new Error("You must provide city");
+  if (typeof city !== "string") throw new Error("city must be a string");
+  if (city.trim().length === 0)
+    throw new Error("city cannot be an empty string or just spaces");
+  city = city.trim();
+  if (!isNaN(city)) throw new Error(`${city} is not a valid value for city.`);
+  if (containsSpecialChars(city) === true)
+    throw new Error("city cannot contain special characters");
+
+  if (!phonenumber) throw new Error ("You must provide phonenumber");
+  if (phonenumber.trim().length === 0)
+    throw new Error("phonenumber cannot be an empty string or just spaces");
+  phonenumber = phonenumber.trim();
+  if (phonenumber.trim().length !== 10)
+    throw new Error("phonenumber cannot be less than/greater than 10 digit");
+  if (isNaN(phonenumber))
+    throw new Error(`${phonenumber} is not a valid value for phonenumber.`);
+  if (isValidDetails(phonenumber) === false)
+    throw new Error(`${contactInfo} is not a valid value for phonenumber.`);
+  if (containsSpecialChars(phonenumber) === true)
+    throw new Error("Contact Information is Incorrect.");
+
 
   const salt = await bcrypt.genSalt(10);
 
@@ -77,6 +114,10 @@ const checkUser = async (email, password, req) => {
     );
   }
 
+  if (!email.includes("@") || !email.includes(".")) {
+    throw new Error("It is not email formet");
+  }
+
   const userCollections = await users();
 
   if (typeof password !== "string" || password.length < 6) {
@@ -84,7 +125,7 @@ const checkUser = async (email, password, req) => {
       "password should be a valid string and should be at least 4 characters long."
     );
   }
-
+  email = email.toLowerCase();
   const findemail = await userCollections.findOne({
     email,
   });
@@ -113,7 +154,7 @@ const getReviewfromId = async (reviewId) => {
   //return { authenticated: true };
   return userRecord; */
 
-  if (!ObjectId.isValid(reviewId)) throw "review id is not a valid object ID";
+  if (!ObjectId.isValid(reviewId)) throw new Error ("review id is not a valid object ID");
   const apartmentCollection = await apartment();
   // const band = await bandsCollection.find({ 'albums._id': ObjectId(albumId)}).toArray();
   const aprtment = await apartmentCollection
@@ -133,5 +174,23 @@ const getReviewfromId = async (reviewId) => {
   //console.log(JSON.stringify(band[0].albums[0],null,4));
   return aprtment[0].reviews[0];
 };
+
+function containsSpecialChars(str) {
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  return specialChars.test(str);
+}
+
+function isValidDetails(rating) {
+  if (rating.toString().includes(".")) {
+    if (rating.toString().split(".")[1].length !== 1) {
+      //console.log("inside if2",rating.toString().split('.')[1].length);
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    return true;
+  }
+}
 
 module.exports = { createUser, checkUser, getReviewfromId };

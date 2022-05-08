@@ -24,6 +24,7 @@
     }
   </style>
   <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBlsIQWGfYvZQFI3XptUFNo_aPQTgUXT_E"></script>
   </head>
 
 <body>
@@ -44,22 +45,21 @@
         {{#if isNotLogin}}
         <a class="nav-item nav-link active" href="/login">Login
           <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link hidden" href="/signup">Sign Up</a>
+        {{!-- <a class="nav-item nav-link hidden" href="/signup">Sign Up</a> --}}
 
         {{else}}
         {{#if signup}}
-        <a class="nav-item nav-link active" href="/login">Login</a>
-        <a class="nav-item nav-link active" href="/login">Log Out</a>
+          <a class="nav-item nav-link active" href="/login">Login</a>
         {{else}}
-        <a class="nav-item nav-link active" href="/apartment">Apartments
+         <a class="nav-item nav-link active" href="/apartment">Apartments
           <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link active" href="/newApartment">Add New
+         <a class="nav-item nav-link active" href="/newApartment">Add New
           Property</a>
 
-        <a class="nav-item nav-link active" href="/login">Log Out</a>
+          <a class="nav-item nav-link active" href="/login">Log Out</a>
 
         {{/if}}
-        {{/if}}
+      {{/if}}
 
         {{#if allApartmentListing}}
         <a class="nav-item nav-link" href="/apartment/sortbyrent">Sort by

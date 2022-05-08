@@ -8,6 +8,9 @@
     <div>{{this.occupantCapacity}}</div>
 
   {{/each}} --}}
+  {{#if success}}
+<h2>{{success}}</h2>
+{{/if}}
 
     {{#each allAddedApartmentListing}}
    <div class="col-md-6 col-sm-6">
@@ -49,7 +52,7 @@
                         </tr>
                          <tr>
                             <td class="text-left">Update apartment details</td>
-                            <td class="text-right"><a href="/updateApartment">click here to update</a></td>
+                            <td class="text-right"><a href="/{{this._id}}/updateApartment">click here to update</a></td>
                         </tr>
                         </tbody>
                     </table>
