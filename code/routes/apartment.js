@@ -155,7 +155,6 @@ router.post(
   isLogin,
   upload.array("photos"),
   async (req, res) => {
-    console.log("do")
     let city = req.body.city;
     let address = req.body.address;
     let zipcode = req.body.zipcode;
@@ -163,9 +162,10 @@ router.post(
     let size = req.body.size;
     let occupantCapacity = req.body.occupantCapacity;
     try {
-
-      const paths = req.files?.map((file) => file.path);
-      const paths2 = paths?.map((file) => "\\" + file) || '';
+      //console.log("apartment crate request sessino", req.session.user._id);
+     // console.log("this", req.files);
+      const paths = req.files.map((file) => file.path);
+      const paths2 = paths.map((file) => "\\" + file);
       let x = await apartmentData.create(
         req.body.state,
         req.body.city,
@@ -188,7 +188,8 @@ router.post(
         isNotLogin: !req.session.user,
       });
     } catch (e) {
-      res.status(400).send(e);
+      //console.log(e);
+      res.status(400).redirect(`/newApartment?error=${e}`);
     }
   }
 );
