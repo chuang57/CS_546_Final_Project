@@ -139,7 +139,6 @@ router.get("/checkAllApartments", isLogin, async (req, res) => {
   return;
 });
 
-
 router.get("/checkAllAddedApartments", isLogin, async (req, res) => {
   const apartmentCollections = await apartment();
   const allAddedApartmentListing = (
@@ -150,7 +149,7 @@ router.get("/checkAllAddedApartments", isLogin, async (req, res) => {
 
   //console.log("allAddedApartmentListing..",allAddedApartmentListing);
   //console.log("req.session._id",req.session._id,req.session.id);
- 
+
   try {
     res.render("checkAllAddedApartments", {
       allAddedApartmentListing,
@@ -160,8 +159,6 @@ router.get("/checkAllAddedApartments", isLogin, async (req, res) => {
   }
   return;
 });
-
-
 
 router.get("/profile/:email", async (req, res) => {
   let positiveRatingCount = 0;
@@ -255,7 +252,7 @@ router.post("/signup", async (req, res) => {
       usertype
     );
   } catch (e) {
-    //console.log(e);
+    console.log(e);
     return res.redirect(`/signup?error=${e.message}`);
   }
   res.redirect("/login");
