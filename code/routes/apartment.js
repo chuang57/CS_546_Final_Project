@@ -655,16 +655,28 @@ router.post("/apartmentAddress", isLogin, async (req, res) => {
   }
 
   try {
-    let apartment = await apartmentData.getApartmentAddress(apartmentAddress);
-    console.log("yooooooooo")
-
-    res.status(200).render("each-apartment-listing", {
-      apartmentListing: apartment,
-      reviews: apartment[0].reviews,
-      username: req.session.user?.username,
-      email: req.session.user?.email,
-      isNotLogin: !req.session.user,
-    });
+    const apartment = await apartmentData.getApartmentAddress(apartmentAddress);
+    console.log("yooooooooo", apartment)
+    if (apartment.length === 0){
+        console.log("tooooooooo", apartment)
+        res.status(404).render("city-choosing", {
+          title: "Apartment Finder",
+          username: req.session.user?.username,
+          email: req.session.user?.email,
+          isNotLogin: !req.session.user,
+          errorAddress: `No apartment with this address exists.`,
+      });
+    }else{
+      console.log("uooooooooo", apartment)
+      res.status(200).render("each-apartment-listing", {
+        apartmentListing: apartment,
+        reviews: apartment[0].reviews,
+        username: req.session.user?.username,
+        email: req.session.user?.email,
+        isNotLogin: !req.session.user,
+      });
+    }
+    
   } catch (e) {
     console.log(e);
     res.status(404);

@@ -224,7 +224,7 @@ router.get("/profile/:email", async (req, res) => {
     postiveRatingRatio,
     negativeRatingRatio,
     neutralRatingRatio,
-    addedPropertyLength,
+    //addedPropertyLength,
   });
   return;
 });
