@@ -2,7 +2,7 @@
 
 Apartment Finder Website
 
-Our main branch that contains our final code is the dev branch.
+IMPORTANT: Our main branch that contains our final code is the dev branch.
 
 When in the main directory, run npm install.
 Then run npm start.
